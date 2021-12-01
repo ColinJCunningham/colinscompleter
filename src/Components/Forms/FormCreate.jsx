@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { PdfDocument } from "./LincolnDirector";
+import { PdfDocument } from "./Lincoln_Director/LincolnDirector";
 import masterlist from "../../Data/Planlist";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -16,12 +16,19 @@ import {
 import Moment from "moment";
 
 export default function FormCreate() {
-  const [dist, setDist] = useState("");
-  const [name, setName] = useState("Your Name Here");
-  const [dob, setDob] = useState("10/21/1996");
+  
+  
+  
+  
+  //----- Form Inputs ----//
+  const [dist, setDist] = useState(""); // Distribution Reason 
+  const [name, setName] = useState("Your Name Here"); // Particpant Name 
+  const [dob, setDob] = useState("10/21/1996"); // Date of Birth 
   const [planData, setPlanData] = useState([
     { planName: "", planID: "", contract: "", vendor: "", tpaID: "" },
-  ]);
+  ]); // Plan Data Autocomplete
+  //----- Form Inputs ----//
+
 
   const [display, setDisplay] = useState("none");
 
@@ -50,23 +57,11 @@ export default function FormCreate() {
     { value: 662, text: "Plan Term" },
   ];
 
-  //DDT = 430
-  //Ret = 447
-  // Disabilty = 462
-  //Death = 489
-  //in-serv (under 59) = 525
-  //in -serv (over) = 550
-  //hardsh = 575
-  //RMD = 601
-  //QDRO = 626.5
-  //Plan Term = 662
-
   return (
     <form>
       <div style={{ textAlign: "center", margin: 10 }}>
         <div style={{ margin: "5%", marginBottom: 200, textAlign: "center" }}>
           <Container fluid>
-            {/*-------------- Personal Info  ---------------- */}
             <Row>
               <Col>
                 <h1> Tell us a bit about yourself </h1>
@@ -74,8 +69,7 @@ export default function FormCreate() {
                   <Form.Label>Full Name</Form.Label>
                   <InputGroup
                     className="mb-3"
-                    style={{}}
-                    id="Full Name"
+                    id="name"
                     onMouseOut={(e) => setName(e.target.value)}
                     value={name}
                   >
@@ -90,8 +84,7 @@ export default function FormCreate() {
                   <Col>
                     <InputGroup
                       className="mb-3"
-                      style={{}}
-                      id="Date of Birth"
+                      id="dob"
                       onInput={(e) => setDob(e.target.value)}
                       value={dob}
                     >
@@ -104,7 +97,7 @@ export default function FormCreate() {
                     </InputGroup>
                   </Col>
                 </Row>
-                <Button onClick={(e) => setDisplay("")}>Next</Button>
+                <Button onClick={setDisplay("")}>Next</Button> {/* Form Progression (new options added) */}
               </Col>
             </Row>
             <Row
@@ -116,7 +109,7 @@ export default function FormCreate() {
             >
               <Col style={{ width: "100%" }}>
                 <select
-                  id="distr"
+                  id="DisType"
                   className="select"
                   value={reasons.value}
                   onChange={(e) => setDist(e.target.value)}
@@ -174,13 +167,6 @@ export default function FormCreate() {
           <PDFDownloadLink
             document={<PdfDocument data={data} />}
             fileName={planData.tpaID + " - " + name + " " + date + ".pdf"}
-            style={{
-              textDecoration: "none",
-              padding: "0px",
-              color: "#4a4a4a",
-              backgroundColor: "#f2f2f2",
-              border: "1px solid #4a4a4a",
-            }}
           >
             {({ blob, url, loading, error }) =>
               loading ? "Download Pdf" : "Download Pdf"

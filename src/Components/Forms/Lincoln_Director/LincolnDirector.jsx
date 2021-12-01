@@ -1,7 +1,10 @@
+// ---- React Components and StyleSheets ---- //
 import React from "react";
-import LD from "../../Assets/LD.png";
-import LD2 from "../../Assets/LD2.png";
-
+import "../Lincoln_Director/director.css";
+// ---- Assets ---- //
+import LD from "../../Assets/LD.png"; // Page 1 LD Form
+import LD2 from "../../Assets/LD2.png"; // Page 2 LD Form
+// ---- NPM Components ---- //
 import {
   Page,
   Text,
@@ -9,10 +12,9 @@ import {
   Document,
   StyleSheet,
   Image,
-} from "@react-pdf/renderer";
+} from "@react-pdf/renderer"; // PDFReact-Renderer (npm package)
 
-const POSTER_PATH = "https://image.tmdb.org/t/p/w154";
-
+// Needed for PDF Styling
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
@@ -43,54 +45,21 @@ const styles = StyleSheet.create({
 });
 
 export function PdfDocument(props) {
-  console.log(props)
-  const type = props.data[0].dist;
-  //DDT = 430
-  //Ret = 447
-  // Disabilty = 462
-  //Death = 489
-  //in-serv (under 59) = 525
-  //in -serv (over) = 550
-  //hardsh = 575
-  //RMD = 601
-  //QDRO = 626.5
-  //Plan Term = 662
-
-  const wopTop = 715;
-  const woLeft = 23.5;
-
-  //Total Lump Sum T: 364, L: 24
-  //Partial Withdrawl T: 377, L: 24
-  //RMD T: 390, L: 24
-  //Hardship T: 520, L: 24
-  //Direct rollover (rest cash) T: 652, L: 23.5
-  //Cash (rest direct rollover) T: 665, L: 23.5
-  //Toal Vested Account Balance T: 703, L: 23.5
-  //Rollover (partial) T: 352, L: 24
-
-  // limit characters
-  function limit (string = '', limit = 0) {  
-    return string.substring(0, limit)
-  } 
-
+  console.log(props); // Props check ************Remove before publishing***************
+  // ---- Addtional Functions ---- //
+  function limit(string = "", limit = 0) {
+    return string.substring(0, limit);
+  } // Limit character function
 
   return (
     <Document>
-{/*---------------------------------- Page 1 ----------------------------------------------------- */}
-   <Page object-fit="fill" style={styles.page,{fontSize: 13}} size="A4">
+      {/*---------------------------------- Page 1 ----------------------------------------------------- */}
+      <Page object-fit="fill" style={(styles.page, { fontSize: 13 })} size="A4">
         <View style={styles.view}>
           <Image style={styles.image} src={LD} alt="images" />
-          <View
-            style={{
-              position: "absolute",
-              top: 200,
-              left: 74,
-              right: 0,
-              bottom: 0,
-            }}
-          >
-            {/* Limit to 48 Characters */}
-            <Text>{limit(`${props.data[3].data.planName}`, 52)}</Text>
+          {/* ---- Input Group 1 ---- */}
+          <View id="planname">
+            <Text>{limit(`${props.data[3].data.planName}`, 52)}</Text> {/* Limit to 51 Characters */}
           </View>
           <View
             style={{
@@ -249,7 +218,7 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: type,
+              top: `${props.data[0].dist}`,
               left: 25,
               right: 0,
               bottom: 0,
@@ -259,7 +228,7 @@ export function PdfDocument(props) {
           </View>
         </View>
       </Page>
-{/*---------------------------------- Page 2 ----------------------------------------------------- */}      
+      {/*---------------------------------- Page 2 ----------------------------------------------------- */}
       <Page object-fit="fill" style={styles.page} size="A4">
         <View style={styles.view}>
           <Image style={styles.image} src={LD2} alt="images" />
@@ -279,9 +248,3 @@ export function PdfDocument(props) {
     </Document>
   );
 }
-
-
-
-
-
-
