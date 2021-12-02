@@ -1,9 +1,16 @@
+// --- Form Creation --- //
 import React, { useState } from "react";
+// --- NPM Imports --- //
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { PdfDocument } from "./Lincoln_Director/LincolnDirector";
-import masterlist from "../../Data/Planlist";
+import Moment from "moment";
+import Addautocomplete from "react-google-autocomplete";
+// --- CMS Imports --- //
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+// --- Component/Data Imports --- //
+import { PdfDocument } from "./Lincoln_Director/LincolnDirector";
+import masterlist from "../../Data/Planlist";
+import reasons from "../../Data/dists";
 import {
   Row,
   Container,
@@ -13,30 +20,35 @@ import {
   Form,
   Button,
 } from "react-bootstrap/";
-import Moment from "moment";
+// --- Api Key --- //
+const key = process.env.REACT_APP_API_KEY;
 
 export default function FormCreate() {
-  
-  
-  
-  
   //----- Form Inputs ----//
-  const [dist, setDist] = useState(""); // Distribution Reason 
-  const [name, setName] = useState("Your Name Here"); // Particpant Name 
-  const [dob, setDob] = useState("10/21/1996"); // Date of Birth 
+  const [index, setIndex] = useState(9);
+  const [name, setName] = useState("Your Name Here"); // Particpant Name
+  const [dob, setDob] = useState("10/21/1996"); // Date of Birth
+  const [doi, setDoi] = useState(""); // Date of Incident
   const [planData, setPlanData] = useState([
     { planName: "", planID: "", contract: "", vendor: "", tpaID: "" },
   ]); // Plan Data Autocomplete
-  //----- Form Inputs ----//
 
+  const [homeAddress, setHomeaddress] = useState([
+    { address: "", city: "city", state: "ST", zip: "12345" },
+  ]);
+  //----- Form Inputs ----//
 
   const [display, setDisplay] = useState("none");
 
+
   const data = [
-    { dist: dist },
+    { dist: reasons[index].value},
     { name: name },
-    { dob: Moment(dob).format("MM  DD   YYYY") },
+    { dob: Moment(dob).format("MM - DD - YYYY") },
     { data: planData },
+    { address: homeAddress },
+    { doi: Moment(doi).format("MM - DD - YYYY")},
+    { date: reasons[index].yvalue}
   ];
 
   const current = new Date();
@@ -44,33 +56,19 @@ export default function FormCreate() {
     current.getMonth() + 1
   }${current.getDate()}${current.getFullYear()}`;
 
-  const reasons = [
-    { value: 430, text: "Termination of Employment" },
-    { value: 447, text: "Retirement" },
-    { value: 462, text: "Disability" },
-    { value: 489, text: "Death Claim" },
-    { value: 525, text: "In-Service (Under 59)" },
-    { value: 550, text: "In-Service (Over 59)" },
-    { value: 575, text: "Hardship" },
-    { value: 601, text: "RMD" },
-    { value: 626.5, text: "QDRO" },
-    { value: 662, text: "Plan Term" },
-  ];
-
   return (
     <form>
-      <div style={{ textAlign: "center", margin: 10 }}>
-        <div style={{ margin: "5%", marginBottom: 200, textAlign: "center" }}>
+      <div style={{ textAlign: "center" }}>
+        <div style={{ margin: "1%", marginBottom: 200, textAlign: "center" }}>
           <Container fluid>
             <Row>
-              <Col>
-                <h1> Tell us a bit about yourself </h1>
+              <Col style={{ padding: "2rem" }}>
                 <Row>
-                  <Form.Label>Full Name</Form.Label>
+                  <Form.Label className="label">Full Name</Form.Label>
                   <InputGroup
                     className="mb-3"
                     id="name"
-                    onMouseOut={(e) => setName(e.target.value)}
+                    onInput={(e) => setName(e.target.value)}
                     value={name}
                   >
                     <FormControl
@@ -80,25 +78,102 @@ export default function FormCreate() {
                     />
                   </InputGroup>
                 </Row>
+                <Row style={{ width: "60%" }}>
+                  <Form.Label className="label">Date of Birth</Form.Label>
+                  <InputGroup
+                    className="mb-3"
+                    id="dob"
+                    onInput={(e) => setDob(e.target.value)}
+                    value={dob}
+                  >
+                    <FormControl
+                      type="date"
+                      placeholder=""
+                      aria-label="DOB"
+                      aria-describedby="basic-addon1"
+                    />
+                  </InputGroup>
+                </Row>
+              </Col>
+              {/* --- Address Input --- */}
+              <Col
+                style={{
+                  fontSize: ".9rem",
+                  marginTop: "2rem",
+                  padding: "2rem",
+                }}
+              >
                 <Row>
+                  <Addautocomplete
+                    style={{ padding: "10px" }}
+                    apiKey={key}
+                    onPlaceSelected={(place) => {
+                      setHomeaddress({
+                        address:
+                          place.address_components[0].long_name +
+                          " " +
+                          place.address_components[1].long_name,
+                        city: place.address_components[3].long_name,
+                        state: place.address_components[5].short_name,
+                        zip: place.address_components[7].short_name,
+                      });
+                    }}
+                    options={{
+                      types: ["address"],
+                      componentRestrictions: { country: "us" },
+                    }}
+                    value={homeAddress.address}
+                  />
+                </Row>
+                <Row style={{ padding: "10px", fontSize: 14 }}>
                   <Col>
-                    <InputGroup
-                      className="mb-3"
-                      id="dob"
-                      onInput={(e) => setDob(e.target.value)}
-                      value={dob}
-                    >
-                      <FormControl
-                        type="date"
-                        placeholder="Your Name Here"
-                        aria-label="DOB"
-                        aria-describedby="basic-addon1"
-                      />
-                    </InputGroup>
+                    <Form.Control
+                      type="text"
+                      placeholder="City"
+                      value={homeAddress.city}
+                      onInput={(e) =>
+                        setHomeaddress({
+                          address: homeAddress.address,
+                          city: e.target.value,
+                          state: homeAddress.state,
+                          zip: homeAddress.zip,
+                        })
+                      }
+                    />
+                    <Form.Control
+                      type="text"
+                      placeholder="State"
+                      value={homeAddress.state}
+                      onInput={(e) =>
+                        setHomeaddress({
+                          address: homeAddress.address,
+                          city: homeAddress.city,
+                          state: e.target.value,
+                          zip: homeAddress.zip,
+                        })
+                      }
+                      style={{ marginTop: "5px" }}
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Control
+                      type="text"
+                      placeholder="Zip Code"
+                      value={homeAddress.zip}
+                      onInput={(e) =>
+                        setHomeaddress({
+                          address: homeAddress.address,
+                          city: homeAddress.city,
+                          state: homeAddress.state,
+                          zip: e.target.value,
+                        })
+                      }
+                    />
                   </Col>
                 </Row>
-                <Button onClick={setDisplay("")}>Next</Button> {/* Form Progression (new options added) */}
               </Col>
+              <Button onClick={(e) => setDisplay("")}>Next</Button>
+              {/* Form Progression (new options added) */}
             </Row>
             <Row
               style={{
@@ -107,12 +182,12 @@ export default function FormCreate() {
                 display: `${display}`,
               }}
             >
-              <Col style={{ width: "100%" }}>
+              <Col style={{ width: "100%" }} >
                 <select
                   id="DisType"
                   className="select"
                   value={reasons.value}
-                  onChange={(e) => setDist(e.target.value)}
+                  onChange={(e) => setIndex(e.target.value)}
                   style={{
                     backgroundColor: "#DBE9EE",
                     width: "100%",
@@ -124,14 +199,27 @@ export default function FormCreate() {
                     Select your Option
                   </option>
                   {reasons.map((reason, index) => {
-                    return (
-                      <option key={index} value={reason.value}>
-                        {reason.text}
-                      </option>
-                    );
+                    return <option value={index}>{reason.text}</option>;
                   })}
                 </select>
+                <Row style={{ width: "60%", display: `${reasons[index].date}` }}>
+                  <Form.Label className="label">{reasons[index].label}</Form.Label>
+                  <InputGroup
+                    className="mb-3"
+                    id="DOI"
+                    onInput={(e) => setDoi(e.target.value)}
+                    value={doi}
+                  >
+                    <FormControl
+                      type="date"
+                      placeholder=""
+                      aria-label="DOI"
+                      aria-describedby="basic-addon1"
+                    />
+                  </InputGroup>
+                </Row>
               </Col>
+              {/* Plan Data */}
               <Col style={{ width: "100%" }}>
                 <Autocomplete
                   disablePortal
@@ -163,16 +251,21 @@ export default function FormCreate() {
             </Row>
           </Container>
         </div>
-        <div className="container">
-          <PDFDownloadLink
-            document={<PdfDocument data={data} />}
-            fileName={planData.tpaID + " - " + name + " " + date + ".pdf"}
-          >
-            {({ blob, url, loading, error }) =>
-              loading ? "Download Pdf" : "Download Pdf"
-            }
-          </PDFDownloadLink>
-        </div>
+        {/* ---- PDF DOWNLOAD ---- */}
+        <PDFDownloadLink
+          document={<PdfDocument data={data} />}
+          fileName={planData.tpaID + " - " + name + " " + date + ".pdf"}
+          style={{
+            padding: "10px",
+            color: "#4a4a4a",
+            backgroundColor: "#f2f2f2",
+            border: "1px solid #4a4a4a",
+          }}
+        >
+          {({ blob, url, loading, error }) =>
+            loading ? "Download Pdf" : "Download Pdf"
+          }
+        </PDFDownloadLink>
       </div>
     </form>
   );

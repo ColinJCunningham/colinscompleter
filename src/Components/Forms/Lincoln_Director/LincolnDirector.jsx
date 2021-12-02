@@ -1,9 +1,8 @@
 // ---- React Components and StyleSheets ---- //
 import React from "react";
-import "../Lincoln_Director/director.css";
 // ---- Assets ---- //
-import LD from "../../Assets/LD.png"; // Page 1 LD Form
-import LD2 from "../../Assets/LD2.png"; // Page 2 LD Form
+import LD from "../../../Assets/LD.png"; // Page 1 LD Form
+import LD2 from "../../../Assets/LD2.png"; // Page 2 LD Form
 // ---- NPM Components ---- //
 import {
   Page,
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
 });
 
 export function PdfDocument(props) {
-  console.log(props); // Props check ************Remove before publishing***************
+  console.log(props.data[4].address); // Props check ************Remove before publishing***************
   // ---- Addtional Functions ---- //
   function limit(string = "", limit = 0) {
     return string.substring(0, limit);
@@ -58,8 +57,18 @@ export function PdfDocument(props) {
         <View style={styles.view}>
           <Image style={styles.image} src={LD} alt="images" />
           {/* ---- Input Group 1 ---- */}
-          <View id="planname">
-            <Text>{limit(`${props.data[3].data.planName}`, 52)}</Text> {/* Limit to 51 Characters */}
+          <View 
+            id="planname"
+            style={{
+              position: "absolute",
+              top: 200,
+              left: 74,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>{limit(`${props.data[3].data.planName}`, 52)}</Text>
+            {/* Limit to 51 Characters */}
           </View>
           <View
             style={{
@@ -108,35 +117,46 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: 288,
+              top: 270,
               left: 70,
               right: 0,
               bottom: 0,
             }}
           >
-            <Text>cccccc</Text>
+            <Text>{props.data[4].address.address}</Text>
           </View>
           <View
             style={{
               position: "absolute",
-              top: 288,
-              left: 380,
+              top: 293,
+              left: 70,
               right: 0,
               bottom: 0,
             }}
           >
-            <Text>xxxxx</Text>
+            <Text>{props.data[4].address.city}</Text>
           </View>
           <View
             style={{
               position: "absolute",
-              top: 288,
-              left: 500,
+              top: 294,
+              left: 343,
               right: 0,
               bottom: 0,
             }}
           >
-            <Text>Zip</Text>
+            <Text>{props.data[4].address.state}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 292,
+              left: 490,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>{props.data[4].address.zip}</Text>
           </View>
           <View
             style={{
@@ -152,13 +172,13 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: 335,
-              left: 377,
+              top: 338,
+              left: 380,
               right: 0,
               bottom: 0,
             }}
           >
-            <Text> {} </Text>
+            <Text>{props.data[2].dob} </Text>
           </View>
           <View
             style={{
@@ -174,46 +194,13 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: 425,
-              left: 230,
+              top: `${props.data[0].dist}` - 2,
+              left: `${props.data[6].date}`,
               right: 0,
               bottom: 0,
             }}
           >
-            <Text> xx / xx /xxxx </Text>
-          </View>
-          <View
-            style={{
-              position: "absolute",
-              top: 425,
-              left: 410,
-              right: 0,
-              bottom: 0,
-            }}
-          >
-            <Text> xx </Text>
-          </View>
-          <View
-            style={{
-              position: "absolute",
-              top: 440,
-              left: 110,
-              right: 0,
-              bottom: 0,
-            }}
-          >
-            <Text> ll/ ll /llll </Text>
-          </View>
-          <View
-            style={{
-              position: "absolute",
-              top: 482,
-              left: 143,
-              right: 0,
-              bottom: 0,
-            }}
-          >
-            <Text> xx / xx /xxxx </Text>
+            <Text>{props.data[5].doi}</Text>
           </View>
           <View
             style={{
@@ -235,8 +222,8 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: wopTop,
-              left: woLeft,
+              top: 0,
+              left: 0,
               right: 0,
               bottom: 0,
             }}
