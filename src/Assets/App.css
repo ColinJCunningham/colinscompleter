@@ -9,3 +9,8 @@
 .App-link {
   color: #61dafb;
 }
+
+@font-face {
+  font-family: 'webfont';
+  src: local('webfont'), url(./AtkinsonHyperlegible-Regular.ttf) format('truetype')}
+      

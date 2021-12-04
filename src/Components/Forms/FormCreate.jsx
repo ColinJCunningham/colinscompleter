@@ -1,12 +1,15 @@
 // --- Form Creation --- //
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 // --- NPM Imports --- //
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { useForm, Controller } from "react-hook-form";
 import Moment from "moment";
 import Addautocomplete from "react-google-autocomplete";
 // --- CMS Imports --- //
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import NumberFormat from "react-number-format";
+import "../../Assets/App.css";
 // --- Component/Data Imports --- //
 import { PdfDocument } from "./Lincoln_Director/LincolnDirector";
 import masterlist from "../../Data/Planlist";
@@ -15,41 +18,73 @@ import {
   Row,
   Container,
   Col,
-  InputGroup,
-  FormControl,
-  Form,
   Button,
+  FormControl,
+  InputGroup,
+  Form,
 } from "react-bootstrap/";
+
 // --- Api Key --- //
 const key = process.env.REACT_APP_API_KEY;
 
 export default function FormCreate() {
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) =>
+    setData({
+      dist: reasons[index].value,
+      name: data.name,
+      dob: Moment(data.dob).format("MM - DD - YYYY"),
+      data: planData,
+      address: homeAddress,
+      doi: Moment(data.doi).format("MM - DD - YYYY"),
+      date: reasons[index].yvalue,
+      ssn: data.ssn,
+      doh: Moment(data.doh).format("MM - DD - YYYY"),
+    });
+
+  const [data, setData] = useState([
+    {
+      dist: "",
+      name: "",
+      dob: "",
+      data: "",
+      address: "",
+      doi: "",
+      date: "",
+      ssn: "",
+      doh: "",
+    },
+  ]);
+
   //----- Form Inputs ----//
   const [index, setIndex] = useState(9);
-  const [name, setName] = useState("Your Name Here"); // Particpant Name
-  const [dob, setDob] = useState("10/21/1996"); // Date of Birth
-  const [doi, setDoi] = useState(""); // Date of Incident
   const [planData, setPlanData] = useState([
     { planName: "", planID: "", contract: "", vendor: "", tpaID: "" },
   ]); // Plan Data Autocomplete
-
   const [homeAddress, setHomeaddress] = useState([
-    { address: "", city: "city", state: "ST", zip: "12345" },
+    { address: "", city: "", state: "", zip: "" },
   ]);
+
+  const [curinput, setCurinput] = "";
   //----- Form Inputs ----//
 
-  const [display, setDisplay] = useState("none");
+  const [display, setDisplay] = useState("");
 
-
-  const data = [
-    { dist: reasons[index].value},
-    { name: name },
-    { dob: Moment(dob).format("MM - DD - YYYY") },
-    { data: planData },
-    { address: homeAddress },
-    { doi: Moment(doi).format("MM - DD - YYYY")},
-    { date: reasons[index].yvalue}
-  ];
+  const inputStyle = {
+    color: "black",
+    padding: "2%",
+    paddingLeft: "4%",
+    fontSize: "1.2rem",
+    textAlign: "justify",
+    fontFamily: "webfont",
+    marginBottom: "2%",
+  };
 
   const current = new Date();
   const date = `${
@@ -57,80 +92,127 @@ export default function FormCreate() {
   }${current.getDate()}${current.getFullYear()}`;
 
   return (
-    <form>
+    <div>
+      {/* ---- PDF DOWNLOAD ---- */}
+
       <div style={{ textAlign: "center" }}>
         <div style={{ margin: "1%", marginBottom: 200, textAlign: "center" }}>
-          <Container fluid>
-            <Row>
-              <Col style={{ padding: "2rem" }}>
-                <Row>
-                  <Form.Label className="label">Full Name</Form.Label>
-                  <InputGroup
-                    className="mb-3"
-                    id="name"
-                    onInput={(e) => setName(e.target.value)}
-                    value={name}
-                  >
-                    <FormControl
-                      placeholder="Your Name Here"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
+          <PDFDownloadLink
+            document={<PdfDocument data={data} />}
+            fileName={planData.tpaID + " - " + data.name + " " + date + ".pdf"}
+            style={{
+              fontFamily: "webfont",
+              fontWeight: "800",
+              position: "fixed",
+              right: "4%",
+              padding: ".5%",
+              borderRadius: "5px",
+              color: "#4a4a4a",
+              backgroundColor: "#f2f2f2",
+              border: "1px solid #4a4a4a",
+              fontSize: "1.2rem",
+            }}
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? "Download PDF" : "Download PDF"
+            }
+          </PDFDownloadLink>
+          <Container>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Row>
+                <h1
+                  onClick={console.log("hello", data)}
+                  style={{ marginTop: "3%", textAlign: "left" }}
+                >
+                  Personal Information
+                </h1>
+                <Col md style={{ padding: "4rem" }}>
+                  <Row>
+                    <Form.Label className="label">Name</Form.Label>
+                    <input
+                      style={inputStyle}
+                      defaultValue=""
+                      {...register("name")}
                     />
-                  </InputGroup>
-                </Row>
-                <Row style={{ width: "60%" }}>
-                  <Form.Label className="label">Date of Birth</Form.Label>
-                  <InputGroup
-                    className="mb-3"
-                    id="dob"
-                    onInput={(e) => setDob(e.target.value)}
-                    value={dob}
-                  >
-                    <FormControl
+                  </Row>
+                  <Row>
+                    <Form.Label className="label">Date of Birth</Form.Label>
+                    <input
+                      style={inputStyle}
                       type="date"
-                      placeholder=""
-                      aria-label="DOB"
-                      aria-describedby="basic-addon1"
+                      defaultValue=""
+                      {...register("Date of Birth")}
                     />
-                  </InputGroup>
-                </Row>
-              </Col>
-              {/* --- Address Input --- */}
-              <Col
-                style={{
-                  fontSize: ".9rem",
-                  marginTop: "2rem",
-                  padding: "2rem",
-                }}
-              >
-                <Row>
-                  <Addautocomplete
-                    style={{ padding: "10px" }}
-                    apiKey={key}
-                    onPlaceSelected={(place) => {
-                      setHomeaddress({
-                        address:
-                          place.address_components[0].long_name +
-                          " " +
-                          place.address_components[1].long_name,
-                        city: place.address_components[3].long_name,
-                        state: place.address_components[5].short_name,
-                        zip: place.address_components[7].short_name,
-                      });
-                    }}
-                    options={{
-                      types: ["address"],
-                      componentRestrictions: { country: "us" },
-                    }}
-                    value={homeAddress.address}
-                  />
-                </Row>
-                <Row style={{ padding: "10px", fontSize: 14 }}>
-                  <Col>
+                  </Row>
+                  <Row>
+                    <Form.Label className="label">
+                      Social Security Number
+                    </Form.Label>
+                    <Controller
+                      control={control}
+                      name="ssn"
+                      render={({ field: { onChange, name, value } }) => (
+                        <NumberFormat
+                          format="### ## ####"
+                          name={name}
+                          value={value}
+                          onChange={onChange}
+                        />
+                      )}
+                    />
+                  </Row>
+                </Col>
+                {/* --- Address Input --- */}
+                <Col
+                  md
+                  style={{
+                    marginTop: "4rem",
+                    padding: "2rem",
+                  }}
+                >
+                  <Row>
+                    <Addautocomplete
+                      style={{ ...inputStyle, ...{ marginBottom: "5%" } }}
+                      apiKey={key}
+                      onPlaceSelected={(place) => {
+                        setHomeaddress({
+                          address:
+                            place.address_components[0].long_name +
+                            " " +
+                            place.address_components[1].long_name,
+                          city: place.address_components[3].long_name,
+                          state: place.address_components[5].short_name,
+                          zip: place.address_components[7].long_name,
+                        });
+                      }}
+                      options={{
+                        types: ["address"],
+                        componentRestrictions: { country: "us" },
+                      }}
+                    />
+                    <Row>
+                      <input
+                        style={{ ...inputStyle, ...{ width: "100%" } }}
+                        type="text"
+                        placeholder={
+                          homeAddress.address ? homeAddress.address : "Address"
+                        }
+                        onInput={(e) =>
+                          setHomeaddress({
+                            address: e.target.value,
+                            city: homeAddress.city,
+                            state: homeAddress.state,
+                            zip: homeAddress.zip,
+                          })
+                        }
+                      />
+                    </Row>
+                  </Row>
+                  <Row>
                     <Form.Control
+                      style={{ ...inputStyle, ...{ width: "70%" } }}
                       type="text"
-                      placeholder="City"
-                      value={homeAddress.city}
+                      placeholder={homeAddress.city ? homeAddress.city : "City"}
                       onInput={(e) =>
                         setHomeaddress({
                           address: homeAddress.address,
@@ -141,9 +223,11 @@ export default function FormCreate() {
                       }
                     />
                     <Form.Control
+                      style={{ ...inputStyle, ...{ width: "70%" } }}
                       type="text"
-                      placeholder="State"
-                      value={homeAddress.state}
+                      placeholder={
+                        homeAddress.state ? homeAddress.state : "State"
+                      }
                       onInput={(e) =>
                         setHomeaddress({
                           address: homeAddress.address,
@@ -152,14 +236,14 @@ export default function FormCreate() {
                           zip: homeAddress.zip,
                         })
                       }
-                      style={{ marginTop: "5px" }}
                     />
-                  </Col>
-                  <Col>
+
                     <Form.Control
+                      style={{ ...inputStyle, ...{ width: "50%" } }}
                       type="text"
-                      placeholder="Zip Code"
-                      value={homeAddress.zip}
+                      placeholder={
+                        homeAddress.zip ? homeAddress.zip : "Zip Code"
+                      }
                       onInput={(e) =>
                         setHomeaddress({
                           address: homeAddress.address,
@@ -169,31 +253,62 @@ export default function FormCreate() {
                         })
                       }
                     />
-                  </Col>
-                </Row>
-              </Col>
-              <Button onClick={(e) => setDisplay("")}>Next</Button>
-              {/* Form Progression (new options added) */}
-            </Row>
-            <Row
-              style={{
-                fontSize: ".9rem",
-                marginTop: "10%",
-                display: `${display}`,
-              }}
-            >
-              <Col style={{ width: "100%" }} >
+                  </Row>
+                </Col>
+              </Row>
+              {/* -------------- (Form Progression (new options added) ------------------ */}
+              <Row
+                style={{
+                  fontSize: ".9rem",
+                  marginTop: "5%",
+                  display: `${display}`,
+                }}
+              >
+                {/* Plan Data */}
+                <Col style={{ width: "100%" }}>
+                  <Autocomplete
+                    id="plan-list"
+                    options={masterlist}
+                    onChange={(event, value) =>
+                      setPlanData({
+                        planName: value.label,
+                        planID: value.planID,
+                        contract: value.contract_num,
+                        vendor: value.vendor,
+                        tpaID: value.TPAID,
+                      })
+                    }
+                    sx={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Plan Name"
+                        style={{
+                          backgroundColor: "#DBE9EE",
+                          borderRadius: "5px",
+                        }}
+                      />
+                    )}
+                    s
+                  />
+                </Col>
+                <Col>
+                  <Form.Label className="label">Date of Hire</Form.Label>
+                  <input
+                    style={inputStyle}
+                    type="date"
+                    defaultValue=""
+                    {...register("DOH")}
+                  />
+                </Col>
+              </Row>
+              <Col style={{ width: "100%", marginTop: "100px" }}>
                 <select
                   id="DisType"
                   className="select"
                   value={reasons.value}
                   onChange={(e) => setIndex(e.target.value)}
-                  style={{
-                    backgroundColor: "#DBE9EE",
-                    width: "100%",
-                    padding: "17px",
-                    borderRadius: "5px",
-                  }}
+                  style={inputStyle}
                 >
                   <option value={"Distribution due to Termination"}>
                     Select your Option
@@ -202,71 +317,30 @@ export default function FormCreate() {
                     return <option value={index}>{reason.text}</option>;
                   })}
                 </select>
-                <Row style={{ width: "60%", display: `${reasons[index].date}` }}>
-                  <Form.Label className="label">{reasons[index].label}</Form.Label>
-                  <InputGroup
-                    className="mb-3"
-                    id="DOI"
-                    onInput={(e) => setDoi(e.target.value)}
-                    value={doi}
-                  >
-                    <FormControl
-                      type="date"
-                      placeholder=""
-                      aria-label="DOI"
-                      aria-describedby="basic-addon1"
-                    />
-                  </InputGroup>
+                <Row
+                  style={{ width: "60%", display: `${reasons[index].date}` }}
+                >
+                  <Form.Label className="label">
+                    {reasons[index].label}
+                  </Form.Label>
+                  <input
+                    style={inputStyle}
+                    type="date"
+                    defaultValue=""
+                    {...register("DOI")}
+                  />
                 </Row>
               </Col>
-              {/* Plan Data */}
-              <Col style={{ width: "100%" }}>
-                <Autocomplete
-                  disablePortal
-                  id="plan-list"
-                  options={masterlist}
-                  onChange={(event, value) =>
-                    setPlanData({
-                      planName: value.label,
-                      planID: value.planID,
-                      contract: value.contract_num,
-                      vendor: value.vendor,
-                      tpaID: value.TPAID,
-                    })
-                  }
-                  sx={{ width: "100%" }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Plan Name"
-                      style={{
-                        backgroundColor: "#DBE9EE",
-                        borderRadius: "5px",
-                      }}
-                    />
-                  )}
-                  s
-                />
-              </Col>
-            </Row>
+              <input
+                style={{ width: "50%" }}
+                onClick={(e) => setDisplay("none")}
+                type="submit"
+                placeholder="Next Section"
+              />
+            </form>
           </Container>
         </div>
-        {/* ---- PDF DOWNLOAD ---- */}
-        <PDFDownloadLink
-          document={<PdfDocument data={data} />}
-          fileName={planData.tpaID + " - " + name + " " + date + ".pdf"}
-          style={{
-            padding: "10px",
-            color: "#4a4a4a",
-            backgroundColor: "#f2f2f2",
-            border: "1px solid #4a4a4a",
-          }}
-        >
-          {({ blob, url, loading, error }) =>
-            loading ? "Download Pdf" : "Download Pdf"
-          }
-        </PDFDownloadLink>
       </div>
-    </form>
+    </div>
   );
 }

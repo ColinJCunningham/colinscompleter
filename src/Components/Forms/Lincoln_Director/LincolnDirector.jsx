@@ -1,8 +1,11 @@
 // ---- React Components and StyleSheets ---- //
 import React from "react";
 // ---- Assets ---- //
-import LD from "../../../Assets/LD.png"; // Page 1 LD Form
-import LD2 from "../../../Assets/LD2.png"; // Page 2 LD Form
+import LD from "../../../Assets/LD_DistForm/LD.png"; // Page 1 LD Form
+import LD2 from "../../../Assets/LD_DistForm/LD2.png"; // Page 2 LD Form
+// import LD3 from "../../../Assets/LD_DistForm/LD3.png"; // Page 2 LD Form
+// import LD4 from "../../../Assets/LD_DistForm/LD4.png"; // Page 2 LD Form
+// import LD5 from "../../../Assets/LD_DistForm/LD5.png"; // Page 2 LD Form
 // ---- NPM Components ---- //
 import {
   Page,
@@ -44,11 +47,14 @@ const styles = StyleSheet.create({
 });
 
 export function PdfDocument(props) {
-  console.log(props.data[4].address); // Props check ************Remove before publishing***************
+ // Props check ************Remove before publishing***************
   // ---- Addtional Functions ---- //
+  console.log(props.data.data)
   function limit(string = "", limit = 0) {
     return string.substring(0, limit);
   } // Limit character function
+
+  
 
   return (
     <Document>
@@ -67,7 +73,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{limit(`${props.data[3].data.planName}`, 52)}</Text>
+            <Text>{limit(`${props.data.data ? props.data.data.planName: ""}  `, 52)}</Text>
             {/* Limit to 51 Characters */}
           </View>
           <View
@@ -90,7 +96,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[1].name}</Text>
+            <Text>{props.data.name}</Text>
           </View>
           <View
             style={{
@@ -101,7 +107,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[3].data.planID}</Text>
+            <Text>{props.data.data ? props.data.data.planID : ""}</Text>
           </View>
           <View
             style={{
@@ -112,7 +118,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[3].data.contract}</Text>
+            <Text>{props.data.data ? props.data.data.contract: ""}</Text>
           </View>
           <View
             style={{
@@ -123,7 +129,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[4].address.address}</Text>
+            <Text>{props.data.address ? props.data.address.address:" "}</Text>
           </View>
           <View
             style={{
@@ -134,7 +140,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[4].address.city}</Text>
+            <Text>{props.data.address ? props.data.address.city: " "}</Text>
           </View>
           <View
             style={{
@@ -145,7 +151,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[4].address.state}</Text>
+            <Text>{props.data.address ? props.data.address.state: " "}</Text>
           </View>
           <View
             style={{
@@ -156,18 +162,18 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[4].address.zip}</Text>
+            <Text>{props.data.address ? props.data.address.zip: " "}</Text>
           </View>
           <View
             style={{
               position: "absolute",
-              top: 335,
-              left: 137,
+              top: 338,
+              left: 145,
               right: 0,
               bottom: 0,
             }}
           >
-            <Text>xxx - xx - xxxx</Text>
+            <Text>{props.data.ssn}</Text>
           </View>
           <View
             style={{
@@ -178,7 +184,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[2].dob} </Text>
+            <Text>{props.data.dob} </Text>
           </View>
           <View
             style={{
@@ -189,23 +195,23 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text> xx / xx / xxxx </Text>
+            <Text></Text>
           </View>
           <View
             style={{
               position: "absolute",
-              top: `${props.data[0].dist}` - 2,
-              left: `${props.data[6].date}`,
+              top: `${props.data.dist ? props.data.dist : .1}` - 2,
+              left: `${props.data.date ? props.data.date  : .1}`,
               right: 0,
               bottom: 0,
             }}
           >
-            <Text>{props.data[5].doi}</Text>
+            <Text>{props.data.doi}</Text>
           </View>
           <View
             style={{
               position: "absolute",
-              top: `${props.data[0].dist}`,
+              top: `${props.data.dist ? props.data.dist : .1}`,
               left: 25,
               right: 0,
               bottom: 0,
