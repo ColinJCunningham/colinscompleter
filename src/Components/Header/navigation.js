@@ -6,12 +6,12 @@ function Navigation() {
   return (
   
     <Container>
-      <Row>
+      <Row style={{color: "whitesmoke",padding: "2%"}}>
         <h1> CFC </h1>
         <h5>Colin's File Completer</h5>
       </Row>
       <Row>
-        <Nav variant="tabs" defaultActiveKey="/home">
+        {/* <Nav variant="tabs" defaultActiveKey="/home">
           <Nav.Item>
             <Nav.Link href="/home">Lincoln Director</Nav.Link>
           </Nav.Item>
@@ -23,7 +23,7 @@ function Navigation() {
               Disabled
             </Nav.Link>
           </Nav.Item>
-        </Nav>
+        </Nav> */}
       </Row>
     </Container>
  
