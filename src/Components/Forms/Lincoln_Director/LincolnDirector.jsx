@@ -1,5 +1,5 @@
 // ---- React Components and StyleSheets ---- //
-import React from "react";
+import React, { useState } from "react";
 // ---- Assets ---- //
 import LD from "../../../Assets/LD_DistForm/LD.png"; // Page 1 LD Form
 import LD2 from "../../../Assets/LD_DistForm/LD2.png"; // Page 2 LD Form
@@ -47,8 +47,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
 export function PdfDocument(props) {
   // Props check ************Remove before publishing***************
   // ---- Addtional Functions ---- //
@@ -57,15 +55,22 @@ export function PdfDocument(props) {
     return string.substring(0, limit);
   } // Limit character function
 
-  const dob = (props.data.dob ? Moment(props.data.dob).format("MM - DD - YYYY") : "")
-  const bDob = (props.data.bDob ? Moment(props.data.bDob).format("MM - DD - YYYY") : "")
-  const doh = (props.data.doh ? Moment(props.data.doh).format("MM - DD - YYYY") : "")
-  const doi = (props.data.doi ? Moment(props.data.doi).format("MM - DD - YYYY") : "")
+  const dob = props.data.dob
+    ? Moment(props.data.dob).format("MM - DD - YYYY")
+    : "";
+  const bDob = props.data.bDob
+    ? Moment(props.data.bDob).format("MM - DD - YYYY")
+    : "";
+  const doh = props.data.doh
+    ? Moment(props.data.doh).format("MM - DD - YYYY")
+    : "";
+  const doi = props.data.doi
+    ? Moment(props.data.doi).format("MM - DD - YYYY")
+    : "";
 
-  const addDoc = props.data.addtionalDoc
+  console.log(props.data.file);
 
-
-  console.log(dob)
+  const [display, setDisplay] = ("none")
 
   return (
     <Document>
@@ -272,7 +277,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data.relate ? props.data.relate: " "}</Text>
+            <Text>{props.data.relate ? props.data.relate : " "}</Text>
           </View>
           <View
             style={{
@@ -283,7 +288,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data.baddress ? props.data.baddress.address : " "}</Text>
+            <Text>
+              {props.data.baddress ? props.data.baddress.address : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -404,9 +411,6 @@ export function PdfDocument(props) {
           </View>
         </View>
       </Page>
-
-
-      
     </Document>
   );
 }

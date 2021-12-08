@@ -19,6 +19,7 @@ import { PdfDocument } from "./Lincoln_Director/LincolnDirector";
 import masterlist from "../../Data/Planlist";
 import reasons from "../../Data/dists";
 import options from "../../Data/withdrawlopt";
+import RMD from "../../Data/RMD";
 import {
   Row,
   Container,
@@ -60,6 +61,7 @@ export default function FormCreate() {
       bssn: data.bssn,
       relate: data.relate,
       share: data.share,
+      rmdcalc: calc,
     });
   // Moment(data.bDob).format("MM - DD - YYYY")
   const [data, setData] = useState([
@@ -79,13 +81,15 @@ export default function FormCreate() {
       baddress: "",
       bssn: "",
       relate: "",
-      share: ""
+      share: "",
+      rmdcalc: "",
     },
   ]);
 
   //----- Form Inputs ----//
   const [index, setIndex] = useState(9);
   const [oindex, setOindex] = useState(0);
+  const [aindex, setAindex] = useState(0);
   const [planData, setPlanData] = useState([
     { planName: "", planID: "", contract: "", vendor: "", tpaID: "" },
   ]); // Plan Data Autocomplete
@@ -96,8 +100,6 @@ export default function FormCreate() {
   const [bhomeAddress, setBhomeaddress] = useState([
     { address: "", city: "", state: "", zip: "" },
   ]);
-
-  const [additonalDoc, setAdditonaldoc] = useState([]);
 
   //----- Form Inputs ----//
 
@@ -131,7 +133,12 @@ export default function FormCreate() {
     marginTop: "2%",
   };
 
-  const [show, setShow] = useState(true);
+  const right = {
+    direction: "rtl",
+    unicodeBidi: "bidi-override",
+  };
+
+  const [show, setShow] = useState("none");
 
   const current = new Date();
 
@@ -139,15 +146,21 @@ export default function FormCreate() {
 
   const curAge = Moment(watchAge).diff({ watchAge }, "years", true);
 
+  const [accbal, setAccbal] = useState("");
+
   const date = `${
     current.getMonth() + 1
   }${current.getDate()}${current.getFullYear()}`;
+
+  const num = +accbal.replace(/,/g, "");
+
+  const calc = Math.round((num / RMD[aindex].factor) * 100) / 100;
 
   return (
     <div style={{ backgroundColor: "#F5F5F5" }}>
       {/* ---- PDF DOWNLOAD ---- */}
 
-      <button onClick={console.log(curAge)}> h </button>
+      <button onClick={console.log(calc)}> h </button>
 
       <div style={{}}>
         <div style={{ margin: "1%", marginBottom: 200 }}>
@@ -498,427 +511,488 @@ export default function FormCreate() {
                     switch (reasons[index].value) {
                       case "489":
                         return (
-                          <Col
-                            md
-                            style={{
-                              padding: "1.5rem",
-                            }}
-                          >
-                            <h2> Beneficary or Alternate Payee Information</h2>
-                            <h5 style={{ fontSize: "14px" }}>
-                              If multiple, you will need a form for each one, so
-                              after you complete this one commplete another one
-                            </h5>
-                            <Row>
-                              <h5>Relationship</h5>
-                              <input
-                                style={{ ...sinputStyle, ...{ width: "80%" } }}
-                                defaultValue=""
-                                {...register("relate")}
-                              />
-                            </Row>
-                            <Row>
-                              <h5>Share</h5>
-                              <Controller
-                                control={control}
-                                name="share"
-                                render={({
-                                  field: { onChange, name, value },
-                                }) => (
-                                  <NumberFormat
-                                    style={{
-                                      ...sinputStyle,
-                                      ...{ width: "60%" },
-                                    }}
-                                    format="###%"
-                                    name={name}
-                                    value={value}
-                                    onChange={onChange}
-                                  />
-                                )}
-                              />
-                            </Row>
-                            <Row>
-                              <h5>Name</h5>
-                              <input
-                                style={{ ...sinputStyle, ...{ width: "80%" } }}
-                                defaultValue=""
-                                {...register("bname")}
-                              />
-                            </Row>
-                            <Row>
-                              <h5>
-                                Social Security Number{" "}
-                                <span>
-                                  <Image
-                                    style={{
-                                      width: "20px",
-                                      paddingBottom: "4px",
-                                      marginLeft: "4px",
-                                    }}
-                                    src={question}
-                                    roundedCircle
-                                  />
-                                </span>
-                              </h5>
-                              <Controller
-                                control={control}
-                                name="bssn"
-                                render={({
-                                  field: { onChange, name, value },
-                                }) => (
-                                  <NumberFormat
-                                    style={{
-                                      ...sinputStyle,
-                                      ...{ width: "60%" },
-                                    }}
-                                    format="### - ## - ####"
-                                    name={name}
-                                    value={value}
-                                    onChange={onChange}
-                                  />
-                                )}
-                              />
-                            </Row>
-                            <Row>
-                              <h5>Date of Birth</h5>
-                              <input
-                                style={{ ...sinputStyle, ...{ width: "40%" } }}
-                                type="date"
-                                defaultValue=""
-                                {...register("bDob")}
-                              />
-                            </Row>
-                            <Row>
-                              <h5
-                                style={{
-                                  textAlign: "left",
-                                  fontSize: "1.2rem",
-                                  color: "whitesmoke",
-                                }}
-                              >
-                                Try our Auto-Complete Feature!
-                              </h5>
-                              <Addautocomplete
-                                style={{
-                                  ...sinputStyle,
-                                  ...{ marginBottom: "5px" },
-                                }}
-                                apiKey={key}
-                                onPlaceSelected={(place) => {
-                                  setBhomeaddress({
-                                    address:
-                                      place.address_components[0].long_name +
-                                      " " +
-                                      place.address_components[1].long_name,
-                                    city: place.address_components[3].long_name,
-                                    state:
-                                      place.address_components[5].short_name,
-                                    zip: place.address_components[7].long_name,
-                                  });
-                                }}
-                                options={{
-                                  types: ["address"],
-                                  componentRestrictions: { country: "us" },
-                                }}
-                              />
-                              <h5
-                                style={{
-                                  textAlign: "left",
-                                  fontSize: "1.2rem",
-                                  color: "whitesmoke",
-                                }}
-                              >
-                                Or just type it in yourself!
+                          <Alert>
+                            <Col
+                              md
+                              style={{
+                                padding: "1.5rem",
+                              }}
+                            >
+                              <h3>
+                                {" "}
+                                <em>
+                                  In order to process this request we will need
+                                  a copy of the Original Death Certificate
+                                </em>
+                              </h3>
+                              <h3>
+                                {" "}
+                                Beneficary or Alternate Payee Information
+                              </h3>
+                              <h5 style={{ fontSize: "14px" }}>
+                                If multiple, you will need a form for each one,
+                                so after you complete this one commplete another
+                                one
                               </h5>
                               <Row>
+                                <h5>Relationship</h5>
                                 <input
                                   style={{
                                     ...sinputStyle,
-                                    ...{ width: "100%" },
+                                    ...{ width: "80%" },
+                                  }}
+                                  defaultValue=""
+                                  {...register("relate")}
+                                />
+                              </Row>
+                              <Row>
+                                <h5>Share</h5>
+                                <Controller
+                                  control={control}
+                                  name="share"
+                                  render={({
+                                    field: { onChange, name, value },
+                                  }) => (
+                                    <NumberFormat
+                                      style={{
+                                        ...sinputStyle,
+                                        ...{ width: "60%" },
+                                      }}
+                                      format="###%"
+                                      name={name}
+                                      value={value}
+                                      onChange={onChange}
+                                    />
+                                  )}
+                                />
+                              </Row>
+                              <Row>
+                                <h5>Name</h5>
+                                <input
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ width: "80%" },
+                                  }}
+                                  defaultValue=""
+                                  {...register("bname")}
+                                />
+                              </Row>
+                              <Row>
+                                <h5>
+                                  Social Security Number{" "}
+                                  <span>
+                                    <Image
+                                      style={{
+                                        width: "20px",
+                                        paddingBottom: "4px",
+                                        marginLeft: "4px",
+                                      }}
+                                      src={question}
+                                      roundedCircle
+                                    />
+                                  </span>
+                                </h5>
+                                <Controller
+                                  control={control}
+                                  name="bssn"
+                                  render={({
+                                    field: { onChange, name, value },
+                                  }) => (
+                                    <NumberFormat
+                                      style={{
+                                        ...sinputStyle,
+                                        ...{ width: "60%" },
+                                      }}
+                                      format="### - ## - ####"
+                                      name={name}
+                                      value={value}
+                                      onChange={onChange}
+                                    />
+                                  )}
+                                />
+                              </Row>
+                              <Row>
+                                <h5>Date of Birth</h5>
+                                <input
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ width: "40%" },
+                                  }}
+                                  type="date"
+                                  defaultValue=""
+                                  {...register("bDob")}
+                                />
+                              </Row>
+                              <Row>
+                                <h5
+                                  style={{
+                                    textAlign: "left",
+                                    fontSize: "1.2rem",
+                                  }}
+                                >
+                                  Try our Auto-Complete Feature!
+                                </h5>
+                                <Addautocomplete
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ marginBottom: "5px" },
+                                  }}
+                                  apiKey={key}
+                                  onPlaceSelected={(place) => {
+                                    setBhomeaddress({
+                                      address:
+                                        place.address_components[0].long_name +
+                                        " " +
+                                        place.address_components[1].long_name,
+                                      city: place.address_components[3]
+                                        .long_name,
+                                      state:
+                                        place.address_components[5].short_name,
+                                      zip: place.address_components[7]
+                                        .long_name,
+                                    });
+                                  }}
+                                  options={{
+                                    types: ["address"],
+                                    componentRestrictions: { country: "us" },
+                                  }}
+                                />
+                                <h5
+                                  style={{
+                                    textAlign: "left",
+                                    fontSize: "1.2rem",
+                                  }}
+                                >
+                                  Or just type it in yourself!
+                                </h5>
+                                <Row>
+                                  <input
+                                    style={{
+                                      ...sinputStyle,
+                                      ...{ width: "100%" },
+                                    }}
+                                    type="text"
+                                    placeholder={
+                                      bhomeAddress.address
+                                        ? bhomeAddress.address
+                                        : "Address"
+                                    }
+                                    onInput={(e) =>
+                                      setBhomeaddress({
+                                        address: e.target.value,
+                                        city: bhomeAddress.city,
+                                        state: bhomeAddress.state,
+                                        zip: bhomeAddress.zip,
+                                      })
+                                    }
+                                  />
+                                </Row>
+                              </Row>
+                              <Row>
+                                <Form.Control
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ width: "70%" },
                                   }}
                                   type="text"
                                   placeholder={
-                                    bhomeAddress.address
-                                      ? bhomeAddress.address
-                                      : "Address"
+                                    bhomeAddress.city
+                                      ? bhomeAddress.city
+                                      : "City"
                                   }
                                   onInput={(e) =>
                                     setBhomeaddress({
-                                      address: e.target.value,
-                                      city: bhomeAddress.city,
+                                      address: bhomeAddress.address,
+                                      city: e.target.value,
                                       state: bhomeAddress.state,
                                       zip: bhomeAddress.zip,
                                     })
                                   }
                                 />
-                              </Row>
-                            </Row>
-                            <Row>
-                              <Form.Control
-                                style={{ ...sinputStyle, ...{ width: "70%" } }}
-                                type="text"
-                                placeholder={
-                                  bhomeAddress.city ? bhomeAddress.city : "City"
-                                }
-                                onInput={(e) =>
-                                  setBhomeaddress({
-                                    address: bhomeAddress.address,
-                                    city: e.target.value,
-                                    state: bhomeAddress.state,
-                                    zip: bhomeAddress.zip,
-                                  })
-                                }
-                              />
-                              <Form.Control
-                                style={{ ...sinputStyle, ...{ width: "70%" } }}
-                                type="text"
-                                placeholder={
-                                  bhomeAddress.state
-                                    ? bhomeAddress.state
-                                    : "State"
-                                }
-                                onInput={(e) =>
-                                  setBhomeaddress({
-                                    address: bhomeAddress.address,
-                                    city: bhomeAddress.city,
-                                    state: e.target.value,
-                                    zip: bhomeAddress.zip,
-                                  })
-                                }
-                              />
+                                <Form.Control
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ width: "70%" },
+                                  }}
+                                  type="text"
+                                  placeholder={
+                                    bhomeAddress.state
+                                      ? bhomeAddress.state
+                                      : "State"
+                                  }
+                                  onInput={(e) =>
+                                    setBhomeaddress({
+                                      address: bhomeAddress.address,
+                                      city: bhomeAddress.city,
+                                      state: e.target.value,
+                                      zip: bhomeAddress.zip,
+                                    })
+                                  }
+                                />
 
-                              <Form.Control
-                                style={{ ...sinputStyle, ...{ width: "50%" } }}
-                                type="text"
-                                placeholder={
-                                  bhomeAddress.zip
-                                    ? bhomeAddress.zip
-                                    : "Zip Code"
-                                }
-                                onInput={(e) =>
-                                  setBhomeaddress({
-                                    address: bhomeAddress.address,
-                                    city: bhomeAddress.city,
-                                    state: bhomeAddress.state,
-                                    zip: e.target.value,
-                                  })
-                                }
-                              />
-                            </Row>
-                          </Col>
+                                <Form.Control
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ width: "50%" },
+                                  }}
+                                  type="text"
+                                  placeholder={
+                                    bhomeAddress.zip
+                                      ? bhomeAddress.zip
+                                      : "Zip Code"
+                                  }
+                                  onInput={(e) =>
+                                    setBhomeaddress({
+                                      address: bhomeAddress.address,
+                                      city: bhomeAddress.city,
+                                      state: bhomeAddress.state,
+                                      zip: e.target.value,
+                                    })
+                                  }
+                                />
+                              </Row>
+                            </Col>
+                          </Alert>
                         );
                       case "626.5":
                         return (
-                          <Col
-                            md
-                            style={{
-                              padding: "1.5rem",
-                            }}
-                          >
-                            <h2> Beneficary or Alternate Payee Information</h2>
-                            <h5 style={{ fontSize: "14px" }}>
-                              If multiple, you will need a form for each one, so
-                              after you complete this one commplete another one
-                            </h5>
-                            <Row>
-                              <h5>Relationship</h5>
-                              <input
-                                style={{ ...sinputStyle, ...{ width: "80%" } }}
-                                defaultValue=""
-                                {...register("relate")}
-                              />
-                            </Row>
-                            <Row>
-                              <h5>Share</h5>
-                              <Controller
-                                control={control}
-                                name="share"
-                                render={({
-                                  field: { onChange, name, value },
-                                }) => (
-                                  <NumberFormat
-                                    style={{
-                                      ...sinputStyle,
-                                      ...{ width: "60%" },
-                                    }}
-                                    format="###%"
-                                    name={name}
-                                    value={value}
-                                    onChange={onChange}
-                                  />
-                                )}
-                              />
-                            </Row>
-                            <Row>
-                              <h5>Name</h5>
-                              <input
-                                style={{ ...sinputStyle, ...{ width: "80%" } }}
-                                defaultValue=""
-                                {...register("bname")}
-                              />
-                            </Row>
-                            <Row>
-                              <h5>
-                                Social Security Number{" "}
-                                <span>
-                                  <Image
-                                    style={{
-                                      width: "20px",
-                                      paddingBottom: "4px",
-                                      marginLeft: "4px",
-                                    }}
-                                    src={question}
-                                    roundedCircle
-                                  />
-                                </span>
-                              </h5>
-                              <Controller
-                                control={control}
-                                name="bssn"
-                                render={({
-                                  field: { onChange, name, value },
-                                }) => (
-                                  <NumberFormat
-                                    style={{
-                                      ...sinputStyle,
-                                      ...{ width: "60%" },
-                                    }}
-                                    format="### - ## - ####"
-                                    name={name}
-                                    value={value}
-                                    onChange={onChange}
-                                  />
-                                )}
-                              />
-                            </Row>
-                            <Row>
-                              <h5>Date of Birth</h5>
-                              <input
-                                style={{ ...sinputStyle, ...{ width: "40%" } }}
-                                type="date"
-                                defaultValue=""
-                                {...register("bDob")}
-                              />
-                            </Row>
-                            <Row>
-                              <h5
-                                style={{
-                                  textAlign: "left",
-                                  fontSize: "1.2rem",
-                                  color: "whitesmoke",
-                                }}
-                              >
-                                Try our Auto-Complete Feature!
-                              </h5>
-                              <Addautocomplete
-                                style={{
-                                  ...sinputStyle,
-                                  ...{ marginBottom: "5px" },
-                                }}
-                                apiKey={key}
-                                onPlaceSelected={(place) => {
-                                  setBhomeaddress({
-                                    address:
-                                      place.address_components[0].long_name +
-                                      " " +
-                                      place.address_components[1].long_name,
-                                    city: place.address_components[3].long_name,
-                                    state:
-                                      place.address_components[5].short_name,
-                                    zip: place.address_components[7].long_name,
-                                  });
-                                }}
-                                options={{
-                                  types: ["address"],
-                                  componentRestrictions: { country: "us" },
-                                }}
-                              />
-                              <h5
-                                style={{
-                                  textAlign: "left",
-                                  fontSize: "1.2rem",
-                                  color: "whitesmoke",
-                                }}
-                              >
-                                Or just type it in yourself!
+                          <Alert>
+                            <Col
+                              md
+                              style={{
+                                padding: "1.5rem",
+                              }}
+                            >
+                              <h2>
+                                {" "}
+                                Beneficary or Alternate Payee Information
+                              </h2>
+                              <h5 style={{ fontSize: "14px" }}>
+                                If multiple, you will need a form for each one,
+                                so after you complete this one commplete another
+                                one
                               </h5>
                               <Row>
+                                <h5>Relationship</h5>
                                 <input
                                   style={{
                                     ...sinputStyle,
-                                    ...{ width: "100%" },
+                                    ...{ width: "80%" },
+                                  }}
+                                  defaultValue=""
+                                  {...register("relate")}
+                                />
+                              </Row>
+                              <Row>
+                                <h5>Share</h5>
+                                <Controller
+                                  control={control}
+                                  name="share"
+                                  render={({
+                                    field: { onChange, name, value },
+                                  }) => (
+                                    <NumberFormat
+                                      style={{
+                                        ...sinputStyle,
+                                        ...{ width: "60%" },
+                                      }}
+                                      format="###%"
+                                      name={name}
+                                      value={value}
+                                      onChange={onChange}
+                                    />
+                                  )}
+                                />
+                              </Row>
+                              <Row>
+                                <h5>Name</h5>
+                                <input
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ width: "80%" },
+                                  }}
+                                  defaultValue=""
+                                  {...register("bname")}
+                                />
+                              </Row>
+                              <Row>
+                                <h5>
+                                  Social Security Number{" "}
+                                  <span>
+                                    <Image
+                                      style={{
+                                        width: "20px",
+                                        paddingBottom: "4px",
+                                        marginLeft: "4px",
+                                      }}
+                                      src={question}
+                                      roundedCircle
+                                    />
+                                  </span>
+                                </h5>
+                                <Controller
+                                  control={control}
+                                  name="bssn"
+                                  render={({
+                                    field: { onChange, name, value },
+                                  }) => (
+                                    <NumberFormat
+                                      style={{
+                                        ...sinputStyle,
+                                        ...{ width: "60%" },
+                                      }}
+                                      format="### - ## - ####"
+                                      name={name}
+                                      value={value}
+                                      onChange={onChange}
+                                    />
+                                  )}
+                                />
+                              </Row>
+                              <Row>
+                                <h5>Date of Birth</h5>
+                                <input
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ width: "40%" },
+                                  }}
+                                  type="date"
+                                  defaultValue=""
+                                  {...register("bDob")}
+                                />
+                              </Row>
+                              <Row>
+                                <h5
+                                  style={{
+                                    textAlign: "left",
+                                    fontSize: "1.2rem",
+                                    color: "whitesmoke",
+                                  }}
+                                >
+                                  Try our Auto-Complete Feature!
+                                </h5>
+                                <Addautocomplete
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ marginBottom: "5px" },
+                                  }}
+                                  apiKey={key}
+                                  onPlaceSelected={(place) => {
+                                    setBhomeaddress({
+                                      address:
+                                        place.address_components[0].long_name +
+                                        " " +
+                                        place.address_components[1].long_name,
+                                      city: place.address_components[3]
+                                        .long_name,
+                                      state:
+                                        place.address_components[5].short_name,
+                                      zip: place.address_components[7]
+                                        .long_name,
+                                    });
+                                  }}
+                                  options={{
+                                    types: ["address"],
+                                    componentRestrictions: { country: "us" },
+                                  }}
+                                />
+                                <h5
+                                  style={{
+                                    textAlign: "left",
+                                    fontSize: "1.2rem",
+                                    color: "whitesmoke",
+                                  }}
+                                >
+                                  Or just type it in yourself!
+                                </h5>
+                                <Row>
+                                  <input
+                                    style={{
+                                      ...sinputStyle,
+                                      ...{ width: "100%" },
+                                    }}
+                                    type="text"
+                                    placeholder={
+                                      bhomeAddress.address
+                                        ? bhomeAddress.address
+                                        : "Address"
+                                    }
+                                    onInput={(e) =>
+                                      setBhomeaddress({
+                                        address: e.target.value,
+                                        city: bhomeAddress.city,
+                                        state: bhomeAddress.state,
+                                        zip: bhomeAddress.zip,
+                                      })
+                                    }
+                                  />
+                                </Row>
+                              </Row>
+                              <Row>
+                                <Form.Control
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ width: "70%" },
                                   }}
                                   type="text"
                                   placeholder={
-                                    bhomeAddress.address
-                                      ? bhomeAddress.address
-                                      : "Address"
+                                    bhomeAddress.city
+                                      ? bhomeAddress.city
+                                      : "City"
                                   }
                                   onInput={(e) =>
                                     setBhomeaddress({
-                                      address: e.target.value,
-                                      city: bhomeAddress.city,
+                                      address: bhomeAddress.address,
+                                      city: e.target.value,
                                       state: bhomeAddress.state,
                                       zip: bhomeAddress.zip,
                                     })
                                   }
                                 />
-                              </Row>
-                            </Row>
-                            <Row>
-                              <Form.Control
-                                style={{ ...sinputStyle, ...{ width: "70%" } }}
-                                type="text"
-                                placeholder={
-                                  bhomeAddress.city ? bhomeAddress.city : "City"
-                                }
-                                onInput={(e) =>
-                                  setBhomeaddress({
-                                    address: bhomeAddress.address,
-                                    city: e.target.value,
-                                    state: bhomeAddress.state,
-                                    zip: bhomeAddress.zip,
-                                  })
-                                }
-                              />
-                              <Form.Control
-                                style={{ ...sinputStyle, ...{ width: "70%" } }}
-                                type="text"
-                                placeholder={
-                                  bhomeAddress.state
-                                    ? bhomeAddress.state
-                                    : "State"
-                                }
-                                onInput={(e) =>
-                                  setBhomeaddress({
-                                    address: bhomeAddress.address,
-                                    city: bhomeAddress.city,
-                                    state: e.target.value,
-                                    zip: bhomeAddress.zip,
-                                  })
-                                }
-                              />
+                                <Form.Control
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ width: "70%" },
+                                  }}
+                                  type="text"
+                                  placeholder={
+                                    bhomeAddress.state
+                                      ? bhomeAddress.state
+                                      : "State"
+                                  }
+                                  onInput={(e) =>
+                                    setBhomeaddress({
+                                      address: bhomeAddress.address,
+                                      city: bhomeAddress.city,
+                                      state: e.target.value,
+                                      zip: bhomeAddress.zip,
+                                    })
+                                  }
+                                />
 
-                              <Form.Control
-                                style={{ ...sinputStyle, ...{ width: "50%" } }}
-                                type="text"
-                                placeholder={
-                                  bhomeAddress.zip
-                                    ? bhomeAddress.zip
-                                    : "Zip Code"
-                                }
-                                onInput={(e) =>
-                                  setBhomeaddress({
-                                    address: bhomeAddress.address,
-                                    city: bhomeAddress.city,
-                                    state: bhomeAddress.state,
-                                    zip: e.target.value,
-                                  })
-                                }
-                              />
-                            </Row>
-                          </Col>
+                                <Form.Control
+                                  style={{
+                                    ...sinputStyle,
+                                    ...{ width: "50%" },
+                                  }}
+                                  type="text"
+                                  placeholder={
+                                    bhomeAddress.zip
+                                      ? bhomeAddress.zip
+                                      : "Zip Code"
+                                  }
+                                  onInput={(e) =>
+                                    setBhomeaddress({
+                                      address: bhomeAddress.address,
+                                      city: bhomeAddress.city,
+                                      state: bhomeAddress.state,
+                                      zip: e.target.value,
+                                    })
+                                  }
+                                />
+                              </Row>
+                            </Col>
+                          </Alert>
                         );
 
                       case "430":
@@ -973,11 +1047,11 @@ export default function FormCreate() {
                             }}
                           >
                             <Alert>
-                              <p>
+                              <Alert.Heading>
                                 You will need to provide your social security
                                 award letter with your form upon submisson to
                                 RetireWell.
-                              </p>
+                              </Alert.Heading>
                               <p style={{ textAlign: "center" }}>
                                 What's that?{" "}
                                 <a
@@ -1036,9 +1110,10 @@ export default function FormCreate() {
                           <Col
                             style={{
                               marginLeft: "30px",
+                              backgroundColor: "#01172F",
                             }}
                           >
-                            <Alert variant="success">
+                            <Alert>
                               <Alert.Heading>
                                 Important Information!
                               </Alert.Heading>
@@ -1049,7 +1124,7 @@ export default function FormCreate() {
                               </p>
                               <p>
                                 Please see what qualifies for a "hardship"
-                                below, or read more
+                                below, or read more: 
                                 <a
                                   href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-hardship-distributions"
                                   target="_blank"
@@ -1058,42 +1133,109 @@ export default function FormCreate() {
                                   Here
                                 </a>
                               </p>
-                              <ListGroup>
-                                <ListGroup.Item>
+                              <ListGroup style={{fontSize:"1.2rem"}}>
+                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
                                   Medical care expenses for the employee, the
                                   employee’s spouse, dependents or beneficiary.
                                 </ListGroup.Item>
-                                <ListGroup.Item>
+                                <hr />
+                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
                                   Costs directly related to the purchase of an
                                   employee’s principal residence (excluding
                                   mortgage payments).
                                 </ListGroup.Item>
-                                <ListGroup.Item>
+                                <hr />
+                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
                                   Tuition, related educational fees and room and
                                   board expenses for the next 12 months of
                                   postsecondary education for the employee or
                                   the employee’s spouse, children, dependents or
                                   beneficiary.
                                 </ListGroup.Item>
-                                <ListGroup.Item>
+                                <hr />
+                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
                                   Payments necessary to prevent the eviction of
                                   the employee from the employee’s principal
                                   residence or foreclosure on the mortgage on
                                   that residence.
                                 </ListGroup.Item>
-                                <ListGroup.Item>
+                                <hr />
+                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
                                   Funeral expenses for the employee, the
                                   employee’s spouse, children, dependents, or
                                   beneficiary.
                                 </ListGroup.Item>
-                                <ListGroup.Item>
+                                <hr />
+                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
                                   Certain expenses to repair damage to the
                                   employee’s principal residence.
                                 </ListGroup.Item>
                               </ListGroup>
-                              <hr />
-                              <div className="d-flex justify-content-end">Upload your documentation here! <input onChange={(e) => setAdditonaldoc(e.target.value)} type="file"></input></div>
                             </Alert>
+                          </Col>
+                        );
+                      case "601":
+                        return (
+                          <Col>
+                            <h3>Calculate your RMD here!</h3>
+                            <Row>
+                              <Col lg>
+                                <Row>
+                                  <label>Age as of 12/31/2021</label>
+                                  <br />
+                                  <select
+                                    id="rmd"
+                                    className="select"
+                                    value={RMD.value}
+                                    onChange={(e) => setAindex(e.target.value)}
+                                    style={{
+                                      ...inputStyle,
+                                      ...{ width: "45%" },
+                                    }}
+                                  >
+                                    {RMD.map((rmd, index) => {
+                                      return (
+                                        <option value={index}>{rmd.age}</option>
+                                      );
+                                    })}
+                                  </select>
+                                </Row>
+                                <Row>
+                                  <label>
+                                    Account Balance as of <em>12/31/2020</em>
+                                  </label>
+                                  <br />
+                                  <NumberFormat
+                                    style={inputStyle}
+                                    thousandsGroupStyle="thousand"
+                                    value={2456981}
+                                    decimalSeparator="."
+                                    displayType="input"
+                                    type="text"
+                                    thousandSeparator={true}
+                                    value={accbal}
+                                    onChange={(e) => setAccbal(e.target.value)}
+                                  />
+                                </Row>
+                              </Col>
+                              <Col
+                                md
+                                style={{
+                                  margin: "10%",
+                                  backgroundColor: "#01172Faa",
+                                  color: "whitesmoke",
+                                  padding: "3%",
+                                }}
+                              >
+                                <fieldset disabled>
+                                  <input
+                                    value={"$" + calc}
+                                    {...register("rmdcalc")}
+                                    placeholder={"$" + {calc}}
+                                  />
+                                </fieldset>
+                              </Col>
+                            </Row>
                           </Col>
                         );
                       default:
@@ -1110,7 +1252,6 @@ export default function FormCreate() {
                   onChange={(e) => setOindex(e.target.value)}
                   style={{ ...inputStyle, ...{ padding: "1%" } }}
                 >
-                  <option value={oindex}>Withdrawl Options</option>
                   {options.map((option, index) => {
                     return <option value={index}>{option.text}</option>;
                   })}
