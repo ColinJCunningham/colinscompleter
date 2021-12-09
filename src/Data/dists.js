@@ -51,6 +51,7 @@ export default [
   },
   { value: "575", text: "Hardship", date: "none", show: "none", reveal: "none" },
   { value: "601", text: "RMD", date: "none", show: "none", reveal: "none" },
-  { value: "626.5", text: "QDRO", date: "none", show: "none", reveal: "" },
+  { value: "626.5", text: "QDRO", date: "", show: "none", reveal: "" },
   { value: "662", text: "Plan Term", date: "none", show: "none", reveal: "none" },
+  { value: "0", text: "------------------", date: "none", show: "none", reveal: "none" },
 ];

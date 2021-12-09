@@ -68,7 +68,7 @@ export function PdfDocument(props) {
     ? Moment(props.data.doi).format("MM - DD - YYYY")
     : "";
 
-  console.log(props.data.file);
+  console.log(props.data.wx);
 
   const [display, setDisplay] = ("none")
 
@@ -357,6 +357,72 @@ export function PdfDocument(props) {
             }}
           >
             <Text>{props.data.share ? props.data.share : " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: `${props.data.wy ? props.data.wy : 0.1}`,
+              left: `${props.data.wx ? props.data.wx : 0.1}`,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>X</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 373,
+              left: 270,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>partial</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 650.5,
+              left: 275,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>rols</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 662.5,
+              left: 295,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>lsro</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 710,
+              left: 300,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>proll</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 389,
+              left: 300,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>rmd</Text>
           </View>
         </View>
       </Page>

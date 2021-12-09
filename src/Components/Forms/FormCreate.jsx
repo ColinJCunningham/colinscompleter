@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // --- Images & Icons --- //
 import confused from "../../Assets/Confused.jpg";
 import question from "../../Assets/qmark.png";
+import dollas from "../../Assets/dolla.png";
 // --- NPM Imports --- //
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useForm, Controller } from "react-hook-form";
@@ -31,6 +32,7 @@ import {
   Alert,
   ListGroup,
 } from "react-bootstrap/";
+import { fontSize } from "@mui/system";
 
 // --- Api Key --- //
 const key = process.env.REACT_APP_API_KEY;
@@ -62,6 +64,13 @@ export default function FormCreate() {
       relate: data.relate,
       share: data.share,
       rmdcalc: calc,
+      wy: options[oindex].y,
+      wx: options[oindex].x,
+      partial: data.partial,
+      rols: data.ro_ls,
+      lsro: data.ls_ro,
+      proll: data.prol,
+      rmd: data.rmd,
     });
   // Moment(data.bDob).format("MM - DD - YYYY")
   const [data, setData] = useState([
@@ -83,12 +92,19 @@ export default function FormCreate() {
       relate: "",
       share: "",
       rmdcalc: "",
+      wy: "",
+      wx: "",
+      partial: "",
+      rols: "",
+      lsro: "",
+      proll: "",
+      rmd: "",
     },
   ]);
 
   //----- Form Inputs ----//
   const [index, setIndex] = useState(9);
-  const [oindex, setOindex] = useState(0);
+  const [oindex, setOindex] = useState(8);
   const [aindex, setAindex] = useState(0);
   const [planData, setPlanData] = useState([
     { planName: "", planID: "", contract: "", vendor: "", tpaID: "" },
@@ -130,12 +146,13 @@ export default function FormCreate() {
     marginBottom: "3%",
     paddingLeft: 0,
     color: "#01172F",
-    marginTop: "2%",
+    marginTop: "10%",
   };
 
-  const right = {
-    direction: "rtl",
-    unicodeBidi: "bidi-override",
+  const dolla = {
+    backgroundImage: `url(${dollas})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "left",
   };
 
   const [show, setShow] = useState("none");
@@ -155,6 +172,123 @@ export default function FormCreate() {
   const num = +accbal.replace(/,/g, "");
 
   const calc = Math.round((num / RMD[aindex].factor) * 100) / 100;
+
+  const enteramount =
+    oindex === "1" ? (
+      <>
+        <h4>Enter the Amount of your Distribution</h4>
+        <Controller
+          control={control}
+          name="partial"
+          render={({ field: { onChange, name, value } }) => (
+            <NumberFormat
+              style={{
+                ...inputStyle,
+                ...dolla,
+                ...{
+                  width: "70%",
+                  paddingLeft: "2.5rem",
+                },
+              }}
+              thousandsGroupStyle="thousand"
+              name={name}
+              value={value}
+              decimalSeparator="."
+              displayType="input"
+              type="text"
+              thousandSeparator={true}
+              onChange={onChange}
+            />
+          )}
+        />
+      </>
+    ) : oindex === "4" ? (
+      <>
+        <h4>Enter the Amount of your Distribution</h4>
+        <Controller
+          control={control}
+          name="ro_ls"
+          render={({ field: { onChange, name, value } }) => (
+            <NumberFormat
+              style={{
+                ...inputStyle,
+                ...dolla,
+                ...{
+                  width: "70%",
+                  paddingLeft: "2.5rem",
+                },
+              }}
+              thousandsGroupStyle="thousand"
+              name={name}
+              value={value}
+              decimalSeparator="."
+              displayType="input"
+              type="text"
+              thousandSeparator={true}
+              onChange={onChange}
+            />
+          )}
+        />
+      </>
+    ) : oindex === "5" ? (
+      <>
+        <h4>Enter the Amount of your Distribution</h4>
+        <Controller
+          control={control}
+          name="ls_ro"
+          render={({ field: { onChange, name, value } }) => (
+            <NumberFormat
+              style={{
+                ...inputStyle,
+                ...dolla,
+                ...{
+                  width: "70%",
+                  paddingLeft: "2.5rem",
+                },
+              }}
+              thousandsGroupStyle="thousand"
+              name={name}
+              value={value}
+              decimalSeparator="."
+              displayType="input"
+              type="text"
+              thousandSeparator={true}
+              onChange={onChange}
+            />
+          )}
+        />
+      </>
+    ) : oindex === "7" ? (
+      <>
+        <h4>Enter the Amount of your Distribution</h4>
+        <Controller
+          control={control}
+          name="prol"
+          render={({ field: { onChange, name, value } }) => (
+            <NumberFormat
+              style={{
+                ...inputStyle,
+                ...dolla,
+                ...{
+                  width: "70%",
+                  paddingLeft: "2.5rem",
+                },
+              }}
+              thousandsGroupStyle="thousand"
+              name={name}
+              value={value}
+              decimalSeparator="."
+              displayType="input"
+              type="text"
+              thousandSeparator={true}
+              onChange={onChange}
+            />
+          )}
+        />
+      </>
+    )  : (
+      <div></div>
+    );
 
   return (
     <div style={{ backgroundColor: "#F5F5F5" }}>
@@ -201,6 +335,7 @@ export default function FormCreate() {
                 <Col
                   md
                   style={{
+                    marginTop: "3%",
                     padding: "1.5rem",
                     height: "29rem",
                   }}
@@ -371,7 +506,6 @@ export default function FormCreate() {
                 style={{
                   fontSize: ".9rem",
                   marginTop: "5%",
-                  display: `${display}`,
                 }}
               >
                 {/* Plan Data */}
@@ -476,34 +610,508 @@ export default function FormCreate() {
                     style={{
                       ...inputStyle,
                       ...{
-                        paddingTop: "1%",
-                        paddingBottom: "1%",
-                        paddingRight: "1%",
                         width: "80%",
                       },
                     }}
                   >
-                    <option value={index}></option>
+                    <option value={10}>Choose Your Distribution Reason</option>
                     {reasons.map((reason, index) => {
                       return <option value={index}>{reason.text}</option>;
                     })}
                   </select>
                   <Row
                     style={{
-                      width: "70",
-                      display: `${reasons[index].date}`,
-                      marginLeft: "5%",
+                      width: "100",
                     }}
                   >
-                    <h5 style={{ fontSize: "1rem", marginBottom: "0" }}>
-                      {reasons[index].label}
-                    </h5>
-                    <input
-                      style={{ ...inputStyle, ...{ marginTop: "2%" } }}
-                      type="date"
-                      defaultValue=""
-                      {...register("doi")}
-                    />
+                    {(() => {
+                      switch (reasons[index].value) {
+                        case "0":
+                          return (
+                            <Alert variant="danger">
+                              <span>Distribution Reason is Required</span>
+                            </Alert>
+                          );
+                        case "489":
+                          return (
+                            <Col>
+                              <Row>
+                                <h5
+                                  style={{
+                                    fontSize: "1rem",
+                                    marginBottom: "0",
+                                    marginTop: "10px",
+                                  }}
+                                >
+                                  {reasons[index].label}
+                                </h5>
+                                <input
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      marginTop: "2%",
+                                      width: "60%",
+                                      marginLeft: "2rem",
+                                    },
+                                  }}
+                                  type="date"
+                                  defaultValue=""
+                                  {...register("doi")}
+                                />
+                              </Row>
+                              <Row style={{ marginTop: "10%" }}>
+                                <select
+                                  id="termOptions"
+                                  className="select"
+                                  value={oindex}
+                                  onChange={(e) => setOindex(e.target.value)}
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      paddingTop: "3%",
+                                      paddingBottom: "3%",
+                                      paddingRight: "1%",
+                                      paddinLeft: "0",
+                                      width: "40rem",
+                                      fontSize: "1.3rem",
+                                      marginLeft: "none",
+                                    },
+                                  }}
+                                >
+                                  <option value={8}>Withdrawl Options</option>
+                                  <option value={0}>
+                                    Total Lump Sum Distribution (Cash Out)
+                                  </option>
+                                  <option value={6}>
+                                    Direct Rollover (Total Vested Balance)
+                                  </option>
+                                  <option value={5}>
+                                    A lump sum payable to myself and the
+                                    remainder payable as a direct rollover
+                                  </option>
+                                  <option value={4}>
+                                    Direct Rollover as a Portion of my Vested
+                                    Account Balance and the remainder as a lump
+                                    sum payable to myself
+                                  </option>
+                                </select>
+                              </Row>
+                              <Row>{enteramount}</Row>
+                            </Col>
+                          );
+                        case "626.5":
+                          return (
+                            <Col
+                              md
+                              style={{
+                                marginTop: "3%",
+                              }}
+                            >
+                              <Row>
+                                <select
+                                  id="termOptions"
+                                  className="select"
+                                  value={oindex}
+                                  onChange={(e) => setOindex(e.target.value)}
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      paddingTop: "3%",
+                                      paddingBottom: "3%",
+                                      paddingRight: "1%",
+                                      paddinLeft: "0",
+                                      width: "40rem",
+                                      fontSize: "1.3rem",
+                                      marginLeft: "none",
+                                    },
+                                  }}
+                                >
+                                  <option value={8}>Withdrawl Options</option>
+                                  <option value={0}>
+                                    Total Lump Sum Distribution (Cash Out)
+                                  </option>
+                                  <option value={6}>
+                                    Direct Rollover (Total Vested Balance)
+                                  </option>
+                                  <option value={1}>
+                                    Partial Cash Withdrawl
+                                  </option>
+                                  <option value={7}>Partial Rollover</option>
+                                  <option value={5}>
+                                    A lump sum payable to myself and the
+                                    remainder payable as a direct rollover
+                                  </option>
+                                  <option value={4}>
+                                    Direct Rollover as a Portion of my Vested
+                                    Account Balance and the remainder as a lump
+                                    sum payable to myself
+                                  </option>
+                                </select>
+                              </Row>
+                              <Row>{enteramount}</Row>
+                            </Col>
+                          );
+
+                        case "430":
+                          return (
+                            <Col>
+                              <Row>
+                                <h5
+                                  style={{
+                                    fontSize: "1rem",
+                                    marginBottom: "0",
+                                    marginTop: "10px",
+                                  }}
+                                >
+                                  {reasons[index].label}
+                                </h5>
+                                <input
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      marginTop: "2%",
+                                      width: "60%",
+                                      marginLeft: "2rem",
+                                    },
+                                  }}
+                                  type="date"
+                                  defaultValue=""
+                                  {...register("doi")}
+                                />
+                              </Row>
+                              <Row style={{ marginTop: "10%" }}>
+                                <select
+                                  id="termOptions"
+                                  className="select"
+                                  value={oindex}
+                                  onChange={(e) => setOindex(e.target.value)}
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      paddingTop: "3%",
+                                      paddingBottom: "3%",
+                                      paddingRight: "1%",
+                                      paddinLeft: "0",
+                                      width: "40rem",
+                                      fontSize: "1.3rem",
+                                      marginLeft: "none",
+                                    },
+                                  }}
+                                >
+                                  <option value={8}>Withdrawl Options</option>
+                                  <option value={0}>
+                                    Total Lump Sum Distribution (Cash Out)
+                                  </option>
+                                  <option value={6}>
+                                    Direct Rollover (Total Vested Balance)
+                                  </option>
+                                  <option value={5}>
+                                    A lump sum payable to myself and the
+                                    remainder payable as a direct rollover
+                                  </option>
+                                  <option value={4}>
+                                    Direct Rollover as a Portion of my Vested
+                                    Account Balance and the remainder as a lump
+                                    sum payable to myself
+                                  </option>
+                                </select>
+                              </Row>
+                              <Row>{enteramount}</Row>
+                            </Col>
+                          );
+                        case "447":
+                          return (
+                            <Col>
+                              <Row>
+                                <h5
+                                  style={{
+                                    fontSize: "1rem",
+                                    marginBottom: "0",
+                                    marginTop: "10px",
+                                  }}
+                                >
+                                  {reasons[index].label}
+                                </h5>
+                                <input
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      marginTop: "2%",
+                                      width: "60%",
+                                      marginLeft: "2rem",
+                                    },
+                                  }}
+                                  type="date"
+                                  defaultValue=""
+                                  {...register("doi")}
+                                />
+                              </Row>
+                              <Row style={{ marginTop: "10%" }}>
+                                <select
+                                  id="termOptions"
+                                  className="select"
+                                  value={oindex}
+                                  onChange={(e) => setOindex(e.target.value)}
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      paddingTop: "3%",
+                                      paddingBottom: "3%",
+                                      paddingRight: "1%",
+                                      paddinLeft: "0",
+                                      width: "40rem",
+                                      fontSize: "1.3rem",
+                                      marginLeft: "none",
+                                    },
+                                  }}
+                                >
+                                  <option value={8}>Withdrawl Options</option>
+                                  <option value={0}>
+                                    Total Lump Sum Distribution (Cash Out)
+                                  </option>
+                                  <option value={6}>
+                                    Direct Rollover (Total Vested Balance)
+                                  </option>
+                                  <option value={5}>
+                                    A lump sum payable to myself and the
+                                    remainder payable as a direct rollover
+                                  </option>
+                                  <option value={4}>
+                                    Direct Rollover as a Portion of my Vested
+                                    Account Balance and the remainder as a lump
+                                    sum payable to myself
+                                  </option>
+                                </select>
+                              </Row>
+                              <Row>{enteramount}</Row>
+                            </Col>
+                          );
+
+                        case "462":
+                          return (
+                            <Col>
+                              <Row>
+                                <h5
+                                  style={{
+                                    fontSize: "1rem",
+                                    marginBottom: "0",
+                                    marginTop: "10px",
+                                  }}
+                                >
+                                  {reasons[index].label}
+                                </h5>
+                                <input
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      marginTop: "2%",
+                                      width: "60%",
+                                      marginLeft: "2rem",
+                                    },
+                                  }}
+                                  type="date"
+                                  defaultValue=""
+                                  {...register("doi")}
+                                />
+                              </Row>
+                              <Row style={{ marginTop: "10%" }}>
+                                <select
+                                  id="termOptions"
+                                  className="select"
+                                  value={oindex}
+                                  onChange={(e) => setOindex(e.target.value)}
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      paddingTop: "3%",
+                                      paddingBottom: "3%",
+                                      paddingRight: "1%",
+                                      paddinLeft: "0",
+                                      width: "40rem",
+                                      fontSize: "1.3rem",
+                                      marginLeft: "none",
+                                    },
+                                  }}
+                                >
+                                  <option value={8}>Withdrawl Options</option>
+                                  <option value={0}>
+                                    Total Lump Sum Distribution (Cash Out)
+                                  </option>
+                                  <option value={6}>
+                                    Direct Rollover (Total Vested Balance)
+                                  </option>
+                                  <option value={1}>
+                                    Partial Cash Withdrawl
+                                  </option>
+                                  <option value={7}>Partial Rollover</option>
+                                  <option value={5}>
+                                    A lump sum payable to myself and the
+                                    remainder payable as a direct rollover
+                                  </option>
+                                  <option value={4}>
+                                    Direct Rollover as a Portion of my Vested
+                                    Account Balance and the remainder as a lump
+                                    sum payable to myself
+                                  </option>
+                                </select>
+                              </Row>
+                              <Row>{enteramount}</Row>
+                            </Col>
+                          );
+
+                        case "525":
+                          return (
+                            <Col>
+                              <Row style={{ marginTop: "10%" }}>
+                                <select
+                                  id="termOptions"
+                                  className="select"
+                                  value={oindex}
+                                  onChange={(e) => setOindex(e.target.value)}
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      paddingTop: "3%",
+                                      paddingBottom: "3%",
+                                      paddingRight: "1%",
+                                      paddinLeft: "0",
+                                      width: "40rem",
+                                      fontSize: "1.3rem",
+                                      marginLeft: "none",
+                                    },
+                                  }}
+                                >
+                                  <option value={8}>Withdrawl Options</option>
+                                  <option value={1}>
+                                    Partial Cash Withdrawl
+                                  </option>
+                                  <option value={7}>Partial Rollover</option>
+                                </select>
+                              </Row>
+                              <Row>{enteramount}</Row>
+                            </Col>
+                          );
+
+                        case "550":
+                          return (
+                            <Col>
+                              <Row style={{ marginTop: "10%" }}>
+                                <select
+                                  id="termOptions"
+                                  className="select"
+                                  value={oindex}
+                                  onChange={(e) => setOindex(e.target.value)}
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      paddingTop: "3%",
+                                      paddingBottom: "3%",
+                                      paddingRight: "1%",
+                                      paddinLeft: "0",
+                                      width: "40rem",
+                                      fontSize: "1.3rem",
+                                      marginLeft: "none",
+                                    },
+                                  }}
+                                >
+                                  <option value={8}>Withdrawl Options</option>
+                                  <option value={0}>
+                                    Total Lump Sum Distribution (Cash Out)
+                                  </option>
+                                  <option value={6}>
+                                    Direct Rollover (Total Vested Balance)
+                                  </option>
+                                  <option value={1}>
+                                    Partial Cash Withdrawl
+                                  </option>
+                                  <option value={7}>Partial Rollover</option>
+                                  <option value={5}>
+                                    A lump sum payable to myself and the
+                                    remainder payable as a direct rollover
+                                  </option>
+                                  <option value={4}>
+                                    Direct Rollover as a Portion of my Vested
+                                    Account Balance and the remainder as a lump
+                                    sum payable to myself
+                                  </option>
+                                </select>
+                              </Row>
+                              <Row>{enteramount}</Row>
+                            </Col>
+                          );
+
+                        case "575":
+                          return (
+                            <Col style={{ marginTop: "5%" }}>
+                              <h4>Enter the amount of your Hardship </h4>
+                              <Row>
+                                <Controller
+                                  control={control}
+                                  name="hship"
+                                  render={({
+                                    field: { onChange, name, value },
+                                  }) => (
+                                    <NumberFormat
+                                      style={{
+                                        ...inputStyle,
+                                        ...dolla,
+                                        ...{
+                                          width: "70%",
+                                          paddingLeft: "2.5rem",
+                                        },
+                                      }}
+                                      thousandsGroupStyle="thousand"
+                                      name={name}
+                                      value={value}
+                                      decimalSeparator="."
+                                      displayType="input"
+                                      type="text"
+                                      thousandSeparator={true}
+                                      onChange={onChange}
+                                    />
+                                  )}
+                                />
+                              </Row>
+                              <Row>{enteramount}</Row>
+                            </Col>
+                          );
+                        case "601":
+                          return (
+                            <Col>
+                              <Row style={{ marginTop: "0.5%" }}>
+                                <select
+                                  id="termOptions"
+                                  className="select"
+                                  value={oindex}
+                                  onChange={(e) => setOindex(e.target.value)}
+                                  style={{
+                                    ...inputStyle,
+                                    ...{
+                                      paddinLeft: "0",
+                                      width: "16rem",
+                                      fontSize: "1rem",
+                                      marginLeft: "1rem",
+                                    },
+                                  }}
+                                >
+                                  <option value={8}>
+                                    Withdrawl Amount Options
+                                  </option>
+                                  <option value={2}>
+                                    Stick with my calculated RMD Below
+                                  </option>
+                                  <option value={9}>
+                                    Elect to take additonal funds
+                                  </option>
+                                </select>
+                              </Row>
+                              <Row>{enteramount}</Row>
+                            </Col>
+                          );
+                        default:
+                          return <div></div>;
+                      }
+                    })()}
                   </Row>
                 </Col>
                 <Col>
@@ -515,20 +1123,17 @@ export default function FormCreate() {
                             <Col
                               md
                               style={{
+                                marginTop: "3%",
                                 padding: "1.5rem",
                               }}
                             >
                               <h3>
-                                {" "}
                                 <em>
                                   In order to process this request we will need
                                   a copy of the Original Death Certificate
                                 </em>
                               </h3>
-                              <h3>
-                                {" "}
-                                Beneficary or Alternate Payee Information
-                              </h3>
+                              <h3>Beneficary or Alternate Payee Information</h3>
                               <h5 style={{ fontSize: "14px" }}>
                                 If multiple, you will need a form for each one,
                                 so after you complete this one commplete another
@@ -760,6 +1365,7 @@ export default function FormCreate() {
                             <Col
                               md
                               style={{
+                                marginTop: "3%",
                                 padding: "1.5rem",
                               }}
                             >
@@ -999,7 +1605,8 @@ export default function FormCreate() {
                         return (
                           <Col
                             style={{
-                              marginLeft: "30px",
+                              marginTop: "3%",
+                              marginLeft: "3%",
                               backgroundColor: "#01172F",
                             }}
                           >
@@ -1020,7 +1627,8 @@ export default function FormCreate() {
                         return (
                           <Col
                             style={{
-                              marginLeft: "30px",
+                              marginTop: "3%",
+                              marginLeft: "3%",
                               backgroundColor: "#01172F",
                             }}
                           >
@@ -1042,7 +1650,8 @@ export default function FormCreate() {
                         return (
                           <Col
                             style={{
-                              marginLeft: "30px",
+                              marginTop: "3%",
+                              marginLeft: "3%",
                               backgroundColor: "#01172F",
                             }}
                           >
@@ -1070,24 +1679,29 @@ export default function FormCreate() {
                         return (
                           <Col
                             style={{
-                              marginLeft: "30px",
+                              marginTop: "3%",
+                              marginLeft: "3%",
                               backgroundColor: "#01172F",
                             }}
                           >
                             <Alert>
                               <h4>Did you know?</h4>
-                              <p>
+                              <p  style={{ fontSize: "1.3rem" }}>
                                 Most plans do not allow for in-service
                                 distributions under the age of 59
                                 <span style={{ fontSize: "10px" }}>
                                   1/2
                                 </span>{" "}
-                                years old, other than from Rollover Sources?
+                                years old?*
                               </p>
                               <p>
-                                You may want to look into othe options for
+                                You may want to look into other options for
                                 withdrawing from your 401(k), click here to
                                 learn more
+                              </p>
+                              <p style={{ fontSize: ".8rem" }}>
+                                *This does not include previous money rolled
+                                into the plan
                               </p>
                             </Alert>
                           </Col>
@@ -1109,7 +1723,8 @@ export default function FormCreate() {
                         return (
                           <Col
                             style={{
-                              marginLeft: "30px",
+                              marginTop: "3%",
+                              marginLeft: "3%",
                               backgroundColor: "#01172F",
                             }}
                           >
@@ -1124,7 +1739,7 @@ export default function FormCreate() {
                               </p>
                               <p>
                                 Please see what qualifies for a "hardship"
-                                below, or read more: 
+                                below, or read more:
                                 <a
                                   href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-hardship-distributions"
                                   target="_blank"
@@ -1133,19 +1748,25 @@ export default function FormCreate() {
                                   Here
                                 </a>
                               </p>
-                              <ListGroup style={{fontSize:"1.2rem"}}>
-                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
+                              <ListGroup style={{ fontSize: "1.2rem" }}>
+                                <ListGroup.Item
+                                  style={{ backgroundColor: "transparent" }}
+                                >
                                   Medical care expenses for the employee, the
                                   employee’s spouse, dependents or beneficiary.
                                 </ListGroup.Item>
                                 <hr />
-                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
+                                <ListGroup.Item
+                                  style={{ backgroundColor: "transparent" }}
+                                >
                                   Costs directly related to the purchase of an
                                   employee’s principal residence (excluding
                                   mortgage payments).
                                 </ListGroup.Item>
                                 <hr />
-                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
+                                <ListGroup.Item
+                                  style={{ backgroundColor: "transparent" }}
+                                >
                                   Tuition, related educational fees and room and
                                   board expenses for the next 12 months of
                                   postsecondary education for the employee or
@@ -1153,20 +1774,26 @@ export default function FormCreate() {
                                   beneficiary.
                                 </ListGroup.Item>
                                 <hr />
-                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
+                                <ListGroup.Item
+                                  style={{ backgroundColor: "transparent" }}
+                                >
                                   Payments necessary to prevent the eviction of
                                   the employee from the employee’s principal
                                   residence or foreclosure on the mortgage on
                                   that residence.
                                 </ListGroup.Item>
                                 <hr />
-                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
+                                <ListGroup.Item
+                                  style={{ backgroundColor: "transparent" }}
+                                >
                                   Funeral expenses for the employee, the
                                   employee’s spouse, children, dependents, or
                                   beneficiary.
                                 </ListGroup.Item>
                                 <hr />
-                                <ListGroup.Item style={{backgroundColor: "transparent"}}>
+                                <ListGroup.Item
+                                  style={{ backgroundColor: "transparent" }}
+                                >
                                   Certain expenses to repair damage to the
                                   employee’s principal residence.
                                 </ListGroup.Item>
@@ -1176,67 +1803,95 @@ export default function FormCreate() {
                         );
                       case "601":
                         return (
-                          <Col>
-                            <h3>Calculate your RMD here!</h3>
-                            <Row>
-                              <Col lg>
-                                <Row>
-                                  <label>Age as of 12/31/2021</label>
-                                  <br />
-                                  <select
-                                    id="rmd"
-                                    className="select"
-                                    value={RMD.value}
-                                    onChange={(e) => setAindex(e.target.value)}
-                                    style={{
-                                      ...inputStyle,
-                                      ...{ width: "45%" },
-                                    }}
+                          <Alert>
+                            <Col
+                              style={{ marginTop: "3%", marginLeft: "1.5%" }}
+                            >
+                              <h3>Calculate your RMD here!</h3>
+                              <Row>
+                                <Col lg>
+                                  <Row>
+                                    <label>Age as of 12/31/2021</label>
+                                    <br />
+                                    <select
+                                      id="rmd"
+                                      className="select"
+                                      value={RMD.value}
+                                      onChange={(e) =>
+                                        setAindex(e.target.value)
+                                      }
+                                      style={{
+                                        ...inputStyle,
+                                        ...{ width: "45%" },
+                                      }}
+                                    >
+                                      {RMD.map((rmd, index) => {
+                                        return (
+                                          <option value={index}>
+                                            {rmd.age}
+                                          </option>
+                                        );
+                                      })}
+                                    </select>
+                                  </Row>
+                                  <Row>
+                                    <label>
+                                      Account Balance as of <em>12/31/2020</em>
+                                    </label>
+                                    <br />
+                                    <NumberFormat
+                                      style={{
+                                        ...inputStyle,
+                                        ...{ width: "70%" },
+                                      }}
+                                      thousandsGroupStyle="thousand"
+                                      value={2456981}
+                                      decimalSeparator="."
+                                      displayType="input"
+                                      type="text"
+                                      thousandSeparator={true}
+                                      value={accbal}
+                                      onChange={(e) =>
+                                        setAccbal(e.target.value)
+                                      }
+                                    />
+                                  </Row>
+                                </Col>
+                                <Col
+                                  md
+                                  style={{
+                                    marginTop: "5%",
+                                    marginBottom: "5%",
+                                    color: "whitesmoke",
+                                    padding: "3%",
+                                  }}
+                                >
+                                  <fieldset
+                                    disabled
+                                    style={{ backgroundColor: "transparent" }}
                                   >
-                                    {RMD.map((rmd, index) => {
-                                      return (
-                                        <option value={index}>{rmd.age}</option>
-                                      );
-                                    })}
-                                  </select>
-                                </Row>
-                                <Row>
-                                  <label>
-                                    Account Balance as of <em>12/31/2020</em>
-                                  </label>
-                                  <br />
-                                  <NumberFormat
-                                    style={inputStyle}
-                                    thousandsGroupStyle="thousand"
-                                    value={2456981}
-                                    decimalSeparator="."
-                                    displayType="input"
-                                    type="text"
-                                    thousandSeparator={true}
-                                    value={accbal}
-                                    onChange={(e) => setAccbal(e.target.value)}
-                                  />
-                                </Row>
-                              </Col>
-                              <Col
-                                md
-                                style={{
-                                  margin: "10%",
-                                  backgroundColor: "#01172Faa",
-                                  color: "whitesmoke",
-                                  padding: "3%",
-                                }}
-                              >
-                                <fieldset disabled>
-                                  <input
-                                    value={"$" + calc}
-                                    {...register("rmdcalc")}
-                                    placeholder={"$" + {calc}}
-                                  />
-                                </fieldset>
-                              </Col>
-                            </Row>
-                          </Col>
+                                    <h5
+                                      style={{
+                                        color: "#01172F",
+                                        textAlign: "center",
+                                      }}
+                                    >
+                                      Your RMD Amount!
+                                    </h5>
+                                    <input
+                                      style={{
+                                        ...inputStyle,
+                                        ...{ width: "100%", color: "#01172F" },
+                                      }}
+                                      value={"$" + calc}
+                                      {...register("rmdcalc")}
+                                      placeholder={"$" + { calc }}
+                                    />
+                                  </fieldset>
+                                </Col>
+                              </Row>
+                            </Col>
+                          </Alert>
                         );
                       default:
                         return <div></div>;
@@ -1245,32 +1900,7 @@ export default function FormCreate() {
                 </Col>
               </Row>
               <Col md style={{ width: "100%", marginTop: "50px" }}>
-                <select
-                  id="options"
-                  className="select"
-                  value={options.value}
-                  onChange={(e) => setOindex(e.target.value)}
-                  style={{ ...inputStyle, ...{ padding: "1%" } }}
-                >
-                  {options.map((option, index) => {
-                    return <option value={index}>{option.text}</option>;
-                  })}
-                </select>
-                <Row
-                  style={{
-                    width: "60%",
-                    marginLeft: 0,
-                    display: `${options[oindex].date}`,
-                  }}
-                >
-                  <h5>{options[oindex].label}</h5>
-                  <input
-                    style={{ ...inputStyle, ...{ marginTop: "2%" } }}
-                    type=""
-                    defaultValue=""
-                    {...register("wamount")}
-                  />
-                </Row>
+                <Row></Row>
               </Col>
               <input
                 style={{ width: "50%" }}
@@ -1284,4 +1914,16 @@ export default function FormCreate() {
       </div>
     </div>
   );
+}
+
+{
+  /* <h5 style={{ fontSize: "1rem", marginBottom: "0" }}>
+{reasons[index].label}
+</h5>
+<input
+style={{ ...inputStyle, ...{ marginTop: "2%" } }}
+type="date"
+defaultValue=""
+{...register("doi")}
+/> */
 }
