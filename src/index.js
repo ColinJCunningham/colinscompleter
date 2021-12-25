@@ -5,14 +5,11 @@ import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import * as ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-    <App />
-    </BrowserRouter>
+    <App style={{backgroundColor:"#45050c"}} />
   </React.StrictMode>,
   document.getElementById('root')
 );

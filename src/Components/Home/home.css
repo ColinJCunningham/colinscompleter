@@ -1,0 +1,46 @@
+#sh {
+  /* text-shadow: 1px 1px whitesmoke; */
+  color: #242a57;
+  font-weight: 900;
+}
+
+#ro {
+  padding-left: none !important;
+}
+
+ul {
+  list-style: none; /* Remove default bullets */
+}
+
+ul li::before {
+  content: url("./target.png"); /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 1.8em; /* Also needed for space (tweak if needed) */
+  margin-left: -.8em; /* Also needed for space (tweak if needed) */
+}
+
+#butt { 
+
+    background-color: #242a57;
+    margin-top: 5rem;
+    color: whitesmoke;
+}
+
+#buttconn {
+    text-align: center;
+}
+
+#gst {
+    background-color: #f4d1ae;
+}
+
+h8 {
+  font-size: 1rem;
+}
+
+#card {
+  background-color: transparent;
+  margin: 1.5rem;
+  border: none;
+}

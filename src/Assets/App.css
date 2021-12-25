@@ -1,8 +1,10 @@
 .App {
-  background-color: #242a57cc
+  background-color: #242a57
 }
 
-
+@font-face {
+  font-family: 'poppins';
+  src: local('poppins'), url(./Poppins.ttf) format('truetype')}
 
 
 .App-link {
@@ -12,4 +14,7 @@
 @font-face {
   font-family: 'webfont';
   src: local('webfont'), url(./AtkinsonHyperlegible-Regular.ttf) format('truetype')}
+
       
+
+  

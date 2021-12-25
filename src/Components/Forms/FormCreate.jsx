@@ -14,7 +14,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import NumberFormat from "react-number-format";
 import "../../Assets/App.css";
-import "../..//Assets/AtkinsonHyperlegible-Regular.ttf";
+import "../../Assets/AtkinsonHyperlegible-Regular.ttf";
 // --- Component/Data Imports --- //
 import { PdfDocument } from "./Lincoln_Director/LincolnDirector";
 import masterlist from "../../Data/Planlist";
@@ -32,7 +32,6 @@ import {
   Alert,
   ListGroup,
 } from "react-bootstrap/";
-import { fontSize } from "@mui/system";
 
 // --- Api Key --- //
 const key = process.env.REACT_APP_API_KEY;
@@ -536,7 +535,7 @@ export default function FormCreate() {
                           }}
                         />
                       )}
-                      s
+                      
                     />
                   </Row>
                   <Row style={{ marginTop: "3%" }}>
