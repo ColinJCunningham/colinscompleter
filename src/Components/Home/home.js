@@ -1,11 +1,20 @@
 import React from "react";
 
-import { Row, Container, ListGroup, Col, Button, Card, CardGroup } from "react-bootstrap/";
+import {
+  Row,
+  Container,
+  ListGroup,
+  Col,
+  Button,
+  Card,
+  CardGroup,
+} from "react-bootstrap/";
 import "../Home/home.css";
 import { Link } from "react-router-dom";
 import "../../Assets/Poppins.ttf";
-import QuizTwoToneIcon from '@mui/icons-material/QuizTwoTone';
-import { padding } from "@mui/system";
+import desk from "../../Assets/desk.jpg";
+import hands from "../../Assets/hands.jpg";
+import dude from "../../Assets/dude.jpg";
 
 function Home() {
   return (
@@ -69,39 +78,12 @@ function Home() {
           </Link>
         </div>
       </Row>
-      <Row style={{ padding: "1rem", margin: "1rem" }}>
+      <Row style={{ padding: "1rem", margin: "1rem", marginTop: "3rem" }}>
         <Container>
-          <CardGroup >
+          <CardGroup>
             <Card id="card">
-              <Card.Img variant="top" src="holder.js/100px160" />
               <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer>
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </Card.Footer>
-            </Card>
-            <Card id="card">
-              <Card.Img variant="top" src="holder.js/100px160" />
-              <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                  This card has supporting text below as a natural lead-in to
-                  additional content.{" "}
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer>
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </Card.Footer>
-            </Card>
-            <Card id="card">
-              <Card.Img variant="top" src="holder.js/100px160" />
-              <Card.Body>
+                <Card.Img variant="bottom" id="img" src={desk} />
                 <Card.Title>Card title</Card.Title>
                 <Card.Text>
                   This is a wider card with supporting text below as a natural
@@ -109,9 +91,16 @@ function Home() {
                   content than the first to show that equal height action.
                 </Card.Text>
               </Card.Body>
-              <Card.Footer>
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </Card.Footer>
+            </Card>
+            <Card id="card">
+              <Card.Img variant="top" id="img1" src={hands} />
+              <Card.Body>
+                <Card.Title>Card title</Card.Title>
+                <Card.Text>
+                  This card has supporting text below as a natural lead-in to
+                  additional content.
+                </Card.Text>
+              </Card.Body>
             </Card>
           </CardGroup>
         </Container>

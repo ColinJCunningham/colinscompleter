@@ -21,7 +21,6 @@ ul li::before {
 }
 
 #butt { 
-
     background-color: #242a57;
     margin-top: 5rem;
     color: whitesmoke;
@@ -43,4 +42,22 @@ h8 {
   background-color: transparent;
   margin: 1.5rem;
   border: none;
+  text-align: center;
+  height: 25rem;
+}
+
+#img{
+  max-width: 20rem;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+#img1{
+  max-width: 20rem;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 12px;
+  margin-bottom: 1rem;
 }
