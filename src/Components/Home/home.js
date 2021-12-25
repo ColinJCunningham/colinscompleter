@@ -8,6 +8,7 @@ import {
   Button,
   Card,
   CardGroup,
+  Placeholder,
 } from "react-bootstrap/";
 import "../Home/home.css";
 import { Link } from "react-router-dom";
@@ -51,60 +52,116 @@ function Home() {
           401(k) Transactions Made Simple
         </h3>
       </div>
-      <Row>
-        <div className="d-grid gap-2">
-          <Link
-            style={{ marginRight: "auto", marginLeft: "auto", width: "70%" }}
-            to="/start"
-          >
-            <Button
-              size="lg"
-              style={{
-                padding: "10px",
-                width: "100%",
 
-                backgroundColor: "#242a57",
+      <div>
+        <Link
+          style={{ marginRight: "auto", marginLeft: "auto", width: "70%" }}
+          to="/start"
+        >
+          <Button
+            size="lg"
+            style={{
+              padding: "10px",
+              width: "100%",
+
+              backgroundColor: "#242a57",
+            }}
+          >
+            <span
+              style={{
+                color: "#fbf5f3",
+                fontSize: "1.5rem",
               }}
             >
-              <span
-                style={{
-                  color: "#fbf5f3",
-                  fontSize: "1.5rem",
-                }}
+              Click Here To Get Started!
+            </span>
+          </Button>
+        </Link>
+      </div>
+      <Container id="changethisone">
+        <Row>
+          <div style={{ padding: "4rem", margin: "1rem", marginTop: "3rem" }}>
+            <CardGroup>
+              <Card
+                id="card1"
+                style={{ backgroundColor: "#242a57", color: "#fbf5f3" }}
               >
-                Click Here To Get Started!
-              </span>
-            </Button>
-          </Link>
-        </div>
-      </Row>
-      <Row style={{ padding: "1rem", margin: "1rem", marginTop: "3rem" }}>
-        <Container>
-          <CardGroup>
-            <Card id="card">
-              <Card.Body>
-                <Card.Img variant="bottom" id="img" src={desk} />
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This card has even longer
-                  content than the first to show that equal height action.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-            <Card id="card">
-              <Card.Img variant="top" id="img1" src={hands} />
-              <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                  This card has supporting text below as a natural lead-in to
-                  additional content.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </CardGroup>
-        </Container>
-      </Row>
+                <Card.Body style={{ width: "70%" }}>
+                  <Card.Title style={{ fontSize: "2rem", textAlign: "left" }}>
+                    Why are these forms so confusing?
+                  </Card.Title>
+                  <Card.Text>
+                    This is a wider card with supporting text below as a natural
+                    lead-in to additional content. This card has even longer
+                    content than the first to show that equal height action.
+                  </Card.Text>
+                  <Card.Img variant="bottom" id="img" src={desk} />
+                </Card.Body>
+                <div id="low-divider">I</div>
+              </Card>
+              <div id="mid-divider">I</div>
+              <Col>
+                <Card
+                  id="card"
+                  style={{
+                    textAlign: "right",
+                    margin: "1.5rem",
+                    border: "none",
+                    textAlign: "right",
+                    height: "auto",
+                    paddingTop: "15%",
+                    color: "#fbf5f3",
+                  }}
+                >
+                  <div
+                    id="high-divider"
+                    style={{
+                      color: "transparent",
+                      borderStyle: "solid",
+                      borderWidth: "2px",
+                      borderColor: "black",
+                      height: "8px",
+                      marginTop: "2rem",
+                      marginBottom: "2rem",
+                      borderRadius: "1rem",
+                      width: "100%",
+                    }}
+                  >
+                    I
+                  </div>
+
+                  <div
+                    style={{
+                      backgroundColor: "#bfd1e5",
+                      padding: "1rem",
+                      color: "#242a57",
+                    }}
+                  >
+                    <Card.Body>
+                      <Card.Img variant="top" id="img1" src={hands} />
+                      <Card.Title
+                        style={{ fontSize: "2rem", textAlign: "right" }}
+                      >
+                        What we do to help
+                      </Card.Title>
+                      <Card.Text
+                        style={{ fontSize: "1rem", textAlign: "right" }}
+                      >
+                        This application simplifies your choices, and desent
+                        prompt you to answer questions that are not relevant.
+                        Along with that it ensures you dont fill out an
+                        "out-dated" or incorrect form for the request you are
+                        making. It is almost like we are over your shoulder
+                        letting you know exactly what needs to be done!
+                      </Card.Text>
+                    </Card.Body>
+                  </div>
+                </Card>
+              </Col>
+            </CardGroup>
+          </div>
+        </Row>
+      </Container>
       <Row id="butt">
         <Container id="buttconn">
           <Row style={{ textAlign: "center", padding: "1rem" }}>
