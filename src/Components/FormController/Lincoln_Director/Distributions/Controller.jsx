@@ -1,10 +1,11 @@
 // --- Form Creation --- //
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // --- Images & Icons --- //
-import confused from "../../Assets/Confused.jpg";
-import question from "../../Assets/qmark.png";
-import dollas from "../../Assets/dolla.png";
+import confused from "../../../../Assets/Confused.jpg";
+import question from "../../../../Assets/qmark.png";
+import dollas from "../../../../Assets/dolla.png";
 // --- NPM Imports --- //
+import { useParams } from "react-router-dom";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useForm, Controller } from "react-hook-form";
 import Moment from "moment";
@@ -13,14 +14,13 @@ import Addautocomplete from "react-google-autocomplete";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import NumberFormat from "react-number-format";
-import "../../Assets/App.css";
-import "../../Assets/AtkinsonHyperlegible-Regular.ttf";
+import "../../../../Assets/atkinson.ttf";
 // --- Component/Data Imports --- //
-import { PdfDocument } from "./Lincoln_Director/LincolnDirector";
-import masterlist from "../../Data/Planlist";
-import reasons from "../../Data/dists";
-import options from "../../Data/withdrawlopt";
-import RMD from "../../Data/RMD";
+import { PdfDocument } from "./LincolnDirector";
+import masterlist from "../../../../Data/Planlist";
+import reasons from "../../../../Data/dists";
+import options from "../../../../Data/withdrawlopt";
+import RMD from "../../../../Data/RMD";
 import {
   Row,
   Container,
@@ -32,7 +32,6 @@ import {
   Alert,
   ListGroup,
 } from "react-bootstrap/";
-
 // --- Api Key --- //
 const key = process.env.REACT_APP_API_KEY;
 
@@ -100,6 +99,8 @@ export default function FormCreate() {
       rmd: "",
     },
   ]);
+
+  useEffect(() => {console.log("hello")})
 
   //----- Form Inputs ----//
   const [index, setIndex] = useState(9);
@@ -285,7 +286,7 @@ export default function FormCreate() {
           )}
         />
       </>
-    )  : (
+    ) : (
       <div></div>
     );
 
@@ -535,7 +536,6 @@ export default function FormCreate() {
                           }}
                         />
                       )}
-                      
                     />
                   </Row>
                   <Row style={{ marginTop: "3%" }}>
@@ -1685,7 +1685,7 @@ export default function FormCreate() {
                           >
                             <Alert>
                               <h4>Did you know?</h4>
-                              <p  style={{ fontSize: "1.3rem" }}>
+                              <p style={{ fontSize: "1.3rem" }}>
                                 Most plans do not allow for in-service
                                 distributions under the age of 59
                                 <span style={{ fontSize: "10px" }}>

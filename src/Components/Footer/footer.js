@@ -2,9 +2,9 @@ import React from "react";
 
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import QuizIcon from '@mui/icons-material/Quiz';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
+import QuizIcon from "@mui/icons-material/Quiz";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 import Paper from "@mui/material/Paper";
 
 import "../Footer/footer.css";
@@ -31,8 +31,11 @@ function Footer() {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label="Plan Sponsor Access" icon={<AdminPanelSettingsIcon  />} />
-        <BottomNavigationAction label="FAQ" icon={<QuizIcon />}  />
+        <BottomNavigationAction
+          label="Plan Sponsor Access"
+          icon={<AdminPanelSettingsIcon />}
+        />
+        <BottomNavigationAction label="FAQ" icon={<QuizIcon />} />
         <BottomNavigationAction label="TPA Access" icon={<LockOpenIcon />} />
       </BottomNavigation>
     </Paper>

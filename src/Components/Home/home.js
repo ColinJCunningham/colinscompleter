@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 import "../../Assets/Poppins.ttf";
 import desk from "../../Assets/desk.jpg";
 import hands from "../../Assets/hands.jpg";
-import dude from "../../Assets/dude.jpg";
 
 function Home() {
   return (
@@ -24,6 +23,8 @@ function Home() {
         fontFamily: "Poppins",
         width: "100%",
         paddingTop: "5%",
+        maxHeight: "100%",
+        paddingBottom:"2rem"
       }}
     >
       <div
@@ -31,11 +32,8 @@ function Home() {
           textAlign: "center",
           fontStyle: "italic",
           marginBottom: "3rem",
-          backgroundColor: "#fbf5f3",
+          backgroundColor: "transparent",
           padding: "1rem",
-          // borderBottomWidth: "3px",
-          // borderBottomColor: "black",
-          // borderBottomStyle: "solid",
         }}
       >
         <h1
@@ -48,21 +46,33 @@ function Home() {
         >
           [Cool Name For App Here]
         </h1>
-        <h3 id="sh" style={{ textAlign: "center", paddingLeft: "10px" }}>
-          401(k) Transactions Made Simple
-        </h3>
+        <h4 id="sh" style={{ textAlign: "center", paddingLeft: "10px" }}>
+          Your 401(k){" "}
+          <em
+            style={{
+              fontSize: "2rem",
+              color: "#d01137",
+              textDecoration: "underline",
+            }}
+          >
+            Made Simple
+          </em>
+        </h4>
       </div>
 
-      <div>
-        <Link
-          style={{ marginRight: "auto", marginLeft: "auto", width: "70%" }}
-          to="/start"
-        >
+      <div
+        style={{
+          marginRight: "auto",
+          marginLeft: "auto",
+          width: "40%",
+          textAlign: "center",
+        }}
+      >
+        <Link to="/start">
           <Button
             size="lg"
             style={{
               padding: "10px",
-              width: "100%",
 
               backgroundColor: "#242a57",
             }}
@@ -88,7 +98,7 @@ function Home() {
               >
                 <Card.Body style={{ width: "70%" }}>
                   <Card.Title style={{ fontSize: "2rem", textAlign: "left" }}>
-                    Why are these forms so confusing?
+                    Why are these forms so complicated?
                   </Card.Title>
                   <Card.Text>
                     This is a wider card with supporting text below as a natural
@@ -161,18 +171,18 @@ function Home() {
             </CardGroup>
           </div>
         </Row>
+        <Row id="butt">
+          <Container id="buttconn">
+            <Row style={{ textAlign: "center", padding: "1rem" }}>
+              <h4>Rather talk to someone in person?</h4>
+              <h8>
+                Please call us at 856-396-0499, or send an questions you may
+                have to clientservcies@retirewelltpa.com
+              </h8>
+            </Row>
+          </Container>
+        </Row>
       </Container>
-      <Row id="butt">
-        <Container id="buttconn">
-          <Row style={{ textAlign: "center", padding: "1rem" }}>
-            <h4>Rather talk to someone in person?</h4>
-            <h8>
-              Please call us at 856-396-0499, or send an questions you may have
-              to clientservcies@retirewelltpa.com
-            </h8>
-          </Row>
-        </Container>
-      </Row>
     </div>
   );
 }

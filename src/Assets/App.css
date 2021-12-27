@@ -11,9 +11,17 @@
   color: #61dafb;
 }
 
+#maindiv {
+  border-style: double;
+  border-width: 0 .6rem;
+  margin: 0px 5px 0 5px;
+  border-color: #1f2a47;
+  min-height: 90vh;
+}
+
 @font-face {
   font-family: 'webfont';
-  src: local('webfont'), url(./AtkinsonHyperlegible-Regular.ttf) format('truetype')}
+  src: local('webfont'), url(./atkinson.ttf) format('truetype')}
 
       
 

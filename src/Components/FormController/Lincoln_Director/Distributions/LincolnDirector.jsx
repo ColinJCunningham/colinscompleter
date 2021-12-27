@@ -1,11 +1,11 @@
 // ---- React Components and StyleSheets ---- //
 import React, { useState } from "react";
 // ---- Assets ---- //
-import LD from "../../../Assets/LD_DistForm/LD.png"; // Page 1 LD Form
-import LD2 from "../../../Assets/LD_DistForm/LD2.png"; // Page 2 LD Form
-import LD3 from "../../../Assets/LD_DistForm/LD3.png"; // Page 2 LD Form
-import LD4 from "../../../Assets/LD_DistForm/LD4.png"; // Page 2 LD Form
-import LD5 from "../../../Assets/LD_DistForm/LD5.png"; // Page 2 LD Form
+import LD from "../../../../Assets/LD_DistForm/LD.png"; // Page 1 LD Form
+import LD2 from "../../../../Assets/LD_DistForm/LD2.png"; // Page 2 LD Form
+import LD3 from "../../../../Assets/LD_DistForm/LD3.png"; // Page 2 LD Form
+import LD4 from "../../../../Assets/LD_DistForm/LD4.png"; // Page 2 LD Form
+import LD5 from "../../../../Assets/LD_DistForm/LD5.png"; // Page 2 LD Form
 import Moment from "moment"; //Moment
 
 // ---- NPM Components ---- //

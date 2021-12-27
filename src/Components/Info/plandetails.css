@@ -1,0 +1,8 @@
+@media screen and (max-width: 920px) {
+  #btn {
+    font-size: 1rem !important;
+  }
+  #maindiv{
+      padding: 0
+  }
+}

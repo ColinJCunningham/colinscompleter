@@ -4,8 +4,6 @@ npms body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #fbf5f3;
-
 }
 
 code {
@@ -20,7 +18,10 @@ code {
 
 html {
   background-color: #fbf5f3;
+  border: #242a57;
+
 }
 
 
 /* fefefe */
+
