@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import masterlist from "../../Data/Planlist";
 import {
   Row,
@@ -14,6 +15,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Chip from "@mui/material/Chip";
 
 import "../../Assets/Poppins.ttf";
 import "../Info/plandetails.css";
@@ -25,6 +27,8 @@ function Getplan() {
   const [display, setDisplay] = useState("none");
   const [next, setNext] = useState("none");
   const [type, setType] = useState("");
+  const [tdata, setTdata] = useState("");
+  const [next1, setNext1] = useState("none");
 
   function handleEvent() {
     if (plandata === null) {
@@ -35,11 +39,7 @@ function Getplan() {
   }
 
   function handleNav() {
-   
-
     console.log(plandata);
-
-   
 
     // const nav = `${"/" + plandata.tpaID + "/" + plandata.vendor}`;
 
@@ -55,7 +55,8 @@ function Getplan() {
     marginBottom: "2%",
     paddingLeft: "2%",
     paddingRight: "2%",
-    borderColor: "#1f2a47",
+    backgroundColor: "#4e5e88",
+    color: "#f2f4e5",
   };
 
   return (
@@ -128,21 +129,32 @@ function Getplan() {
           </Row>
         </Row>
       </Container>
-      <Placeholder
-        bg="secondary"
-        style={{ marginBottom: "2%", marginTop: "3%" }}
-        xs={12}
-        size="xs"
-      />
+      <Container>
+        <Row style={{ marginTop: "2%", fontSize:"auto", display:`${next}` }}>
+          <Chip
+            style={{ width: "20%", marginLeft: "40%" }}
+            icon={<ArrowDownwardIcon />}
+            label="Scroll down"
+          />
+        </Row>
+        <Row>
+          <Placeholder
+            bg="secondary"
+            style={{ marginBottom: "2%", marginTop: "3%" }}
+            xs={12}
+            size="xs"
+          />
+        </Row>
+      </Container>
+
       <Container
         style={{
           textAlign: "left",
           marginTop: "5%",
-          display: "",
+          display: `${next}`,
           width: "100%",
         }}
       >
-        {/* `${next}` */}
         <Row>
           <Row
             style={{
@@ -157,55 +169,94 @@ function Getplan() {
               <p>Something missing? Make sure to reach out to us!</p>
             </div>
           </Row>
+          <Row style={{ marginBottom: "4rem" }}>
+            <ButtonGroup className="btn-group">
+              <Button
+                onClick={(e) => {
+                  setType("dist");
+                  setTdata("Take a Distribution");
+                  setNext("none");
+                  setNext1("inline");
+                }}
+                id="btn"
+                style={{ ...buttonStyle, ...{} }}
+              >
+                Take a Distribution
+              </Button>
+              <Button
+                onClick={(e) => {
+                  setType("loan");
+                  setTdata("Request a Loan");
+                  setNext("none");
+                  setNext1("inline");
+                }}
+                id="btn"
+                style={{
+                  ...buttonStyle,
+                  ...{},
+                }}
+              >
+                Request a Loan
+              </Button>
+              <Button
+                onClick={(e) => {
+                  setType("data");
+                  setTdata("View Plan Data");
+                  setNext("none");
+                  setNext1("inline");
+                }}
+                id="btn"
+                style={{ ...buttonStyle, ...{} }}
+              >
+                View Plan Data
+              </Button>
+              <Button
+                onClick={(e) => {
+                  setType("cont");
+                  setTdata("Contact Us");
+                  setNext("none");
+                  setNext1("inline");
+                }}
+                value="contact"
+                id="btn"
+                style={{
+                  ...buttonStyle,
+                  ...{},
+                }}
+              >
+                Contact Us
+              </Button>
+            </ButtonGroup>
+          </Row>
         </Row>
       </Container>
-      <Row style={{ marginBottom: "4rem" }}>
-        <ButtonGroup className="btn-group">
+      <Container style={{ margin: "0 auto", display: `${next1}` }}>
+        <Row>
+          <h4>Selected:</h4>
           <Button
-            onClick={(e) => setType("dist")}
-            id="btn"
-            style={{ ...buttonStyle, ...{ backgroundColor: "#384B80" } }}
-          >
-            Take a Distribution
-          </Button>
-          <Button
-            onClick={(e) => setType("loan")}
-            id="btn"
+            disabled
             style={{
-              ...buttonStyle,
-              ...{ color: "#1f2a47", backgroundColor: "transparent" },
+              fontSize: "1.4rem",
+              backgroundColor: "#94bbd3",
+              marginBottom: "5%",
+              width: "33%",
+              color: "#1f2a47",
+              marginLeft: "1rem",
             }}
           >
-            Request a Loan
+            {tdata}
           </Button>
+        </Row>
+        <Row>
           <Button
-            onClick={(e) => setType("data")}
-            id="btn"
-            style={{ ...buttonStyle, ...{ backgroundColor: "#384B80" } }}
+            size="lg"
+            onClick={() => console.log(type)}
+            style={{ fontSize: "1.4rem", backgroundColor: "#092746" }}
           >
-            View Plan Data
+            Next
           </Button>
-          <Button
-            onClick={(e) => setType("cont")}
-            value="contact"
-            id="btn"
-            style={{
-              ...buttonStyle,
-              ...{ color: "#1f2a47", backgroundColor: "transparent" },
-            }}
-          >
-            Contact Us
-          </Button>
-        </ButtonGroup>
-      </Row>
-      <Button
-        variant="secondary"
-        size="md"
-        onClick={handleNav()}
-        style={{ fontSize: "1.4rem", backgroundColor: "#092746" }}
-      >
-        Next
-      </Button>
+        </Row>
+      </Container>
     </Container>
   );
 }
