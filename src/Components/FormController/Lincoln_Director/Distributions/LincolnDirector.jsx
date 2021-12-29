@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
 export function PdfDocument(props) {
   // Props check ************Remove before publishing***************
   // ---- Addtional Functions ---- //
-  console.log(props.data);
   function limit(string = "", limit = 0) {
     return string.substring(0, limit);
   } // Limit character function
@@ -68,9 +67,9 @@ export function PdfDocument(props) {
     ? Moment(props.data.doi).format("MM - DD - YYYY")
     : "";
 
-  console.log(props.data.wx);
+  console.log(props.data);
 
-  const [display, setDisplay] = ("none")
+  const [display, setDisplay] = "none";
 
   return (
     <Document>
@@ -378,7 +377,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>partial</Text>
+            <Text>{props.data ? props.data.partial : ""}</Text>
           </View>
           <View
             style={{
@@ -389,7 +388,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>rols</Text>
+            <Text>{props.data ? props.data.rols : ""}</Text>
           </View>
           <View
             style={{
@@ -400,7 +399,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>lsro</Text>
+            <Text>{props.data ? props.data.lsro : ""}</Text>
           </View>
           <View
             style={{
@@ -411,7 +410,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>proll</Text>
+            <Text>{props.data ? props.data.proll : ""}</Text>
           </View>
           <View
             style={{
@@ -422,7 +421,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>rmd</Text>
+            <Text>{props.data.rmndcalc === 0 ? "" : props.data.rmdcalc}</Text>
           </View>
         </View>
       </Page>
@@ -433,13 +432,24 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
+              top: `${props.data.top}`,
+              left: `${props.data.left}`,
               right: 0,
               bottom: 0,
             }}
           >
             <Text style={{ fontSize: 10 }}>X</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 568,
+              left: 222,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.tax ? props.data.tax : ""}</Text>
           </View>
         </View>
       </Page>

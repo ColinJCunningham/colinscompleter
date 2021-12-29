@@ -10,9 +10,9 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useForm, Controller } from "react-hook-form";
 import Moment from "moment";
 import Addautocomplete from "react-google-autocomplete";
-// --- CMS Imports --- //
-import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import { Link } from "react-router-dom";
+// --- CMS Imports --- //
 import NumberFormat from "react-number-format";
 import "../../../../Assets/atkinson.ttf";
 // --- Component/Data Imports --- //
@@ -30,6 +30,7 @@ import {
   Card,
   Alert,
   ListGroup,
+  Placeholder,
 } from "react-bootstrap/";
 // --- Api Key --- //
 const key = process.env.REACT_APP_API_KEY;
@@ -60,7 +61,7 @@ export default function FormCreate() {
       bssn: data.bssn,
       relate: data.relate,
       share: data.share,
-      rmdcalc: calc,
+      rmdcalc: calc === 0 ? "hello" : calc,
       wy: options[oindex].y,
       wx: options[oindex].x,
       partial: data.partial,
@@ -68,6 +69,9 @@ export default function FormCreate() {
       lsro: data.ls_ro,
       proll: data.prol,
       rmd: data.rmd,
+      tax: data.tax,
+      top: displays.top,
+      left: displays.left
     });
   // Moment(data.bDob).format("MM - DD - YYYY")
   const [data, setData] = useState([
@@ -96,10 +100,17 @@ export default function FormCreate() {
       lsro: "",
       proll: "",
       rmd: "",
+      tax: "",
+      top: "",
+      left: ""
     },
   ]);
 
-  useEffect(() => {console.log("hello")})
+  const { tpaid } = useParams();
+
+  const stuff = masterlist.find((list) => {
+    return list.TPAID === tpaid;
+  });
 
   //----- Form Inputs ----//
   const [index, setIndex] = useState(9);
@@ -119,6 +130,8 @@ export default function FormCreate() {
   //----- Form Inputs ----//
 
   const [display, setDisplay] = useState("");
+
+  const [displays, setDisplays] = useState([{top: "", left:""}]);
 
   const inputStyle = {
     color: "black",
@@ -203,7 +216,8 @@ export default function FormCreate() {
       </>
     ) : oindex === "4" ? (
       <>
-        <h4>Enter the Amount of your Distribution</h4>
+        <h4>Enter the amount of money you want Rolled Over</h4>
+        <p>The rest will be paid out directly to you</p>
         <Controller
           control={control}
           name="ro_ls"
@@ -231,7 +245,8 @@ export default function FormCreate() {
       </>
     ) : oindex === "5" ? (
       <>
-        <h4>Enter the Amount of your Distribution</h4>
+        <h4>Enter the amount of money payable diectly to you</h4>
+        <p>The remainder of your balance will be Rolled Over</p>
         <Controller
           control={control}
           name="ls_ro"
@@ -259,7 +274,7 @@ export default function FormCreate() {
       </>
     ) : oindex === "7" ? (
       <>
-        <h4>Enter the Amount of your Distribution</h4>
+        <h4>Enter the Amount you want rolled over</h4>
         <Controller
           control={control}
           name="prol"
@@ -292,9 +307,6 @@ export default function FormCreate() {
   return (
     <div style={{ backgroundColor: "#F5F5F5" }}>
       {/* ---- PDF DOWNLOAD ---- */}
-
-      <button onClick={console.log(calc)}> h </button>
-
       <div style={{}}>
         <div style={{ margin: "1%", marginBottom: 200 }}>
           <PDFDownloadLink
@@ -339,52 +351,54 @@ export default function FormCreate() {
                     height: "29rem",
                   }}
                 >
-                  <Row>
-                    <h5>Name</h5>
-                    <input
-                      style={{ ...inputStyle, ...{ width: "80%" } }}
-                      defaultValue=""
-                      {...register("name")}
-                    />
-                  </Row>
-                  <Row>
-                    <h5>
-                      Social Security Number{" "}
-                      <span>
-                        <Image
-                          style={{
-                            width: "20px",
-                            paddingBottom: "4px",
-                            marginLeft: "4px",
-                          }}
-                          src={question}
-                          roundedCircle
-                        />
-                      </span>
-                    </h5>
-                    <Controller
-                      control={control}
-                      name="ssn"
-                      render={({ field: { onChange, name, value } }) => (
-                        <NumberFormat
-                          style={{ ...inputStyle, ...{ width: "60%" } }}
-                          format="### - ## - ####"
-                          name={name}
-                          value={value}
-                          onChange={onChange}
-                        />
-                      )}
-                    />
-                  </Row>
-                  <Row>
-                    <h5>Date of Birth</h5>
-                    <input
-                      style={{ ...inputStyle, ...{ width: "40%" } }}
-                      type="date"
-                      defaultValue="12/31/1999"
-                      {...register("dob")}
-                    />
-                  </Row>
+                  <div style={{ width: "80%" }}>
+                    <Row>
+                      <h5>Name</h5>
+                      <input
+                        style={inputStyle}
+                        defaultValue=""
+                        {...register("name")}
+                      />
+                    </Row>
+                    <Row>
+                      <h5>
+                        Social Security Number{" "}
+                        <span>
+                          <Image
+                            style={{
+                              width: "20px",
+                              paddingBottom: "4px",
+                              marginLeft: "4px",
+                            }}
+                            src={question}
+                            roundedCircle
+                          />
+                        </span>
+                      </h5>
+                      <Controller
+                        control={control}
+                        name="ssn"
+                        render={({ field: { onChange, name, value } }) => (
+                          <NumberFormat
+                            style={inputStyle}
+                            format="### - ## - ####"
+                            name={name}
+                            value={value}
+                            onChange={onChange}
+                          />
+                        )}
+                      />
+                    </Row>
+                    <Row>
+                      <h5>Date of Birth</h5>
+                      <input
+                        style={inputStyle}
+                        type="date"
+                        defaultValue="12/31/1999"
+                        {...register("dob")}
+                      />
+                    </Row>
+                  </div>
                 </Col>
                 {/* --- Address Input --- */}
                 <Col
@@ -451,52 +465,56 @@ export default function FormCreate() {
                       />
                     </Row>
                   </Row>
-                  <Row>
-                    <Form.Control
-                      style={{ ...inputStyle, ...{ width: "70%" } }}
-                      type="text"
-                      placeholder={homeAddress.city ? homeAddress.city : "City"}
-                      onInput={(e) =>
-                        setHomeaddress({
-                          address: homeAddress.address,
-                          city: e.target.value,
-                          state: homeAddress.state,
-                          zip: homeAddress.zip,
-                        })
-                      }
-                    />
-                    <Form.Control
-                      style={{ ...inputStyle, ...{ width: "70%" } }}
-                      type="text"
-                      placeholder={
-                        homeAddress.state ? homeAddress.state : "State"
-                      }
-                      onInput={(e) =>
-                        setHomeaddress({
-                          address: homeAddress.address,
-                          city: homeAddress.city,
-                          state: e.target.value,
-                          zip: homeAddress.zip,
-                        })
-                      }
-                    />
+                  <div style={{ width: "80%" }}>
+                    <Row>
+                      <Form.Control
+                        style={inputStyle}
+                        type="text"
+                        placeholder={
+                          homeAddress.city ? homeAddress.city : "City"
+                        }
+                        onInput={(e) =>
+                          setHomeaddress({
+                            address: homeAddress.address,
+                            city: e.target.value,
+                            state: homeAddress.state,
+                            zip: homeAddress.zip,
+                          })
+                        }
+                      />
+                      <Form.Control
+                        style={inputStyle}
+                        type="text"
+                        placeholder={
+                          homeAddress.state ? homeAddress.state : "State"
+                        }
+                        onInput={(e) =>
+                          setHomeaddress({
+                            address: homeAddress.address,
+                            city: homeAddress.city,
+                            state: e.target.value,
+                            zip: homeAddress.zip,
+                          })
+                        }
+                      />
 
-                    <Form.Control
-                      style={{ ...inputStyle, ...{ width: "50%" } }}
-                      type="text"
-                      placeholder={
-                        homeAddress.zip ? homeAddress.zip : "Zip Code"
-                      }
-                      onInput={(e) =>
-                        setHomeaddress({
-                          address: homeAddress.address,
-                          city: homeAddress.city,
-                          state: homeAddress.state,
-                          zip: e.target.value,
-                        })
-                      }
-                    />
-                  </Row>
+                      <Form.Control
+                        style={inputStyle}
+                        type="text"
+                        placeholder={
+                          homeAddress.zip ? homeAddress.zip : "Zip Code"
+                        }
+                        onInput={(e) =>
+                          setHomeaddress({
+                            address: homeAddress.address,
+                            city: homeAddress.city,
+                            state: homeAddress.state,
+                            zip: e.target.value,
+                          })
+                        }
+                      />
+                    </Row>
+                  </div>
                 </Col>
               </Row>
               {/* -------------- (Form Progression (new options added) ------------------ */}
@@ -511,31 +529,6 @@ export default function FormCreate() {
                 <Col md style={{ width: "100%" }}>
                   <Row>
                     <h5>Plan Name</h5>
-                    <Autocomplete
-                      style={{ paddingLeft: "0" }}
-                      id="plan-list"
-                      options={masterlist}
-                      onChange={(event, value) =>
-                        setPlanData({
-                          planName: value.label,
-                          planID: value.planID,
-                          contract: value.contract_num,
-                          vendor: value.vendor,
-                          tpaID: value.TPAID,
-                        })
-                      }
-                      sx={{ width: "100%" }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Plan Name"
-                          style={{
-                            backgroundColor: "#DBE9EE",
-                            borderRadius: "5px",
-                          }}
-                        />
-                      )}
-                    />
                   </Row>
                   <Row style={{ marginTop: "3%" }}>
                     <h5>
@@ -557,7 +550,7 @@ export default function FormCreate() {
                       name="accNum"
                       render={({ field: { onChange, name, value } }) => (
                         <NumberFormat
-                          style={{ ...inputStyle, ...{ width: "60%" } }}
+                          style={inputStyle}
                           isNumericString
                           name={name}
                           value={value}
@@ -569,7 +562,7 @@ export default function FormCreate() {
                   <Row style={{ marginTop: "1%" }}>
                     <h5>Date of Hire</h5>
                     <input
-                      style={{ ...inputStyle, ...{ width: "40%" } }}
+                      style={inputStyle}
                       type="date"
                       defaultValue=""
                       {...register("doh")}
@@ -608,7 +601,7 @@ export default function FormCreate() {
                     style={{
                       ...inputStyle,
                       ...{
-                        width: "80%",
+                        width: "100%",
                       },
                     }}
                   >
@@ -1687,9 +1680,7 @@ export default function FormCreate() {
                               <p style={{ fontSize: "1.3rem" }}>
                                 Most plans do not allow for in-service
                                 distributions under the age of 59
-                                <span style={{ fontSize: "10px" }}>
-                                  1/2
-                                </span>{" "}
+                                <span style={{ fontSize: "10px" }}>1/2</span>
                                 years old?*
                               </p>
                               <p>
@@ -1897,15 +1888,158 @@ export default function FormCreate() {
                   })()}
                 </Col>
               </Row>
-              <Col md style={{ width: "100%", marginTop: "50px" }}>
-                <Row></Row>
-              </Col>
-              <input
-                style={{ width: "50%" }}
-                onClick={(e) => setDisplay("")}
-                type="submit"
-                placeholder="Next Section"
-              />
+
+              {oindex === "6" ? (
+                <></>
+              ) : (
+                <>
+                  <h1 style={header}>Important Tax Information</h1>
+                  <Row style={{ margin: "0 auto" }}>
+                    <Container
+                      style={{
+                        width: "90%",
+                        border: "4px double #1f2a47",
+                        padding: "1rem",
+                        marginBottom: "5%",
+                      }}
+                    >
+                      <h5>
+                        Lincoln will withhold taxes from your distribution at
+                        the rates detailed below and automatically send the
+                        withholding to the IRS on your behalf. The total amount
+                        of taxes withheld from your distribution will depend on
+                        the federal and state taxes withheld. Please refer to
+                        the Special Tax Notice for more information.
+                      </h5>
+                      <div style={{ textAlign: "center" }}>
+                        <Link to="/">Download the special tax notice here</Link>
+                        <p>
+                          *It will also appended to the end of the completed
+                          form*
+                        </p>
+                      </div>
+                    </Container>
+                    <Container
+                      style={{ width: "92%", backgroundColor: "transparent" }}
+                    >
+                      <h5>
+                        Taxes Withheld From your distribution will indclude:
+                      </h5>
+                      <ListGroup variant="flush">
+                        <div
+                          style={{
+                            marginLeft: "10%",
+                            width: "75%",
+                            marginBottom: "2%",
+                          }}
+                        >
+                          <ListGroup.Item
+                            style={{ backgroundColor: "transparent" }}
+                          >
+                            • State tax (if applicable; the rate is based on
+                            your state of residence on file and will be
+                            automatically calculated)
+                          </ListGroup.Item>
+                          <ListGroup.Item
+                            style={{ backgroundColor: "transparent" }}
+                          >
+                            • Federal tax: 20% mandatory federal tax (if
+                            applicable; mandatory for distributions that are
+                            eligible for rollover). Hardship and RMD only: 10%
+                            mandatory federal tax or opt out below
+                          </ListGroup.Item>
+                        </div>
+
+                        <ListGroup.Item
+                          style={{
+                            backgroundColor: "transparent",
+                            width: "80%",
+                          }}
+                        >
+                          <h5>
+                            Indicate here if you would like to withhold federal
+                            taxes at a higher rate than the mandatory 20% for
+                            distributions or 10% for RMD or Hardships.
+                          </h5>
+                          <h5>
+                            <input
+                              onClick={(e) => setDisplays({top:"568", left:"42"})}
+                              onChange={(e) => setShow("")}
+                              type="checkbox"
+                            />{" "}
+                            Withhold federal taxes at the rate of %{" "}
+                            {displays ? (
+                              <Controller
+                                control={control}
+                                name="tax"
+                                render={({
+                                  field: { onChange, name, value },
+                                }) => (
+                                  <NumberFormat
+                                    style={{display:`${show}`, backgroundColor: "transparent", border: "none", borderBottom:"2px solid black"}}
+                                    format="###"
+                                    name={name}
+                                    value={value}
+                                    onChange={onChange}
+                                  />
+                                )}
+                              />
+                            ) : (
+                              "_________"
+                            )}
+                          </h5>
+                          <h5>
+                            <input
+                              onClick={(e) => setDisplays({top:"586", left:"42"})}
+                              type="checkbox"
+                            />{" "}
+                            RMD/Hardship Only: Do not withhold taxes. I
+                            understand I am responsible for any payment of
+                            federal taxes due on my distribution.
+                          </h5>
+                        </ListGroup.Item>
+                        <ListGroup.Item
+                          style={{ backgroundColor: "transparent" }}
+                        >
+                          Federal tax withholding election: If you do not
+                          provide a rate, or if you provide a federal tax
+                          withholding rate that is less than 20% for standard
+                          distributions or 10% for RMD or Hardship
+                          distributions, we are still required to withhold the
+                          minimum.
+                        </ListGroup.Item>
+                        <ListGroup.Item
+                          style={{ backgroundColor: "transparent" }}
+                        >
+                          Please note: Your distribution may be subject to an
+                          additional 10% early distribution penalty tax. This
+                          penalty tax will be assessed when you file your tax
+                          returns as a part of your tax liablity and it is not
+                          automatically included in your tax withholding for
+                          this distirbution
+                        </ListGroup.Item>
+                      </ListGroup>
+                    </Container>
+                  </Row>
+                </>
+              )}
+              <Row>
+                <input
+                  style={{ width: "50%", marginTop: "5rem" }}
+                  onClick={(e) => {
+                    setDisplay("");
+                    setPlanData({
+                      planName: stuff.label,
+                      planID: stuff.planID,
+                      contract: stuff.contract_num,
+                      vendor: stuff.vendor,
+                      tpaID: stuff.TPAID,
+                    });
+                  }}
+                  type="submit"
+                  placeholder="Next Section"
+                />
+              </Row>
             </form>
           </Container>
         </div>

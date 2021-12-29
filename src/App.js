@@ -18,7 +18,7 @@ function App() {
           <Route exact path="start" element={<Plan />} />
           <Route
             exact
-            path="director/dist/:tpaid"
+            path="dist/ld/:tpaid"
             element={<Lincoln_Director />}
           />
         </Routes>
