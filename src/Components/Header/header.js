@@ -21,7 +21,7 @@ function Header() {
             <Navbar.Brand
               style={{
                 fontFamily: "Copperplate",
-                fontSize: "2rem",
+                fontSize: "1rem",
               }}
             >
               <img

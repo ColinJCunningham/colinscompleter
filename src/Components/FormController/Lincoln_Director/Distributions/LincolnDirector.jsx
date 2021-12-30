@@ -432,8 +432,8 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: `${props.data.top}`,
-              left: `${props.data.left}`,
+              top: `${props.data.top ? props.data.top : "0.1"}`,
+              left: `${props.data.left ? props.data.left : "0.1"}`,
               right: 0,
               bottom: 0,
             }}
@@ -449,7 +449,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.tax ? props.data.tax : ""}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.tax ? props.data.tax : ""}
+            </Text>
           </View>
         </View>
       </Page>
@@ -460,12 +462,15 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
+              top: `${props.data.mtop ? props.data.mtop : "0.1"}`,
+              left: `${props.data.mleft ? props.data.mleft : "0.1"}`,
               right: 0,
               bottom: 0,
             }}
           >
+            {/* "Check": 76.5, 23, Rollover Check Mailed to part: 90.5, 22.8, Check Mailed to PS: 77, 343.4 */}
+            {/* Rollover Check Mailed to Rollover: 103.2, 22.8  Rollover Check Mailed to Plan Sponsor 90.5, 343.4 */}
+
             <Text style={{ fontSize: 10 }}>X</Text>
           </View>
         </View>

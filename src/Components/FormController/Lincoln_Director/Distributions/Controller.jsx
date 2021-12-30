@@ -30,6 +30,8 @@ import {
   Card,
   Alert,
   ListGroup,
+  Button,
+  ButtonGroup,
   Placeholder,
 } from "react-bootstrap/";
 // --- Api Key --- //
@@ -71,7 +73,9 @@ export default function FormCreate() {
       rmd: data.rmd,
       tax: data.tax,
       top: displays.top,
-      left: displays.left
+      left: displays.left,
+      mtop: method.top,
+      mleft: method.left,
     });
   // Moment(data.bDob).format("MM - DD - YYYY")
   const [data, setData] = useState([
@@ -102,7 +106,9 @@ export default function FormCreate() {
       rmd: "",
       tax: "",
       top: "",
-      left: ""
+      left: "",
+      mtop: "",
+      mleft: "",
     },
   ]);
 
@@ -116,6 +122,7 @@ export default function FormCreate() {
   const [index, setIndex] = useState(9);
   const [oindex, setOindex] = useState(8);
   const [aindex, setAindex] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [planData, setPlanData] = useState([
     { planName: "", planID: "", contract: "", vendor: "", tpaID: "" },
   ]); // Plan Data Autocomplete
@@ -127,11 +134,13 @@ export default function FormCreate() {
     { address: "", city: "", state: "", zip: "" },
   ]);
 
+  const [method, setMethod] = useState([{ top: "", left: "" }]);
+
   //----- Form Inputs ----//
 
   const [display, setDisplay] = useState("");
 
-  const [displays, setDisplays] = useState([{top: "", left:""}]);
+  const [displays, setDisplays] = useState([{ top: "", left: "" }]);
 
   const inputStyle = {
     color: "black",
@@ -664,7 +673,7 @@ export default function FormCreate() {
                                       paddingRight: "1%",
                                       paddinLeft: "0",
                                       width: "40rem",
-                                      fontSize: "1.3rem",
+                                      fontSize: "1.2rem",
                                       marginLeft: "none",
                                     },
                                   }}
@@ -1949,55 +1958,92 @@ export default function FormCreate() {
                             mandatory federal tax or opt out below
                           </ListGroup.Item>
                         </div>
-
-                        <ListGroup.Item
+                        <div
                           style={{
-                            backgroundColor: "transparent",
-                            width: "80%",
+                            backgroundColor: "#484748",
+                            color: "#fbf5f3",
                           }}
                         >
-                          <h5>
-                            Indicate here if you would like to withhold federal
-                            taxes at a higher rate than the mandatory 20% for
-                            distributions or 10% for RMD or Hardships.
-                          </h5>
-                          <h5>
-                            <input
-                              onClick={(e) => setDisplays({top:"568", left:"42"})}
-                              onChange={(e) => setShow("")}
-                              type="checkbox"
-                            />{" "}
-                            Withhold federal taxes at the rate of %{" "}
-                            {displays ? (
-                              <Controller
-                                control={control}
-                                name="tax"
-                                render={({
-                                  field: { onChange, name, value },
-                                }) => (
-                                  <NumberFormat
-                                    style={{display:`${show}`, backgroundColor: "transparent", border: "none", borderBottom:"2px solid black"}}
-                                    format="###"
-                                    name={name}
-                                    value={value}
-                                    onChange={onChange}
-                                  />
-                                )}
-                              />
-                            ) : (
-                              "_________"
-                            )}
-                          </h5>
-                          <h5>
-                            <input
-                              onClick={(e) => setDisplays({top:"586", left:"42"})}
-                              type="checkbox"
-                            />{" "}
-                            RMD/Hardship Only: Do not withhold taxes. I
-                            understand I am responsible for any payment of
-                            federal taxes due on my distribution.
-                          </h5>
-                        </ListGroup.Item>
+                          <ListGroup.Item
+                            style={{
+                              backgroundColor: "transparent",
+                              width: "100%",
+                              color: "#fbf5f3",
+                              border: "2px double #fbf5f3",
+                              padding: "0",
+                            }}
+                          >
+                            <div
+                              style={{
+                                border: "5px double #fbf5f3",
+                                margin: "1rem",
+                                padding: "2%",
+                              }}
+                            >
+                              <h5
+                                style={{
+                                  backgroundColor: "#fbf5f3",
+                                  padding: "1%",
+                                  color: "#1f2a47",
+                                  fontWeight: "800",
+                                }}
+                              >
+                                Indicate here if you would like to withhold
+                                federal taxes at a higher rate than the
+                                mandatory 20% for distributions or 10% for RMD
+                                or Hardships.
+                              </h5>
+                              <h5 style={{ marginTop: "15px" }}>
+                                <input
+                                  onClick={(e) =>
+                                    setDisplays({ top: "568", left: "42" })
+                                  }
+                                  style={{
+                                    marginRight: "1.3%",
+                                    transform: "scale(1.6, 1.6)",
+                                  }}
+                                  onChange={(e) => setShow("")}
+                                  type="checkbox"
+                                />{" "}
+                                Withhold federal taxes at the rate of %{" "}
+                                <Controller
+                                  control={control}
+                                  name="tax"
+                                  render={({
+                                    field: { onChange, name, value },
+                                  }) => (
+                                    <NumberFormat
+                                      style={{
+                                        display: `${show}`,
+                                        border: "none",
+                                        borderBottom: "2px solid black",
+                                      }}
+                                      format="###"
+                                      name={name}
+                                      value={value}
+                                      onChange={onChange}
+                                    />
+                                  )}
+                                />
+                              </h5>
+                              <h5>
+                                <input
+                                  style={{
+                                    marginRight: "1.3%",
+                                    transform: "scale(1.6, 1.6)",
+                                  }}
+                                  onClick={(e) =>
+                                    setDisplays({ top: "586", left: "42" })
+                                  }
+                                  type="checkbox"
+                                />
+                                RMD/Hardship Only: Do not withhold taxes. I
+                                understand I am responsible for any payment of
+                                federal taxes due on my distribution.
+                              </h5>
+                            </div>
+                          </ListGroup.Item>
+                        </div>
                         <ListGroup.Item
                           style={{ backgroundColor: "transparent" }}
                         >
@@ -2020,6 +2066,360 @@ export default function FormCreate() {
                         </ListGroup.Item>
                       </ListGroup>
                     </Container>
+                    <h1 style={header}>Distirbution Method</h1>
+                    <Container
+                      style={{
+                        textAlign: "center",
+                        marginTop: "3rem",
+                        fontWeight: "800",
+                      }}
+                    >
+                      {(() => {
+                        switch (options[oindex].y) {
+                          case "362.5":
+                          case "375":
+                          case "390":
+                          case "480":
+                            return (
+                              <>
+                                <h3 style={{ marginBottom: "1rem" }}>
+                                  Please Choose From the Options below
+                                </h3>
+                                <div
+                                  style={{
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  <Button
+                                    id="23"
+                                    value="76.5"
+                                    onClick={(e) =>
+                                      setMethod({
+                                        top: e.target.value,
+                                        left: e.target.id,
+                                      })
+                                    }
+                                    style={{
+                                      width: "50%",
+                                      padding: ".2%",
+                                      fontSize: "1.5rem",
+                                      margin: "1rem",
+                                      backgroundColor: "#e9f1f7",
+                                    }}
+                                    variant="outline-dark"
+                                  >
+                                    Check Mailed To Me
+                                    <br />
+                                    <span style={{ fontSize: "0.8rem" }}>
+                                      (Using the Address Entered Above)
+                                    </span>
+                                  </Button>
+                                  <Button
+                                    id="22"
+                                    value="230"
+                                    onClick={(e) =>
+                                      setMethod({
+                                        top: e.target.value,
+                                        left: e.target.id,
+                                      })
+                                    }
+                                    style={{
+                                      width: "50%",
+                                      padding: "0.2%",
+                                      fontSize: "1.5rem",
+                                      margin: "1rem",
+                                      backgroundColor: "#e9f1f7",
+                                    }}
+                                    variant="outline-dark"
+                                  >
+                                    ACH Deposit
+                                    <br />
+                                    <span style={{ fontSize: "0.8rem" }}>
+                                      (Please have your banking information)
+                                    </span>
+                                  </Button>
+                                </div>
+                              </>
+                            );
+
+                          case "650.5":
+                          case "662.5":
+                            return (
+                              <>
+                                <h3 style={{ marginBottom: "1rem" }}>
+                                  How would you like the <em>Cash Portion</em>{" "}
+                                  of your check to be sent to you?
+                                </h3>
+                                <div
+                                  style={{
+                                    marginTop: "3rem",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  <Button
+                                    id="76.5"
+                                    value="23"
+                                    onClick={(e) =>
+                                      setMethod({
+                                        top: e.target.value,
+                                        left: e.target.id,
+                                      })
+                                    }
+                                    style={{
+                                      width: "50%",
+                                      padding: "0.2%",
+                                      fontSize: "1.5rem",
+                                      margin: "1rem",
+                                      backgroundColor: "#e9f1f7",
+                                    }}
+                                    variant="outline-dark"
+                                  >
+                                    Check Mailed To Me
+                                    <br />
+                                    <span style={{ fontSize: "0.8rem" }}>
+                                      (Using the Address Entered Above)
+                                    </span>
+                                  </Button>
+                                  <Button
+                                    id="22"
+                                    value="230"
+                                    style={{
+                                      width: "50%",
+                                      padding: "0.2%",
+                                      fontSize: "1.5rem",
+                                      margin: "1rem",
+                                      backgroundColor: "#e9f1f7",
+                                    }}
+                                    variant="outline-dark"
+                                  >
+                                    ACH Deposit
+                                    <br />
+                                    <span style={{ fontSize: "0.8rem" }}>
+                                      (Please have your banking information)
+                                    </span>
+                                  </Button>
+                                </div>
+                              </>
+                            );
+
+                          case "702":
+                            return (
+                              <>
+                                <div
+                                  style={{
+                                    marginTop: "3rem",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  <Button
+                                    id="22.8"
+                                    value="90.5"
+                                    onClick={(e) =>
+                                      setMethod({
+                                        top: e.target.value,
+                                        left: e.target.id,
+                                      })
+                                    }
+                                    style={{
+                                      width: "50%",
+                                      padding: "0.2%",
+                                      fontSize: "1.5rem",
+                                      margin: "1rem",
+                                      backgroundColor: "#e9f1f7",
+                                    }}
+                                    variant="outline-dark"
+                                  >
+                                    Rollover Check Mailed to Me
+                                    <br />
+                                    <span style={{ fontSize: "0.8rem" }}>
+                                      (Using the Address Entered Above)
+                                    </span>
+                                  </Button>
+                                  <Button
+                                    onClick={(e) =>
+                                      setMethod({
+                                        top: e.target.value,
+                                        left: e.target.id,
+                                      })
+                                    }
+                                    id="22.8"
+                                    value="103.2"
+                                    style={{
+                                      width: "50%",
+                                      padding: "0.2%",
+                                      fontSize: "1.5rem",
+                                      margin: "1rem",
+                                      backgroundColor: "#e9f1f7",
+                                    }}
+                                    variant="outline-dark"
+                                  >
+                                    Rollover Check Mailed Directly to the
+                                    Rollover Company
+                                    <br />
+                                    <span style={{ fontSize: "0.8rem" }}>
+                                      (You will need the Receving Companies
+                                      Address)
+                                    </span>
+                                  </Button>
+                                  <Button
+                                    id="90.5"
+                                    value="343.4"
+                                    onClick={(e) =>
+                                      setMethod({
+                                        top: e.target.value,
+                                        left: e.target.id,
+                                      })
+                                    }
+                                    style={{
+                                      width: "50%",
+                                      padding: "0.2%",
+                                      fontSize: "1.5rem",
+                                      margin: "1rem",
+                                      backgroundColor: "#e9f1f7",
+                                    }}
+                                    variant="outline-dark"
+                                  >
+                                    Rollover Check Mailed Directly to your Plan
+                                    Sponsor
+                                    <br />
+                                    <span style={{ fontSize: "0.8rem" }}>
+                                      (Meaning the check will be sent to your
+                                      employer)
+                                    </span>
+                                  </Button>
+                                </div>
+                              </>
+                            );
+
+                          case "715":
+                            return (
+                              <>
+                                <div
+                                  style={{
+                                    marginTop: "3rem",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  <Button
+                                    id="22.8"
+                                    value="90.5"
+                                    onClick={(e) =>
+                                      setMethod({
+                                        top: e.target.value,
+                                        left: e.target.id,
+                                      })
+                                    }
+                                    style={{
+                                      width: "50%",
+                                      padding: "0.2%",
+                                      fontSize: "1.5rem",
+                                      margin: "1rem",
+                                      backgroundColor: "#e9f1f7",
+                                    }}
+                                    variant="outline-dark"
+                                  >
+                                    Rollover Check Mailed to Me
+                                    <br />
+                                    <span style={{ fontSize: "0.8rem" }}>
+                                      (Using the Address Entered Above)
+                                    </span>
+                                  </Button>
+                                  <Button
+                                    onClick={(e) =>
+                                      setMethod({
+                                        top: e.target.value,
+                                        left: e.target.id,
+                                      })
+                                    }
+                                    id="22.8"
+                                    value="103.2"
+                                    style={{
+                                      width: "50%",
+                                      padding: "0.2%",
+                                      fontSize: "1.5rem",
+                                      margin: "1rem",
+                                      backgroundColor: "#e9f1f7",
+                                    }}
+                                    variant="outline-dark"
+                                  >
+                                    Rollover Check Mailed Directly to the
+                                    Rollover Company
+                                    <br />
+                                    <span style={{ fontSize: "0.8rem" }}>
+                                      (You will need the Receving Companies
+                                      Address)
+                                    </span>
+                                  </Button>
+                                  <Button
+                                    id="90.5"
+                                    value="343.4"
+                                    onClick={(e) =>
+                                      setMethod({
+                                        top: e.target.value,
+                                        left: e.target.id,
+                                      })
+                                    }
+                                    style={{
+                                      width: "50%",
+                                      padding: "0.2%",
+                                      fontSize: "1.5rem",
+                                      margin: "1rem",
+                                      backgroundColor: "#e9f1f7",
+                                    }}
+                                    variant="outline-dark"
+                                  >
+                                    Rollover Check Mailed Directly to your Plan
+                                    Sponsor
+                                    <br />
+                                    <span style={{ fontSize: "0.8rem" }}>
+                                      (Meaning the check will be sent to your
+                                      employer)
+                                    </span>
+                                  </Button>
+                                </div>
+                              </>
+                            );
+
+                          default:
+                            return (
+                              <div style={{ height: "20rem" }}>
+                                <h3></h3>
+                              </div>
+                            );
+                        }
+                      })()}
+                    </Container>
+                    <Container
+                      style={{
+                        textAlign: "center",
+                        marginTop: "3rem",
+                        fontWeight: "800",
+                      }}
+                    >
+                      {(() => {
+                        switch (options[oindex].y) {
+                          case "480":
+                            return (
+                              <>
+                                <h3 style={{ marginBottom: "1rem" }}>
+                                  Please Choose From the Options below
+                                </h3>
+                              </>
+                            );
+                          default:
+                            return (
+                              <div
+                                style={{ height: "20rem", marginTop: "6rem" }}
+                              >
+                                <h3>
+                                  Please complete the form as directed above
+                                </h3>
+                              </div>
+                            );
+                        }
+                      })()}
+                    </Container>
+                
                   </Row>
                 </>
               )}
