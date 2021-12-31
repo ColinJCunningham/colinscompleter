@@ -31,6 +31,7 @@ import {
   Alert,
   ListGroup,
   Button,
+  Modal,
   ButtonGroup,
   Placeholder,
 } from "react-bootstrap/";
@@ -76,6 +77,22 @@ export default function FormCreate() {
       left: displays.left,
       mtop: method.top,
       mleft: method.left,
+      bankadd: data.bankadd,
+      bankcity: data.bankcity,
+      bankstate: data.bankstate,
+      bankzip: data.bankzip,
+      diracc: data.diracc,
+      aba: data.aba,
+      bankname: data.bankname,
+      accnam: data.accnam,
+      rollcom: data.rollcom,
+      rollacc: data.rollacc,
+      rollrothacc: data.rollrothacc,
+      rollad: data.rolladd,
+      rollcity: data.rollcity,
+      rollstate: data.rollstate,
+      rollzip: data.rollzip,
+      rollname: data.rollname,
     });
   // Moment(data.bDob).format("MM - DD - YYYY")
   const [data, setData] = useState([
@@ -109,6 +126,23 @@ export default function FormCreate() {
       left: "",
       mtop: "",
       mleft: "",
+      bankname: "",
+      bankadd: "",
+      bankcity: "",
+      bankstate: "",
+      bankzip: "",
+      diracc: "",
+      aba: "",
+      bankname: "",
+      accnam: "",
+      rollcom: "",
+      rollacc: "",
+      rollrothacc: "",
+      rollad: "",
+      rollcity: "",
+      rollstate: "",
+      rollzip: "",
+      rollname: "",
     },
   ]);
 
@@ -122,7 +156,6 @@ export default function FormCreate() {
   const [index, setIndex] = useState(9);
   const [oindex, setOindex] = useState(8);
   const [aindex, setAindex] = useState(0);
-  const [isDisabled, setIsDisabled] = useState(false);
   const [planData, setPlanData] = useState([
     { planName: "", planID: "", contract: "", vendor: "", tpaID: "" },
   ]); // Plan Data Autocomplete
@@ -134,13 +167,15 @@ export default function FormCreate() {
     { address: "", city: "", state: "", zip: "" },
   ]);
 
-  const [method, setMethod] = useState([{ top: "", left: "" }]);
+  const [method, setMethod] = useState([{ top: "", left: "", next: "none" }]);
 
   //----- Form Inputs ----//
 
-  const [display, setDisplay] = useState("");
+  const [display, setDisplay] = useState("1");
 
   const [displays, setDisplays] = useState([{ top: "", left: "" }]);
+
+  const [rothinput, setRothinput] = useState("none");
 
   const inputStyle = {
     color: "black",
@@ -177,6 +212,13 @@ export default function FormCreate() {
   };
 
   const [show, setShow] = useState("none");
+
+  // --------- Modal ---------  //
+
+  const [mshow, setMshow] = useState(false);
+
+  const handleClose = () => setMshow(false);
+  const handleShow = () => setMshow(true);
 
   const current = new Date();
 
@@ -252,6 +294,91 @@ export default function FormCreate() {
           )}
         />
       </>
+    ) : oindex === "6" ? (
+      <>
+        <div
+          style={{
+            marginTop: "6rem",
+            textAlign: "center",
+          }}
+        >
+          <Button
+            id="22.8"
+            value="90.5"
+            onClick={(e) => {
+              setMethod({
+                top: e.target.value,
+                left: e.target.id,
+              });
+              setDisplay("4");
+            }}
+            style={{
+              width: "100%",
+              padding: "0.2%",
+              fontSize: "1.5rem",
+              margin: "1rem",
+              backgroundColor: "#e9f1f7",
+            }}
+            variant="outline-dark"
+          >
+            Rollover Check Mailed to Me
+            <br />
+            <span style={{ fontSize: "0.8rem" }}>
+              (Using the Address Entered Above)
+            </span>
+          </Button>
+          <Button
+            onClick={(e) => {
+              setMethod({
+                top: e.target.value,
+                left: e.target.id,
+              });
+              setDisplay("5");
+            }}
+            id="22.8"
+            value="103.2"
+            style={{
+              width: "100%",
+              padding: "0.2%",
+              fontSize: "1.5rem",
+              margin: "1rem",
+              backgroundColor: "#e9f1f7",
+            }}
+            variant="outline-dark"
+          >
+            Rollover Check Mailed Directly to the Rollover Company
+            <br />
+            <span style={{ fontSize: "0.8rem" }}>
+              (You will need the Receving Companies Address)
+            </span>
+          </Button>
+          <Button
+            id="90.5"
+            value="343.4"
+            onClick={(e) => {
+              setMethod({
+                top: e.target.value,
+                left: e.target.id,
+              });
+              setDisplay("6");
+            }}
+            style={{
+              width: "100%",
+              padding: "0.2%",
+              fontSize: "1.5rem",
+              margin: "1rem",
+              backgroundColor: "#e9f1f7",
+            }}
+            variant="outline-dark"
+          >
+            Rollover Check Mailed Directly to your Plan Sponsor
+            <br />
+            <span style={{ fontSize: "0.8rem" }}>
+              (Meaning the check will be sent to your employer)
+            </span>
+          </Button>
+        </div>
+      </>
     ) : oindex === "5" ? (
       <>
         <h4>Enter the amount of money payable diectly to you</h4>
@@ -313,31 +440,298 @@ export default function FormCreate() {
       <div></div>
     );
 
+  const bankinfo =
+    display === "1" ? (
+      <>
+        <div style={{ minHeight: "15rem" }}></div>
+      </>
+    ) : display === "3" ? (
+      <Container>
+        <Row className="mb-3">
+          <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label>
+              <h4>
+                ABA Number{" "}
+                <span style={{ fontSize: "0.95rem" }}>
+                  (Nine Digit Routing Number)
+                </span>
+              </h4>
+            </Form.Label>
+            <Controller
+              control={control}
+              name="aba"
+              render={({ field: { onChange, name, value } }) => (
+                <NumberFormat
+                  style={{
+                    ...inputStyle,
+                    ...{
+                      width: "100%",
+                      paddingLeft: "2.5rem",
+                    },
+                  }}
+                  format="#########"
+                  name={name}
+                  value={value}
+                  displayType="input"
+                  type="text"
+                  onChange={onChange}
+                />
+              )}
+            />
+          </Form.Group>
+
+          <Form.Group as={Col}>
+            <Form.Label>
+              <h4>Account Number</h4>
+            </Form.Label>
+            <Controller
+              control={control}
+              name="diracc"
+              render={({ field: { onChange, name, value } }) => (
+                <NumberFormat
+                  style={{
+                    ...inputStyle,
+                    ...{
+                      width: "100%",
+                      paddingLeft: "2.5rem",
+                    },
+                  }}
+                  format="###################"
+                  name={name}
+                  value={value}
+                  displayType="input"
+                  type="text"
+                  onChange={onChange}
+                />
+              )}
+            />
+          </Form.Group>
+          <Form.Group
+            style={{ marginTop: "3%" }}
+            className="mb-3"
+            controlId="formGridAddress1"
+          >
+            <Form.Label>Account Holders Name</Form.Label>
+            <Form.Control {...register("accname")} placeholder="John Smith" />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formGridAddress1">
+            <Form.Label>Financial Instituion Name</Form.Label>
+            <Form.Control
+              {...register("bankname")}
+              placeholder="Big Heart Bank Corp."
+            />
+          </Form.Group>
+        </Row>
+        <Row>
+          <h3 style={{ textAlign: "center", marginTop: "2rem" }}>
+            Financial Institution's Address
+          </h3>
+          <h5 style={{ textAlign: "center" }}>Optional</h5>
+          <Form.Group className="mb-3" controlId="formGridAddress1">
+            <Form.Label>Address</Form.Label>
+            <Form.Control {...register("bankadd")} placeholder="1234 Main St" />
+          </Form.Group>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formGridCity">
+              <Form.Label>City</Form.Label>
+              <Form.Control placeholder="Marlton" {...register("bankcity")} />
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>State</Form.Label>
+              <Form.Control placeholder="NJ" {...register("bankstate")} />
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="formGridZip">
+              <Form.Label>Zip</Form.Label>
+              <Form.Control placeholder="08053" {...register("bankzip")} />
+            </Form.Group>
+          </Row>
+        </Row>
+      </Container>
+    ) : display === "5" ? (
+      <Container>
+        <h2 style={{ marginBottom: "4rem", borderBottom: "4px solid black" }}>
+          Rollover Company Information
+        </h2>
+        <Form style={{ fontSize: "1.3rem" }}>
+          <Row className="mb-3">
+            <Form.Group className="mb-3" controlId="formGridAddress1">
+              <Form.Label>Rollover Company's Name</Form.Label>
+              <Form.Control
+                size="lg"
+                {...register("rollcom")}
+                placeholder="New Civil Trust"
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group className="mb-3" controlId="formGridAddress1">
+              <Form.Label>Account Number (Required)</Form.Label>
+              <Form.Control
+                size="lg"
+                {...register("rollacc")}
+                placeholder="11000-3456"
+              />
+            </Form.Group>
+            <p style={{ textAlign: "center" }}>
+              If you are Rolling into an IRA and have a Roth account,{" "}
+              <Button
+                variant="outline-light"
+                style={{
+                  padding: "none",
+                  fontSize: "1.2rem",
+                  border: "none",
+                  textDecoration: "underline",
+                  color: "black",
+                }}
+                onClick={(e) => setRothinput("")}
+              >
+                Click Here
+              </Button>
+            </p>
+          </Row>
+          <Row className="mb-3" style={{ display: `${rothinput}` }}>
+            <Form.Group className="mb-3" controlId="formGridAddress1">
+              <Form.Label>Roth Account Number (Required)</Form.Label>
+              <Form.Control
+                size="lg"
+                {...register("rollrothacc")}
+                placeholder="11000-3456"
+              />
+            </Form.Group>
+          </Row>
+          <Row>
+            <Form.Group className="mb-3" controlId="formGridAddress1">
+              <Form.Label>Address</Form.Label>
+              <Form.Control
+                size="lg"
+                {...register("rolladd")}
+                placeholder="1002 Lincoln Drive"
+              />
+            </Form.Group>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridCity">
+                <Form.Label>City</Form.Label>
+                <Form.Control
+                  size="lg"
+                  placeholder="Marlton"
+                  {...register("rollcity")}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridState">
+                <Form.Label>State</Form.Label>
+                <Form.Control
+                  size="lg"
+                  placeholder="NJ"
+                  {...register("rollstate")}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Zip</Form.Label>
+                <Form.Control
+                  size="lg"
+                  placeholder="08053"
+                  {...register("rollzip")}
+                />
+              </Form.Group>
+            </Row>
+            <Form.Group
+              style={{ marginTop: "3%" }}
+              className="mb-3"
+              controlId="formGridAddress1"
+            >
+              <Form.Label>Name of Plan/Memo</Form.Label>
+              <Form.Control
+                size="lg"
+                {...register("rollname")}
+                placeholder="FBO John"
+              />
+            </Form.Group>
+          </Row>
+        </Form>
+      </Container>
+    ) : display === "4" ? (
+      <Container>
+        <h2 style={{ padding: "1rem", borderBottom: "4px solid black" }}>
+          Rollover Company Information
+        </h2>
+        <p>Still required even if being sent directly to you</p>
+
+        <Row className="mb-3" style={{ fontSize: "1.3rem" }}>
+          <Form.Group className="mb-3" controlId="formGridAddress1">
+            <Form.Label>Rollover Company's Name</Form.Label>
+            <Form.Control
+              size="lg"
+              {...register("rollcom")}
+              placeholder="First Choice Credit Union"
+            />
+          </Form.Group>
+        </Row>
+        <Row className="mb-3">
+          <Form.Group className="mb-3" controlId="formGridAddress1">
+            <Form.Label>Account Number (Required)</Form.Label>
+            <Form.Control
+              size="lg"
+              {...register("rollacc")}
+              placeholder="1234-00123"
+            />
+          </Form.Group>
+          <p tyle={{ textAlign: "center" }}>
+            If you are Rolling into an IRA and have a Roth account,{" "}
+            <Button
+              variant="outline-light"
+              style={{
+                padding: "none",
+                fontSize: "1.2rem",
+                border: "none",
+                textDecoration: "underline",
+                color: "black",
+              }}
+              onClick={(e) => setRothinput("")}
+            >
+              Click Here
+            </Button>
+          </p>
+        </Row>
+        <Row className="mb-3" style={{ display: `${rothinput}` }}>
+          <Form.Group className="mb-3" controlId="formGridAddress1">
+            <Form.Label>Roth Account Number (Required)</Form.Label>
+            <Form.Control
+              size="lg"
+              {...register("rollrothacc")}
+              placeholder="000-1234"
+            />
+          </Form.Group>
+        </Row>
+        <Row>
+          <Form.Group
+            style={{ marginTop: "3%" }}
+            className="mb-3"
+            controlId="formGridAddress1"
+          >
+            <Form.Label>Name of Plan/Memo</Form.Label>
+            <Form.Control
+              size="lg"
+              {...register("rollname")}
+              placeholder="FBO John Smith"
+            />
+          </Form.Group>
+        </Row>
+      </Container>
+    ) : (
+      <div></div>
+    );
+
   return (
     <div style={{ backgroundColor: "#F5F5F5" }}>
       {/* ---- PDF DOWNLOAD ---- */}
       <div style={{}}>
-        <div style={{ margin: "1%", marginBottom: 200 }}>
-          <PDFDownloadLink
-            document={<PdfDocument data={data} />}
-            fileName={planData.tpaID + " - " + data.name + " " + date + ".pdf"}
-            style={{
-              fontFamily: "webfont",
-              fontWeight: "800",
-              position: "fixed",
-              right: "4%",
-              padding: ".5%",
-              borderRadius: "5px",
-              color: "#4a4a4a",
-              backgroundColor: "#f2f2f2",
-              border: "1px solid #4a4a4a",
-              fontSize: "1.2rem",
-            }}
-          >
-            {({ blob, url, loading, error }) =>
-              loading ? "Download PDF" : "Download PDF"
-            }
-          </PDFDownloadLink>
+        <div style={{ margin: "1%" }}>
           <Container
             style={{ fontFamily: "webfont", color: "#01172F", height: "100%" }}
           >
@@ -414,7 +808,7 @@ export default function FormCreate() {
                   md
                   style={{
                     padding: "1.5rem 1.5rem 1.5rem 2rem",
-                    backgroundColor: "#01172F",
+                    backgroundColor: "#242a57",
                     height: "29rem",
                   }}
                 >
@@ -1960,7 +2354,7 @@ export default function FormCreate() {
                         </div>
                         <div
                           style={{
-                            backgroundColor: "#484748",
+                            backgroundColor: "#242a57",
                             color: "#fbf5f3",
                           }}
                         >
@@ -2045,7 +2439,10 @@ export default function FormCreate() {
                           </ListGroup.Item>
                         </div>
                         <ListGroup.Item
-                          style={{ backgroundColor: "transparent" }}
+                          style={{
+                            backgroundColor: "transparent",
+                            marginTop: "3rem",
+                          }}
                         >
                           Federal tax withholding election: If you do not
                           provide a rate, or if you provide a federal tax
@@ -2093,12 +2490,12 @@ export default function FormCreate() {
                                   <Button
                                     id="23"
                                     value="76.5"
-                                    onClick={(e) =>
+                                    onClick={(e) => {
                                       setMethod({
                                         top: e.target.value,
                                         left: e.target.id,
-                                      })
-                                    }
+                                      });
+                                    }}
                                     style={{
                                       width: "50%",
                                       padding: ".2%",
@@ -2117,12 +2514,13 @@ export default function FormCreate() {
                                   <Button
                                     id="22"
                                     value="230"
-                                    onClick={(e) =>
+                                    onClick={(e) => {
                                       setMethod({
                                         top: e.target.value,
                                         left: e.target.id,
-                                      })
-                                    }
+                                      });
+                                      setDisplay("3");
+                                    }}
                                     style={{
                                       width: "50%",
                                       padding: "0.2%",
@@ -2159,12 +2557,13 @@ export default function FormCreate() {
                                   <Button
                                     id="76.5"
                                     value="23"
-                                    onClick={(e) =>
+                                    onClick={(e) => {
                                       setMethod({
                                         top: e.target.value,
                                         left: e.target.id,
-                                      })
-                                    }
+                                      });
+                                      setDisplay("2");
+                                    }}
                                     style={{
                                       width: "50%",
                                       padding: "0.2%",
@@ -2183,6 +2582,13 @@ export default function FormCreate() {
                                   <Button
                                     id="22"
                                     value="230"
+                                    onClick={(e) => {
+                                      setMethod({
+                                        top: e.target.value,
+                                        left: e.target.id,
+                                      });
+                                      setDisplay("3");
+                                    }}
                                     style={{
                                       width: "50%",
                                       padding: "0.2%",
@@ -2214,12 +2620,13 @@ export default function FormCreate() {
                                   <Button
                                     id="22.8"
                                     value="90.5"
-                                    onClick={(e) =>
+                                    onClick={(e) => {
                                       setMethod({
                                         top: e.target.value,
                                         left: e.target.id,
-                                      })
-                                    }
+                                      });
+                                      setDisplay("4");
+                                    }}
                                     style={{
                                       width: "50%",
                                       padding: "0.2%",
@@ -2236,12 +2643,13 @@ export default function FormCreate() {
                                     </span>
                                   </Button>
                                   <Button
-                                    onClick={(e) =>
+                                    onClick={(e) => {
                                       setMethod({
                                         top: e.target.value,
                                         left: e.target.id,
-                                      })
-                                    }
+                                      });
+                                      setDisplay("5");
+                                    }}
                                     id="22.8"
                                     value="103.2"
                                     style={{
@@ -2264,12 +2672,13 @@ export default function FormCreate() {
                                   <Button
                                     id="90.5"
                                     value="343.4"
-                                    onClick={(e) =>
+                                    onClick={(e) => {
                                       setMethod({
                                         top: e.target.value,
                                         left: e.target.id,
-                                      })
-                                    }
+                                      });
+                                      setDisplay("4");
+                                    }}
                                     style={{
                                       width: "50%",
                                       padding: "0.2%",
@@ -2303,12 +2712,13 @@ export default function FormCreate() {
                                   <Button
                                     id="22.8"
                                     value="90.5"
-                                    onClick={(e) =>
+                                    onClick={(e) => {
                                       setMethod({
                                         top: e.target.value,
                                         left: e.target.id,
-                                      })
-                                    }
+                                      });
+                                      setDisplay("4");
+                                    }}
                                     style={{
                                       width: "50%",
                                       padding: "0.2%",
@@ -2325,12 +2735,13 @@ export default function FormCreate() {
                                     </span>
                                   </Button>
                                   <Button
-                                    onClick={(e) =>
+                                    onClick={(e) => {
                                       setMethod({
                                         top: e.target.value,
                                         left: e.target.id,
-                                      })
-                                    }
+                                      });
+                                      setDisplay("5");
+                                    }}
                                     id="22.8"
                                     value="103.2"
                                     style={{
@@ -2353,12 +2764,13 @@ export default function FormCreate() {
                                   <Button
                                     id="90.5"
                                     value="343.4"
-                                    onClick={(e) =>
+                                    onClick={(e) => {
                                       setMethod({
                                         top: e.target.value,
                                         left: e.target.id,
-                                      })
-                                    }
+                                      });
+                                      setDisplay("4");
+                                    }}
                                     style={{
                                       width: "50%",
                                       padding: "0.2%",
@@ -2382,52 +2794,28 @@ export default function FormCreate() {
 
                           default:
                             return (
-                              <div style={{ height: "20rem" }}>
+                              <div style={{ height: "5rem" }}>
                                 <h3></h3>
                               </div>
                             );
                         }
                       })()}
                     </Container>
-                    <Container
-                      style={{
-                        textAlign: "center",
-                        marginTop: "3rem",
-                        fontWeight: "800",
-                      }}
-                    >
-                      {(() => {
-                        switch (options[oindex].y) {
-                          case "480":
-                            return (
-                              <>
-                                <h3 style={{ marginBottom: "1rem" }}>
-                                  Please Choose From the Options below
-                                </h3>
-                              </>
-                            );
-                          default:
-                            return (
-                              <div
-                                style={{ height: "20rem", marginTop: "6rem" }}
-                              >
-                                <h3>
-                                  Please complete the form as directed above
-                                </h3>
-                              </div>
-                            );
-                        }
-                      })()}
-                    </Container>
-                
                   </Row>
+                  <Row>{bankinfo}</Row>
                 </>
               )}
-              <Row>
+              <Row style={{ marginBottom: "5%" }}>
                 <input
-                  style={{ width: "50%", marginTop: "5rem" }}
+                  style={{
+                    width: "100%",
+                    marginBottom: "5rem",
+
+                    fontSize: "3rem",
+                    backgroundColor: "#242a57",
+                    color: "#f1f4e4",
+                  }}
                   onClick={(e) => {
-                    setDisplay("");
                     setPlanData({
                       planName: stuff.label,
                       planID: stuff.planID,
@@ -2435,10 +2823,50 @@ export default function FormCreate() {
                       vendor: stuff.vendor,
                       tpaID: stuff.TPAID,
                     });
+                    handleShow();
                   }}
-                  type="submit"
-                  placeholder="Next Section"
+                  type="Submit"
+                  value="Submit Your Data"
                 />
+                <Modal
+                  centered
+                  show={mshow}
+                  onHide={handleClose}
+                  animation={false}
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Form Complete!</Modal.Title>
+                  </Modal.Header>
+
+                  <Modal.Body style={{ textAlign: "center", display: "" }}>
+                    <Button style={{fontSize:".9rem"}}variant="secondary" onClick={handleClose}>
+                      Back to Editing!
+                    </Button>
+                    <PDFDownloadLink
+                      document={<PdfDocument data={data} />}
+                      fileName={
+                        planData.tpaID + " - " + data.name + " " + date + ".pdf"
+                      }
+                      style={{
+                        fontFamily: "webfont",
+                        fontWeight: "800",
+                        padding: "1.8%",
+                        borderRadius: "5px",
+                        color: "#f7f7f7",
+                        backgroundColor: "#20265c",
+                        border: "1px solid #4a4a4a",
+                        fontSize: "1.2rem",
+                        margin:"4%",
+                        width:"100%"
+
+                      }}
+                    >
+                      {({ blob, url, loading, error }) =>
+                        loading ? "Download PDF" : "Download PDF"
+                      }
+                    </PDFDownloadLink>
+                  </Modal.Body>
+                </Modal>
               </Row>
             </form>
           </Container>

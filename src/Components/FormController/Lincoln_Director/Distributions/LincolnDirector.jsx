@@ -17,6 +17,9 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer"; // PDFReact-Renderer (npm package)
+import moment from "moment";
+
+
 
 // Needed for PDF Styling
 const styles = StyleSheet.create({
@@ -67,7 +70,9 @@ export function PdfDocument(props) {
     ? Moment(props.data.doi).format("MM - DD - YYYY")
     : "";
 
-  console.log(props.data);
+
+
+  const currentdate = Moment().format("MM - DD - YYYY")
 
   const [display, setDisplay] = "none";
 
@@ -468,10 +473,150 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            {/* "Check": 76.5, 23, Rollover Check Mailed to part: 90.5, 22.8, Check Mailed to PS: 77, 343.4 */}
-            {/* Rollover Check Mailed to Rollover: 103.2, 22.8  Rollover Check Mailed to Plan Sponsor 90.5, 343.4 */}
-
             <Text style={{ fontSize: 10 }}>X</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 160,
+              left: 165,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.rollcom ? props.data.rollcom : " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 178,
+              left: 100,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.rollad ? props.data.rollad + "      ,       " + props.data.rollcity + "     ,      " + props.data.rollstate + "    ,    " + props.data.rollzip : " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 200,
+              left: 175,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.rollacc ? props.data.rollacc : " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 200,
+              left: 400,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.rollrothacc ? props.data.rollrothacc : " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 273,
+              left: 205,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.aba? props.data.aba: " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 273,
+              left: 465,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.diracc ? props.data.diracc : " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 293,
+              left: 245,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.accnam? props.data.accnam: " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 310,
+              left: 180,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.bankname ? props.data.bankname : " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 325,
+              left: 80,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.bankadd? props.data.bankadd: " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 345,
+              left: 60,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.bankcity ? props.data.bankcity : " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 345,
+              left: 365,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.bankstate ? props.data.bankstate : " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 345,
+              left: 495,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data.bankzip ? props.data.bankzip : " "}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 542,
+              left: 148,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+          <Text style={{ fontSize: 12, color:"red", fontWeight:"800"}}> Sign Here </Text> 
           </View>
         </View>
       </Page>
@@ -482,13 +627,46 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
+              top: 212,
+              left: 80,
               right: 0,
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>X</Text>
+            <Text style={{ fontSize: 10 }}>RetireWell Administartors Inc.</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 236,
+              left: 80,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>ClientServices@retirewelltpa.com</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 258,
+              left: 80,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>(856)-396-0499</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 285,
+              left: 460,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>{props.data? currentdate : " "}</Text>
           </View>
         </View>
       </Page>
