@@ -1,7 +1,7 @@
 import React from "react";
 import "../../Assets/atkinson.ttf";
 
-import { Row, Container, Navbar, Nav } from "react-bootstrap/";
+import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap/";
 import { Link } from "react-router-dom";
 
 import logo from "../../Assets/goal.png";
@@ -13,31 +13,36 @@ function Header() {
     <div>
       <Navbar
         expand="lg"
-        style={{ backgroundColor: "#242a57", padding: "1.4rem", width:"100%" }}
+        style={{ backgroundColor: "#94bbd3ad", width: "100%", color:"#12113A", }}
         variant="dark"
       >
-        <Container style={{ marginLeft: "0.3rem" }}>
+        <Container>
           <Link style={{ textDecoration: "none" }} to="/">
-            <Navbar.Brand
-              style={{
-                fontFamily: "Copperplate",
-                fontSize: "1rem",
-              }}
-            >
+            <Navbar.Brand>
               <img
+                id="log"
                 alt="rwlogo"
                 src={logo}
-                width="40"
-                height="40"
+                width="10%"
+                height="10%"
                 className="d-inline-block align-top"
+                style={{ marginRight: "1rem" }}
               />
-              RetireWell Administrators Inc.
+              <span id="navtext">RetireWell Administrators Inc.</span>
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle
-            style={{ margin: "0 auto" }}
+            style={{ margin: "0 auto", width: "100%" }}
             aria-controls="basic-navbar-nav"
           />
+          <Navbar.Collapse className="justify-content-end">
+            <Nav.Link style={{ color: "#12113A" }} href="#home">
+              Contact
+            </Nav.Link>
+            <Nav.Link style={{ color: "#12113A" }} href="#link">
+              Privacy
+            </Nav.Link>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </div>

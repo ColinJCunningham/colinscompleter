@@ -1,20 +1,15 @@
 import React from "react";
 
-import {
-  Row,
-  Container,
-  ListGroup,
-  Col,
-  Button,
-  Card,
-  CardGroup,
-  Placeholder,
-} from "react-bootstrap/";
+import { Row, Container, Button, Card, Image, Col } from "react-bootstrap/";
 import "../Home/home.css";
 import { Link } from "react-router-dom";
 import "../../Assets/Poppins.ttf";
-import desk from "../../Assets/desk.jpg";
-import hands from "../../Assets/hands.jpg";
+import portaltran from "../../Assets/portaltran.png";
+
+import MdPhone from "@mui/icons-material/Phone";
+import Chip from "@mui/material/Chip";
+import Email from "@mui/icons-material/Email";
+import Format from "@mui/icons-material/FormatListNumberedRtlOutlined";
 
 function Home() {
   return (
@@ -24,48 +19,32 @@ function Home() {
         width: "100%",
         paddingTop: "5%",
         maxHeight: "100%",
-        paddingBottom:"2rem"
+        paddingBottom: "2rem",
+        padding: "3%",
       }}
     >
-      <div
+      <Container
         style={{
+          backgroundColor: "#12113A",
+          padding: "1%",
           textAlign: "center",
-          fontStyle: "italic",
-          marginBottom: "3rem",
-          backgroundColor: "transparent",
-          padding: "1rem",
+          width: "90%",
+          borderRadius: "1rem",
+          marginTop: "3rem",
         }}
       >
-        <h1
-          style={{
-            color: "#242a57",
-            marginBottom: "2rem",
-            padding: ".5rem",
-            fontWeight: "900",
-          }}
-        >
-          [Cool Name For App Here]
-        </h1>
-        <h4 id="sh" style={{ textAlign: "center", paddingLeft: "10px" }}>
-          Your 401(k){" "}
-          <em
-            style={{
-              fontSize: "2rem",
-              color: "#d01137",
-              textDecoration: "underline",
-            }}
-          >
-            Made Simple
-          </em>
-        </h4>
-      </div>
+        <Image fluid src={portaltran} />
+      </Container>
 
       <div
+        id="sdiv"
         style={{
           marginRight: "auto",
           marginLeft: "auto",
-          width: "40%",
+          marginTop: "3%",
+          width: "100%",
           textAlign: "center",
+          padding: "3rem",
         }}
       >
         <Link to="/start">
@@ -74,7 +53,7 @@ function Home() {
             style={{
               padding: "10px",
 
-              backgroundColor: "#242a57",
+              backgroundColor: "#AD160B",
             }}
           >
             <span
@@ -88,101 +67,97 @@ function Home() {
           </Button>
         </Link>
       </div>
-      <Container id="changethisone">
-        <Row>
-          <div style={{ padding: "4rem", margin: "1rem", marginTop: "3rem" }}>
-            <CardGroup>
-              <Card
-                id="card1"
-                style={{ backgroundColor: "#242a57", color: "#fbf5f3" }}
+      <Row style={{ marginTop: "5rem", marginBottom: "5rem" }}>
+        <Card
+          className="text-center"
+          style={{ backgroundColor: "transparent", border: "none" }}
+        >
+          <Card.Header
+            style={{
+              fontSize: "1.4rem",
+              backgroundColor: "#12113A",
+              color: "#fbf5f3",
+              padding: "1%",
+            }}
+          >
+            Why did my employer send me here?
+          </Card.Header>
+          <Card.Body
+            style={{
+              backgroundColor: "#4e5e88",
+              color: "#fbf5f3",
+              border: "4px double #fbf5f3",
+              padding: "1rem",
+            }}
+          >
+            <div>
+              <Card.Title
+                style={{
+                  marginTop: "1rem",
+                  borderBottom: "4px double #fbf5f3",
+                  width: "fit-content",
+                  margin: "0 auto",
+                }}
               >
-                <Card.Body style={{ width: "70%" }}>
-                  <Card.Title style={{ fontSize: "2rem", textAlign: "left" }}>
-                    Why are these forms so complicated?
-                  </Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This card has even longer
-                    content than the first to show that equal height action.
-                  </Card.Text>
-                  <Card.Img variant="bottom" id="img" src={desk} />
-                </Card.Body>
-                <div id="low-divider">I</div>
-              </Card>
-              <div id="mid-divider">I</div>
-              <Col>
-                <Card
-                  id="card"
-                  style={{
-                    textAlign: "right",
-                    margin: "1.5rem",
-                    border: "none",
-                    textAlign: "right",
-                    height: "auto",
-                    paddingTop: "15%",
-                    color: "#fbf5f3",
-                  }}
+                Here's Why
+              </Card.Title>
+              <Row style={{ margin: "1rem" }}>
+                <Col style={{ marginTop: "1rem" }} xs={12} lg={4}>
+                  <Row>
+                    <Card.Text>
+                      With SmartForm you can strip away the confusion of
+                      financial forms, and have our portal generate only what
+                      you need to complete, while giving hints and tips along
+                      the way!
+                    </Card.Text>
+                  </Row>
+                </Col>
+                <Col style={{ marginTop: "1rem" }} xs={12} lg={4}>
+                  <Row>
+                    <Card.Text>
+                      Get up-to-date plan data: Review withdrawl eligibility,
+                      Loan rules, and more!
+                    </Card.Text>
+                  </Row>
+                </Col>
+                <Col style={{ marginTop: "1rem" }} xs={12} lg={4}>
+                  <Row>
+                    <Card.Text>
+                      Get in contact with a RetireWell distribution specialist,
+                      who can help answer any questions you may have. Contact us
+                      at the information listed below, between 8:30 AM - 5:00
+                      PM.
+                    </Card.Text>
+                  </Row>
+                </Col>
+              </Row>
+              <Row style={{ marginTop: "5%" }}>
+                <a href="tel:8563960499">
+                  <Chip
+                    style={{
+                      backgroundColor: "#fbf5f3",
+                      width: "50%",
+                      marginRight: "1%",
+                    }}
+                    icon={<MdPhone />}
+                    label="Call Us; 856-396-0499"
+                  />
+                </a>
+                <a
+                  href="mailto: clientservices@retirewelltpa.com"
+                  style={{ marginTop: "1%" }}
                 >
-                  <div
-                    id="high-divider"
-                    style={{
-                      color: "transparent",
-                      borderStyle: "solid",
-                      borderWidth: "2px",
-                      borderColor: "black",
-                      height: "8px",
-                      marginTop: "2rem",
-                      marginBottom: "2rem",
-                      borderRadius: "1rem",
-                      width: "100%",
-                    }}
-                  >
-                    I
-                  </div>
-
-                  <div
-                    style={{
-                      backgroundColor: "#bfd1e5",
-                      padding: "1rem",
-                      color: "#242a57",
-                    }}
-                  >
-                    <Card.Body>
-                      <Card.Img variant="top" id="img1" src={hands} />
-                      <Card.Title
-                        style={{ fontSize: "2rem", textAlign: "right" }}
-                      >
-                        What we do to help
-                      </Card.Title>
-                      <Card.Text
-                        style={{ fontSize: "1rem", textAlign: "right" }}
-                      >
-                        This application simplifies your choices, and desent
-                        prompt you to answer questions that are not relevant.
-                        Along with that it ensures you dont fill out an
-                        "out-dated" or incorrect form for the request you are
-                        making. It is almost like we are over your shoulder
-                        letting you know exactly what needs to be done!
-                      </Card.Text>
-                    </Card.Body>
-                  </div>
-                </Card>
-              </Col>
-            </CardGroup>
-          </div>
-        </Row>
-        <Row id="butt">
-          <Container id="buttconn">
-            <Row style={{ textAlign: "center", padding: "1rem" }}>
-              <h4>Rather talk to someone in person?</h4>
-              <h8>
-                Please call us at 856-396-0499, or send an questions you may
-                have to clientservcies@retirewelltpa.com
-              </h8>
-            </Row>
-          </Container>
-        </Row>
-      </Container>
+                  <Chip
+                    style={{ backgroundColor: "#fbf5f3", width: "50%" }}
+                    icon={<Email />}
+                    label="Email Us: Clientservices@retirewelltpa.com"
+                  />
+                </a>
+              </Row>
+            </div>
+          </Card.Body>
+        </Card>
+      </Row>
     </div>
   );
 }

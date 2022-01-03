@@ -1,5 +1,5 @@
 // ---- React Components and StyleSheets ---- //
-import React, { useState } from "react";
+import React from "react";
 // ---- Assets ---- //
 import LD from "../../../../Assets/LD_DistForm/LD.png"; // Page 1 LD Form
 import LD2 from "../../../../Assets/LD_DistForm/LD2.png"; // Page 2 LD Form
@@ -18,8 +18,6 @@ import {
   Image,
 } from "@react-pdf/renderer"; // PDFReact-Renderer (npm package)
 import moment from "moment";
-
-
 
 // Needed for PDF Styling
 const styles = StyleSheet.create({
@@ -52,6 +50,7 @@ const styles = StyleSheet.create({
 
 export function PdfDocument(props) {
   // Props check ************Remove before publishing***************
+  console.log(props.data)
   // ---- Addtional Functions ---- //
   function limit(string = "", limit = 0) {
     return string.substring(0, limit);
@@ -70,9 +69,7 @@ export function PdfDocument(props) {
     ? Moment(props.data.doi).format("MM - DD - YYYY")
     : "";
 
-
-
-  const currentdate = Moment().format("MM - DD - YYYY")
+  const currentdate = Moment().format("MM - DD - YYYY");
 
   const [display, setDisplay] = "none";
 
@@ -484,7 +481,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.rollcom ? props.data.rollcom : " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.rollcom ? props.data.rollcom : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -495,7 +494,17 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.rollad ? props.data.rollad + "      ,       " + props.data.rollcity + "     ,      " + props.data.rollstate + "    ,    " + props.data.rollzip : " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.rollad
+                ? props.data.rollad +
+                  "      ,       " +
+                  props.data.rollcity +
+                  "     ,      " +
+                  props.data.rollstate +
+                  "    ,    " +
+                  props.data.rollzip
+                : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -506,7 +515,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.rollacc ? props.data.rollacc : " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.rollacc ? props.data.rollacc : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -517,7 +528,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.rollrothacc ? props.data.rollrothacc : " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.rollrothacc ? props.data.rollrothacc : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -528,7 +541,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.aba? props.data.aba: " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.aba ? props.data.aba : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -539,7 +554,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.diracc ? props.data.diracc : " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.diracc ? props.data.diracc : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -550,7 +567,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.accnam? props.data.accnam: " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.accnam ? props.data.accnam : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -561,7 +580,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.bankname ? props.data.bankname : " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.bankname ? props.data.bankname : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -572,7 +593,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.bankadd? props.data.bankadd: " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.bankadd ? props.data.bankadd : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -583,7 +606,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.bankcity ? props.data.bankcity : " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.bankcity ? props.data.bankcity : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -594,7 +619,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.bankstate ? props.data.bankstate : " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.bankstate ? props.data.bankstate : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -605,7 +632,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data.bankzip ? props.data.bankzip : " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data.bankzip ? props.data.bankzip : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -616,11 +645,14 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-          <Text style={{ fontSize: 12, color:"red", fontWeight:"800"}}> Sign Here </Text> 
+            <Text style={{ fontSize: 12, color: "red", fontWeight: "800" }}>
+              {" "}
+              Sign Here{" "}
+            </Text>
           </View>
         </View>
       </Page>
-      {/*---------------------------------- Page 5 ----------------------------------------------------- */}
+        {/*---------------------------------- Page 5 ----------------------------------------------------- */}
       <Page object-fit="fill" style={styles.page} size="A4">
         <View style={styles.view}>
           <Image style={styles.image} src={LD5} alt="images" />
@@ -644,7 +676,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>ClientServices@retirewelltpa.com</Text>
+            <Text style={{ fontSize: 10 }}>
+              ClientServices@retirewelltpa.com
+            </Text>
           </View>
           <View
             style={{
@@ -666,7 +700,29 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>{props.data? currentdate : " "}</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data ? currentdate : " "}
+            </Text>
+          </View>
+        </View>
+      </Page>
+      {/*---------------------------------- Page 6 ----------------------------------------------------- */}
+      <Page object-fit="fill" style={styles.page} size="A4">
+        <View style={styles.view}>
+          <View
+            style={{
+              position: "absolute",
+              top: 200,
+              left: 200,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text style={{ fontSize: 10 }}>Participant Notes:</Text>
+            <Text style={{ fontSize: 10 }}>
+              {" "}
+              {props.data.notes ? props.data.notes : " "}
+            </Text>
           </View>
         </View>
       </Page>

@@ -1,3 +1,16 @@
+@media screen and (max-width: 819px) {
+  #card1 {
+  width: fit-content !important;
+  height: fit-content !important;
+  };
+  #card {
+    width: 100% !important;
+    height: fit-content !important;
+    color: red !important;
+  }
+}
+
+
 #sh {
   /* text-shadow: 1px 1px whitesmoke; */
   color: #242a57;
@@ -21,10 +34,12 @@ ul li::before {
 }
 
 #butt { 
-    background-color: #242a57;
-    margin-top: 1rem;
-    margin-bottom: 3rem;
-    color: whitesmoke;
+    background-color: #acd8ec;
+    margin-top: 10rem;
+    margin-bottom: 1rem;
+    color: #242a57;
+    width: fit-content;
+    padding-top: 1rem;
 }
 
 #buttconn {
@@ -36,21 +51,9 @@ ul li::before {
 }
 
 
-#card {
-  background-color: transparent;
-  margin: 1.5rem;
-  border: none;
-  text-align: right;
-  height: 25rem;
-}
 
-#card1 {
-  background-color: transparent;
-  margin: 1.5rem;
-  border: none;
-  text-align: left;
-  height: 25rem;
-}
+
+
 
 #img{
   max-width: 20rem;
@@ -68,34 +71,3 @@ ul li::before {
   margin-bottom: 1rem;
 }
 
-#low-divider{
-  color: transparent;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  height: .35rem;
-  border-radius: 2rem;
-  width: 100%;
-
-}
-
-#high-divider{
-  color: transparent;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  height: .35rem;
-  border-radius: 2rem;
-  width: 100%;
-}
-
-#mid-divider{
-  color: transparent;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  width: 6px;
-  height: 450px;
-  margin-top: 10%;
-  border-radius: 2rem;
-}

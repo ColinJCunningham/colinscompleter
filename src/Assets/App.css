@@ -23,6 +23,10 @@
   font-family: 'webfont';
   src: local('webfont'), url(./atkinson.ttf) format('truetype')}
 
+
+  @font-face {
+    font-family: 'logo';
+    src: local('logo'), url(./Bebas.ttf) format('truetype')}
       
 
   

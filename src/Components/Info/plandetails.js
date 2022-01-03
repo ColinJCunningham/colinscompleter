@@ -22,7 +22,6 @@ import "../Info/plandetails.css";
 
 function Getplan() {
   let navigate = useNavigate();
-  let [error, setError] = React.useState(null);
   const [plandata, setPlandata] = useState(null);
   const [display, setDisplay] = useState("none");
   const [next, setNext] = useState("none");
@@ -136,7 +135,8 @@ function Getplan() {
             style={{
               width: "30%",
               marginLeft: "35%",
-              backgroundColor: "#f8cf17",
+              backgroundColor: "#AD160B",
+              color:"whitesmoke"
             }}
             icon={<ArrowDownwardIcon />}
             label="Scroll down to Continue"
