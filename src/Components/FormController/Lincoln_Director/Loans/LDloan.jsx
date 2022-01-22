@@ -510,7 +510,7 @@ export function PdfDocument(props) {
       {/*---------------------------------- Page 5 ----------------------------------------------------- */}
       <Page object-fit="fill" style={styles.page} size="A4">
         <View style={styles.view}>
-          <Image style={styles.image} src={LD3} alt="images" />
+          <Image style={styles.image} alt="images" />
           <View
             style={{
               position: "absolute",

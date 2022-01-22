@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import QuizIcon from "@mui/icons-material/Quiz";
@@ -35,7 +35,7 @@ function Footer() {
           label="Plan Sponsor Access"
           icon={<AdminPanelSettingsIcon />}
         />
-        <BottomNavigationAction label="FAQ" icon={<QuizIcon />} />
+       <Link to="test"><BottomNavigationAction label="FAQ" icon={<QuizIcon />} /></Link> 
         <BottomNavigationAction label="TPA Access" icon={<LockOpenIcon />} />
       </BottomNavigation>
     </Paper>

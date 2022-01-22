@@ -794,7 +794,7 @@ export default function FormCreate() {
                 >
                   <div style={{ width: "80%" }}>
                     <Row>
-                      <h5 style={{color:"black"}}>Name</h5>
+                      <h5>Name</h5>
                       <input
                         style={inputStyle}
                         defaultValue=""
@@ -802,7 +802,7 @@ export default function FormCreate() {
                       />
                     </Row>
                     <Row>
-                      <h5 style={{color:"black"}}>
+                      <h5>
                         Social Security Number{" "}
                         <span>
                           <Image
@@ -831,7 +831,7 @@ export default function FormCreate() {
                       />
                     </Row>
                     <Row>
-                      <h5 style={{color:"black"}}>Date of Birth</h5>
+                      <h5>Date of Birth</h5>
                       <input
                         style={inputStyle}
                         type="date"

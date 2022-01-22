@@ -7,6 +7,7 @@ import Home from "./Components/Home/home";
 import Plan from "./Components/Info/plandetails";
 import LD_Dist from "./Components/FormController/Lincoln_Director/Distributions/Controller";
 import LD_Loan from "./Components/FormController/Lincoln_Director/Loans/Controller";
+import Test from "./Components/FormController/Lincoln_Director/Force_Dist/Controller";
 import "../src/Assets/App.css";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="start" element={<Plan />} />
           <Route exact path="dist/ld/:tpaid" element={<LD_Dist/>} />
           <Route exact path="loan/ld/:tpaid" element={<LD_Loan />} />
+          <Route exact path="test" element={<Test />} />
         </Routes>
       </div>
       <Footer />

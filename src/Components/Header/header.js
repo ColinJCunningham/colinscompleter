@@ -13,7 +13,7 @@ function Header() {
     <div>
       <Navbar
         expand="lg"
-        style={{ backgroundColor: "#94bbd3ad", width: "100%", color:"#12113A", }}
+        style={{ backgroundColor: "#12113A", width: "100%", color: "#f2f4e5" }}
         variant="dark"
       >
         <Container>
@@ -32,14 +32,17 @@ function Header() {
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle
-            style={{ margin: "0 auto", width: "100%" }}
+            style={{ width: "50%" }}
             aria-controls="basic-navbar-nav"
           />
-          <Navbar.Collapse className="justify-content-end">
-            <Nav.Link style={{ color: "#12113A" }} href="#home">
+          <Navbar.Collapse
+            className="justify-content-end"
+            style={{ color: "black" }}
+          >
+            <Nav.Link style={{ color: "#a5cde6" }} href="#home">
               Contact
             </Nav.Link>
-            <Nav.Link style={{ color: "#12113A" }} href="#link">
+            <Nav.Link style={{ color: "#a5cde6" }} href="#link">
               Privacy
             </Nav.Link>
           </Navbar.Collapse>

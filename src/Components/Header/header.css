@@ -1,13 +1,13 @@
 .navbar {
   color: whitesmoke !important;
-  background-color: #94bbd3ad;
+  background-color: #12113A;
   color: #691515c9;
 }
 
 #navtext {
   font-size: 2rem;
-  color: #12113A;
-  font-weight: 800;
+  color: #ecf1f5;
+  font-weight: 400;
   font-family: "logo", serif;
 }
 
