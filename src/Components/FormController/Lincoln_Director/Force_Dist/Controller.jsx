@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import reasons from "../../../../Data/dists";
 import { usePDF, pdf, Page, Text, Document } from "@react-pdf/renderer";
 import { PDFDownloadLink } from "@react-pdf/renderer";
@@ -6,6 +6,7 @@ import { PdfDocument } from "./LD_Force";
 import XLSX from "xlsx";
 import { Link } from "react-router-dom";
 import Template from "./template.csv";
+import "./controller.css";
 
 import { Table, Container, Row, Col, Button, Alert } from "react-bootstrap/";
 
@@ -14,11 +15,26 @@ import { Table, Container, Row, Col, Button, Alert } from "react-bootstrap/";
 function Test() {
   const [element, setElement] = useState("");
   const [display, setDisplay] = useState("");
+  const [showtable, setShowtable] = useState("none");
+  const [id, setId] = useState(0);
+  const [load, setLoad] = useState("none");
 
   //----------- Excel Import ----------------//
   const [data, setData] = React.useState([]);
   const [cols, setCols] = React.useState([]);
   const [label, setLabel] = React.useState("");
+
+  useEffect(() => {
+    if (id === 0) {
+      console.log("Waiting");
+    } else {
+      const timer = setTimeout(() => {
+        console.log("worked");
+        setLoad("none");
+        setShowtable(" ");
+      }, id * 1000);
+    }
+  }, [id]);
 
   const filData = data[0];
 
@@ -94,7 +110,9 @@ function Test() {
       /* Convert array of arrays */
       const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
       /* Update state */
+      setLoad(" ");
       setData(data);
+      setId(data.length + 2);
     };
     reader.readAsArrayBuffer(file);
   };
@@ -116,14 +134,13 @@ function Test() {
     marginTop: "10%",
   };
 
+  // EXPORT ------------------------------------------------------------------------------------------------ EXPORT //
+  // EXPORT ------------------------------------------------------------------------------------------------ EXPORT //
+  // EXPORT ------------------------------------------------------------------------------------------------ EXPORT //
+  // EXPORT ------------------------------------------------------------------------------------------------ EXPORT //
+
   return (
     <Container style={{ paddingTop: "5%", marginBottom: "5%" }}>
-      <button
-        style={{ backgroundColor: "#6aacf8fd" }}
-        onClick={() => console.log(filData)}
-      >
-        Test
-      </button>
       <Row>
         <h3 style={header}> Upload Your Template Below </h3>
         <Col style={{ minHeight: "10rem", paddingTop: "5%" }}>
@@ -175,19 +192,32 @@ function Test() {
         </Col>
       </Row>
       <div>
+        <div style={{ textAlign: "center", display: `${load}` }}>
+          <h3>The PDF's are generating, please wait!</h3>
+          <br />
+          <p>This generally takes 2-5 seconds per entry</p>
+          <br />
+          <div className="loader"> </div>
+        </div>
+
         <Table
           striped
           bordered
           hover
-          style={{ marginTop: "3%", marginBottom: "8%" }}
+          style={{
+            marginTop: "3%",
+            marginBottom: "8%",
+            display: `${showtable}`,
+          }}
         >
           <thead>
             <tr>
-              <th>Plan ID</th>
+              <th>SSN</th>
               <th>Full Name</th>
-              <th>Date of Birth</th>
-              <th>Date of Hire</th>
-              <th>Date of Termination</th>
+              <th>Date of Termination </th>
+              <th>Plan Name</th>
+              <th>Contract Number</th>
+              <th>TPA Plan ID</th>
               <th>Download Link</th>
             </tr>
           </thead>
@@ -195,26 +225,25 @@ function Test() {
             {element === ""
               ? ""
               : data.map((datab, i) => {
-                  console.log(datab);
                   return i === 0 ? (
-                    <div></div>
+                    <tr key={i}></tr>
                   ) : (
                     <tr key={i}>
-                      <td>{datab[5]}</td>
-                      <td>{datab[3]}</td>
-                      <td>{datab[8] + " " + datab[10]} </td>
-                      <td>{datab[11]} </td>
-                      <td>{datab[17]} </td>
-                      <td>{datab[18]}</td>
-                      <td>
+                      <td key={i + 2}>{datab[6]}</td>
+                      <td key={i + 3}>{datab[8] + " " + datab[10]} </td>
+                      <td key={i + 4}>{datab[18]}</td>
+                      <td key={i + 5}>{datab[2]} </td>
+                      <td key={i + 6}>{datab[5]} </td>
+                      <td key={i + 7}>{datab[3]}</td>
+                      <td value={datab[3]} key={i + 8}>
                         <PDFDownloadLink
                           document={<PdfDocument data={datab} />}
                           fileName={
-                            datab[2] +
+                            datab[3] +
                             " - " +
-                            datab[7] +
+                            datab[8] +
                             " " +
-                            datab[9] +
+                            datab[10] +
                             " - " +
                             date +
                             ".pdf"
@@ -222,7 +251,7 @@ function Test() {
                           style={pageStyle}
                         >
                           {({ blob, url, loading, error }) =>
-                            loading ? "Loading" : "Download File!"
+                            loading ? "Loading" : "Download"
                           }
                         </PDFDownloadLink>
                       </td>

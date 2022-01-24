@@ -31,12 +31,9 @@ function Footer() {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction
-          label="Plan Sponsor Access"
-          icon={<AdminPanelSettingsIcon />}
-        />
-       <Link to="test"><BottomNavigationAction label="FAQ" icon={<QuizIcon />} /></Link> 
-        <BottomNavigationAction label="TPA Access" icon={<LockOpenIcon />} />
+        <Link icon={<QuizIcon />} to="test">
+          Test
+        </Link>
       </BottomNavigation>
     </Paper>
   );

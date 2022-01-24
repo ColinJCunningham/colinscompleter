@@ -51,6 +51,7 @@ const currentdate = Moment().format("MM - DD - YYYY");
 export function PdfDocument(props) {
   // Props check ************Remove before publishing***************
   console.log(props.data[0]);
+
   return (
     <Document>
       {/*---------------------------------- Page 1 ----------------------------------------------------- */}
@@ -67,7 +68,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[3] ? props.data[3] : ""}</Text>
+            <Text>{props.data[2] ? props.data[2] : ""}</Text>
           </View>
           <View
             style={{
@@ -124,9 +125,18 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>
-              {props.data[12] ? props.data[12] + " " + props.data[13] : ""}
-            </Text>
+            <Text>{props.data[12] ? props.data[12] : ""}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 295,
+              left: 200,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>{props.data[12] ? props.data[13] : ""}</Text>
           </View>
           <View
             style={{
@@ -235,7 +245,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>X</Text>
+            <Text>{props.data[1] === "Y" ? "x" : " "} </Text>
           </View>
           <View
             style={{
@@ -246,7 +256,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>X</Text>
+            <Text>{props.data[0] === "Y" ? "x" : " "} </Text>
           </View>
           <View
             style={{
@@ -257,7 +267,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>X</Text>
+            <Text>{props.data[19] === "Y" ? "x" : " "} </Text>
           </View>
           <View
             style={{
@@ -268,7 +278,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>Date of term</Text>
+            <Text></Text>
           </View>
           <View
             style={{
@@ -320,8 +330,8 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: 356,
-              left: 188,
+              top: 359,
+              left: 194,
               right: 0,
               bottom: 0,
             }}
@@ -460,7 +470,7 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: 150,
+              top: 132,
               left: 120,
               right: 0,
               bottom: 0,
@@ -471,7 +481,7 @@ export function PdfDocument(props) {
           <View
             style={{
               position: "absolute",
-              top: 150,
+              top: 132,
               left: 425,
               right: 0,
               bottom: 0,
