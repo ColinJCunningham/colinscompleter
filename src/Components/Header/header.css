@@ -1,6 +1,6 @@
 .navbar {
   color: whitesmoke !important;
-  background-color: #12113A;
+  background-color: #12113a;
   color: #691515c9;
 }
 
@@ -11,16 +11,15 @@
   font-family: "logo", serif;
 }
 
-#log {
-  width: "80%";
-}
-
 @media screen and (max-width: 525px) {
   #navtext {
     font-size: 1.4rem;
   }
   #nav1 {
     padding: 0;
+  }
+  #log {
+    width: "30%" !important;
   }
 }
 
@@ -35,5 +34,8 @@
 
   #nav1 {
     padding: 0;
+  }
+  #log {
+    width: "80%" !important;
   }
 }

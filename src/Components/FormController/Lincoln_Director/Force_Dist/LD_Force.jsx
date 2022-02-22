@@ -50,7 +50,13 @@ const currentdate = Moment().format("MM - DD - YYYY");
 
 export function PdfDocument(props) {
   // Props check ************Remove before publishing***************
-  console.log(props.data[0]);
+  console.log(props.data);
+
+  const cash =
+    props.data[0] && props.data[19] && props.data[1] === false
+      ? " "
+      : props.data[0];
+  const roll = props.data[1] && props.data[19] ? " " : props.data[1];
 
   return (
     <Document>
@@ -191,7 +197,11 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[11] ? props.data[11] : ""}</Text>
+            <Text>
+              {props.data[11]
+                ? Moment(props.data[11]).format("MM - DD - YYYY")
+                : ""}
+            </Text>
           </View>
           <View
             style={{
@@ -202,7 +212,11 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[12] ? props.data[12] : ""}</Text>
+            <Text>
+              {props.data[17]
+                ? Moment(props.data[17]).format("MM - DD - YYYY")
+                : ""}
+            </Text>
           </View>
           <View
             style={{
@@ -245,7 +259,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[1] === "Y" ? "x" : " "} </Text>
+            <Text>{roll} </Text>
           </View>
           <View
             style={{
@@ -256,7 +270,37 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[0] === "Y" ? "x" : " "} </Text>
+            <Text>{cash} </Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 77,
+              left: 175,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>
+              {cash === props.data[0]
+                ? Moment(props.data[18]).format("MM - DD - YYYY")
+                : " "}
+            </Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 50,
+              left: 175,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>
+              {roll === props.data[1]
+                ? Moment(props.data[18]).format("MM - DD - YYYY")
+                : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -267,18 +311,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>{props.data[19] === "Y" ? "x" : " "} </Text>
-          </View>
-          <View
-            style={{
-              position: "absolute",
-              top: 73,
-              left: 170,
-              right: 0,
-              bottom: 0,
-            }}
-          >
-            <Text></Text>
+            <Text>{props.data[19] ? "x" : " "} </Text>
           </View>
           <View
             style={{
@@ -296,24 +329,28 @@ export function PdfDocument(props) {
             style={{
               position: "absolute",
               top: 264,
-              left: 190,
+              left: 200,
               right: 0,
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>100</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data[21] ? props.data[21] : ""}
+            </Text>
           </View>
           {/* match */}
           <View
             style={{
               position: "absolute",
               top: 277,
-              left: 190,
+              left: 200,
               right: 0,
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>100</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data[20] ? props.data[20] : ""}
+            </Text>
           </View>
           {/* Roth */}
           <View
@@ -325,7 +362,18 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>X</Text>
+            <Text>{props.data[22] ? " " : "x"}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 346,
+              left: 256,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>{props.data[22] ? "X" : ""}</Text>
           </View>
           <View
             style={{
@@ -336,7 +384,9 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text style={{ fontSize: 10 }}>Lincoln Calcs</Text>
+            <Text style={{ fontSize: 10 }}>
+              {props.data[22] ? "Lincoln Calcs" : " "}
+            </Text>
           </View>
           <View
             style={{
@@ -347,7 +397,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>Lincoln Calcs</Text>
+            <Text>{props.data[22] ? "Lincoln Calcs" : " "}</Text>
           </View>
           {/* Loans */}
           <View
@@ -359,7 +409,18 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>X</Text>
+            <Text>{props.data[25] ? "" : "X"}</Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 375,
+              left: 193,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>{props.data[25] ? "X" : " "}</Text>
           </View>
           <View
             style={{
@@ -370,7 +431,7 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>Balance</Text>
+            <Text>{props.data[26] ? props.data[26] : " "}</Text>
           </View>
           <View
             style={{
@@ -381,8 +442,20 @@ export function PdfDocument(props) {
               bottom: 0,
             }}
           >
-            <Text>Other</Text>
+            <Text>{props.data[23] ? props.data[23] : " "}</Text>
           </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 297,
+              left: 390,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <Text>{props.data[24] ? props.data[24] : " "}</Text>
+          </View>
+          {/*---------------- Stays ----------------------*/}
           <View
             style={{
               position: "absolute",

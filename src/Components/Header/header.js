@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 
 import logo from "../../Assets/goal.png";
 
-import "../Header/header.css";
+import "./header.css";
 
 function Header() {
   return (
     <div>
       <Navbar
         expand="lg"
-        style={{ backgroundColor: "#12113A", width: "100%", color: "#f2f4e5" }}
+        style={{ backgroundColor: "#0b2746", width: "100%", color: "#f2f4e5" }}
         variant="dark"
       >
         <Container>
@@ -23,27 +23,46 @@ function Header() {
                 id="log"
                 alt="rwlogo"
                 src={logo}
-                width="10%"
-                height="10%"
+                width="15%"
+                height="15%"
                 className="d-inline-block align-top"
-                style={{ marginRight: "1rem" }}
               />
-              <span id="navtext">RetireWell Administrators Inc.</span>
+              <span
+                id="navtext"
+                style={{
+                  float: "right",
+                  marginRight: "10%",
+                  marginTop: "10px",
+                }}
+              >
+                PDF Project Demo
+              </span>
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle
-            style={{ width: "50%" }}
+            style={{ width: "100%" }}
             aria-controls="basic-navbar-nav"
           />
-          <Navbar.Collapse
-            className="justify-content-end"
-            style={{ color: "black" }}
-          >
-            <Nav.Link style={{ color: "#a5cde6" }} href="#home">
-              Contact
+          <Navbar.Collapse style={{ color: "black" }}>
+            <Nav.Link
+              onClick={(e) => {
+                e.preventDefault();
+                window.open("https://www.colinjamescunningham.com", "_blank");
+              }}
+              style={{ color: "white" }}
+              href="#home"
+            >
+              Code
             </Nav.Link>
-            <Nav.Link style={{ color: "#a5cde6" }} href="#link">
-              Privacy
+            <Nav.Link
+              onClick={(e) => {
+                e.preventDefault();
+                window.open("https://www.colinjamescunningham.com", "_blank");
+              }}
+              style={{ color: "white" }}
+              href="#link"
+            >
+              Portfolio
             </Nav.Link>
           </Navbar.Collapse>
         </Container>

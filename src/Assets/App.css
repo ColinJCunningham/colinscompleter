@@ -1,11 +1,11 @@
 .App {
-  background-color: #242a57
+  background-color: #242a57;
 }
 
 @font-face {
-  font-family: 'poppins';
-  src: local('poppins'), url(./Poppins.ttf) format('truetype')}
-
+  font-family: "poppins";
+  src: local("poppins"), url(./Poppins.ttf) format("truetype");
+}
 
 .App-link {
   color: #61dafb;
@@ -13,20 +13,24 @@
 
 #maindiv {
   border-style: double;
-  border-width: 0 .6rem;
+  border-width: 0 0.6rem;
   margin: 0px 5px 0 5px;
   border-color: #1f2a47;
   min-height: 90vh;
+  height: fit-content;
 }
 
 @font-face {
-  font-family: 'webfont';
-  src: local('webfont'), url(./atkinson.ttf) format('truetype')}
+  font-family: "webfont";
+  src: local("webfont"), url(./atkinson.ttf) format("truetype");
+}
 
+@font-face {
+  font-family: "logo";
+  src: local("logo"), url(./Bebas.ttf) format("truetype");
+}
 
-  @font-face {
-    font-family: 'logo';
-    src: local('logo'), url(./Bebas.ttf) format('truetype')}
-      
-
-  
+@font-face {
+  font-family: "cool";
+  src: local("cool"), url(./poppin.ttf) format("truetype");
+}

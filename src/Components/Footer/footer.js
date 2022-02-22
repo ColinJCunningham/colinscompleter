@@ -2,14 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import QuizIcon from "@mui/icons-material/Quiz";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
+import PhoneIcon from "@mui/icons-material/Phone";
+import WebIcon from "@mui/icons-material/Web";
+import EmailIcon from "@mui/icons-material/Email";
 import Paper from "@mui/material/Paper";
 
 import "../Footer/footer.css";
 
 function Footer() {
+  const Portfolio = (
+    <Link target="_blank" to="https://www.colinjamescunningham.com/">
+      Portfolio
+    </Link>
+  );
+
   const [value, setValue] = React.useState(0);
   return (
     <Paper
@@ -18,7 +24,7 @@ function Footer() {
         left: 0,
         right: 0,
         minHeight: "3rem",
-        backgroundColor: "#2d3047",
+        backgroundColor: "#86B3EA",
         color: "whitesmoke",
       }}
       elevation={3}
@@ -31,9 +37,26 @@ function Footer() {
           setValue(newValue);
         }}
       >
-        <Link icon={<QuizIcon />} to="test">
-          Test
-        </Link>
+        <BottomNavigationAction
+          href="tel:+8603313329"
+          id="code"
+          label="Text or Call"
+          icon={<PhoneIcon />}
+        />
+        <BottomNavigationAction
+          target="_blank"
+          onClick={(e) => {
+            e.preventDefault();
+            window.open("https://www.colinjamescunningham.com", "_blank");
+          }}
+          label="Portfolio"
+          icon={<WebIcon />}
+        />
+        <BottomNavigationAction
+          href="mailto:cunninghamwebdesign@gmail.com"
+          label="Email"
+          icon={<EmailIcon />}
+        />
       </BottomNavigation>
     </Paper>
   );

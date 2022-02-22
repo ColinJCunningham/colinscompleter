@@ -39,15 +39,15 @@ function Getplan() {
   }
 
   function handleNav(tran) {
-  
-
-    const nav = `${"/" + tran + "/" + plandata.vendor + "/" + plandata.tpaID + "/"}`;
+    const nav = `${
+      "/" + tran + "/" + plandata.vendor + "/" + plandata.tpaID + "/"
+    }`;
     console.log(nav);
-    navigate(`${ nav }`);
+    navigate(`${nav}`);
   }
 
   const buttonStyle = {
-    textAlign: "left",
+    textAlign: "Center",
     fontSize: "1.5rem",
     textTransform: "none",
     fontWeight: "700",
@@ -57,6 +57,7 @@ function Getplan() {
     paddingRight: "2%",
     backgroundColor: "#4e5e88",
     color: "#f2f4e5",
+    borderRadius: "10px",
   };
 
   return (
@@ -72,7 +73,8 @@ function Getplan() {
         <Row style={{ textAlign: "left" }}>
           <h1>Lets start with telling us what retirement plan you are in</h1>
           <p style={{ marginTop: "5px" }}>
-            Or in other words who is your current/former employer?
+            This is created using mock data suitable for the completion of these
+            forms
           </p>
         </Row>
         <Row>
@@ -122,9 +124,7 @@ function Getplan() {
             style={{ marginTop: "10%", textAlign: "center", fontSize: "1rem" }}
           >
             <Link to="/">
-              <h4 style={{ fontSize: "1rem", color: "#092746" }}>
-                Cant find your plan? Click here!
-              </h4>
+              <h4 style={{ fontSize: "1rem", color: "#092746" }}>Need Help?</h4>
             </Link>
           </Row>
         </Row>
@@ -135,8 +135,8 @@ function Getplan() {
             style={{
               width: "30%",
               marginLeft: "35%",
-              backgroundColor: "#AD160B",
-              color:"whitesmoke"
+              backgroundColor: "#94bbd3",
+              color: "black",
             }}
             icon={<ArrowDownwardIcon />}
             label="Scroll down to Continue"
@@ -183,7 +183,7 @@ function Getplan() {
                   handleNav("dist");
                 }}
                 id="btn"
-                style={buttonStyle}
+                style={{ ...buttonStyle, ...{ margin: "10px" } }}
               >
                 Take a Distribution
               </Button>
@@ -196,35 +196,10 @@ function Getplan() {
                 id="btn"
                 style={{
                   ...buttonStyle,
-                  ...{},
+                  ...{ margin: "10px" },
                 }}
               >
                 Request a Loan
-              </Button>
-              <Button
-                onClick={(e) => {
-                  setType("data");
-                  handleNav("data");
-                }}
-                id="btn"
-                style={buttonStyle}
-              >
-                View Plan Data
-              </Button>
-              <Button
-                onClick={(e) => {
-                  setType("cont");
-
-                  handleNav("cont");
-                }}
-                value="contact"
-                id="btn"
-                style={{
-                  ...buttonStyle,
-                  ...{},
-                }}
-              >
-                Contact Us
               </Button>
             </ButtonGroup>
           </Row>

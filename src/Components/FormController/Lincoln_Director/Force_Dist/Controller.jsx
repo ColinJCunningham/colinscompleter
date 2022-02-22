@@ -6,13 +6,14 @@ import { PdfDocument } from "./LD_Force";
 import XLSX from "xlsx";
 import { Link } from "react-router-dom";
 import Template from "./template.csv";
+import Mock from "./Test_Data.csv";
 import "./controller.css";
 
 import { Table, Container, Row, Col, Button, Alert } from "react-bootstrap/";
 
 // With Blob
 
-function Test() {
+function Multi() {
   const [element, setElement] = useState("");
   const [display, setDisplay] = useState("");
   const [showtable, setShowtable] = useState("none");
@@ -42,31 +43,6 @@ function Test() {
   const date = `${
     current.getMonth() + 1
   }${current.getDate()}${current.getFullYear()}`;
-
-  const SheetJSFT = [
-    "xlsx",
-    "xlsb",
-    "xlsm",
-    "xls",
-    "xml",
-    "csv",
-    "txt",
-    "ods",
-    "fods",
-    "uos",
-    "sylk",
-    "dif",
-    "dbf",
-    "prn",
-    "qpw",
-    "123",
-    "wb*",
-    "wq*",
-    "html",
-    "htm",
-  ]
-    .map((x) => `.${x}`)
-    .join(",");
 
   function DataInput({ handleFile }) {
     const handleChange = (e) => {
@@ -131,7 +107,7 @@ function Test() {
     borderBottomWidth: 4,
     paddingLeft: 0,
     color: "#01172F",
-    marginTop: "10%",
+    marginTop: "6%",
   };
 
   // EXPORT ------------------------------------------------------------------------------------------------ EXPORT //
@@ -140,7 +116,17 @@ function Test() {
   // EXPORT ------------------------------------------------------------------------------------------------ EXPORT //
 
   return (
-    <Container style={{ paddingTop: "5%", marginBottom: "5%" }}>
+    <Container style={{ paddingTop: "5%", paddingBottom: "5%" }}>
+      <div style={{ textAlign: "center" }}>
+        <h1 style={{ textDecoration: "underline" }}>
+          Multi-Participant Download
+        </h1>
+        <p>
+          Allows the ability to use a template to generate multiple files at
+          <br />
+          once and list their download links along with some prelimnary data
+        </p>
+      </div>
       <Row>
         <h3 style={header}> Upload Your Template Below </h3>
         <Col style={{ minHeight: "10rem", paddingTop: "5%" }}>
@@ -184,14 +170,26 @@ function Test() {
                     marginTop: "5%",
                   }}
                 >
-                  Download One Here!
+                  Blank Template
+                </Button>
+              </Link>
+              <Link to={Mock} target="_blank" download>
+                <Button
+                  style={{
+                    width: "100%",
+                    color: "#12113A",
+                    backgroundColor: "whitesmoke",
+                    marginTop: "5%",
+                  }}
+                >
+                  Mock Data (For Testing)
                 </Button>
               </Link>
             </div>
           </div>
         </Col>
       </Row>
-      <div>
+      <div style={{ paddingBottom: "3%", paddingTop: "5%" }}>
         <div style={{ textAlign: "center", display: `${load}` }}>
           <h3>The PDF's are generating, please wait!</h3>
           <br />
@@ -223,7 +221,7 @@ function Test() {
           </thead>
           <tbody style={{ marginBottom: "8%" }}>
             {element === ""
-              ? ""
+              ? "Error"
               : data.map((datab, i) => {
                   return i === 0 ? (
                     <tr key={i}></tr>
@@ -265,4 +263,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default Multi;
